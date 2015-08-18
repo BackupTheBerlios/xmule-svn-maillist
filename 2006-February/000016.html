@@ -1,0 +1,550 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r30 - trunk/xCore
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r30%20-%20trunk/xCore&In-Reply-To=%3C200602092212.k19MC9P3031779%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000015.html">
+   <LINK REL="Next"  HREF="000017.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r30 - trunk/xCore</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r30%20-%20trunk/xCore&In-Reply-To=%3C200602092212.k19MC9P3031779%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r30 - trunk/xCore">avivahl at berlios.de
+       </A><BR>
+    <I>Thu Feb  9 23:12:09 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000015.html">[xMule-svn] r29 - trunk/xCore
+</A></li>
+        <LI>Next message: <A HREF="000017.html">[xMule-svn] r31 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-02-09 23:12:08 +0100 (Thu, 09 Feb 2006)
+New Revision: 30
+
+Added:
+   trunk/xCore/xAbstractFile.cpp
+   trunk/xCore/xAbstractFile.h
+Log:
+Ported the CAbstractFile class -&gt; xAbstractFile. Now uses wxWidgets... Did not compile/test port yet.
+
+Added: trunk/xCore/xAbstractFile.cpp
+===================================================================
+--- trunk/xCore/xAbstractFile.cpp	2006-02-09 22:10:29 UTC (rev 29)
++++ trunk/xCore/xAbstractFile.cpp	2006-02-09 22:12:08 UTC (rev 30)
+@@ -0,0 +1,372 @@
++#include &quot;xAbstractFile.h&quot;             // xAbstractFile
++#include &quot;xUtils.h&quot;                    // md4cpy(), md4clr()
++
++//#include &quot;OtherFunctions.h&quot;
++//#include &quot;Kademlia/Kademlia/Entry.h&quot;
++//#include &quot;ini2.h&quot;
++//#include &quot;Preferences.h&quot;
++//#include &quot;Packets.h&quot;
++
++xAbstractFile::xAbstractFile()
++{
++    md4clr(m_abyFileHash);
++    m_nFileSize = (wxUint64)0;
++    m_uRating = 0;
++    m_bCommentLoaded = false;
++    m_uUserRating = 0;
++    m_bHasComment = false;
++}
++
++xAbstractFile::xAbstractFile(const xAbstractFile* pAbstractFile)
++{
++    m_strFileName = pAbstractFile-&gt;m_strFileName;
++    md4cpy(m_abyFileHash, pAbstractFile-&gt;GetFileHash());
++    m_nFileSize = pAbstractFile-&gt;m_nFileSize;
++    m_strComment = pAbstractFile-&gt;m_strComment;
++    m_uRating = pAbstractFile-&gt;m_uRating;
++    m_bCommentLoaded = pAbstractFile-&gt;m_bCommentLoaded;
++    m_uUserRating = pAbstractFile-&gt;m_uUserRating;
++    m_bHasComment = pAbstractFile-&gt;m_bHasComment;
++    m_strFileType = pAbstractFile-&gt;m_strFileType;
++
++/*    const CTypedPtrList&lt;CPtrList, Kademlia::CEntry*&gt;&amp; list = pAbstractFile-&gt;getNotes(); TODO:KAD
++    for(POSITION pos = list.GetHeadPosition(); pos != NULL; )
++    {
++        Kademlia::CEntry* entry = list.GetNext(pos);
++        m_kadNotes.AddTail(entry-&gt;Copy());
++    }*/
++
++    CopyTags(pAbstractFile-&gt;GetTags());
++}
++
++xAbstractFile::~xAbstractFile()
++{
++    ClearTags();
++/*    for(POSITION pos = m_kadNotes.GetHeadPosition(); pos != NULL; ) TODO:KAD
++    {
++        Kademlia::CEntry* entry = m_kadNotes.GetNext(pos);
++        delete entry;
++    }*/
++}
++
++/*bool xAbstractFile::AddNote(Kademlia::CEntry* pEntry) TODO:KAD
++{
++    for(POSITION pos = m_kadNotes.GetHeadPosition(); pos != NULL; )
++    {
++        Kademlia::CEntry* entry = m_kadNotes.GetNext(pos);
++        if(entry-&gt;m_uSourceID == pEntry-&gt;m_uSourceID)
++        {
++            ASSERT(entry != pEntry);
++            return false;
++        }
++    }
++    m_kadNotes.AddHead(pEntry);
++    UpdateFileRatingCommentAvail();
++    return true;
++}*/
++
++wxUint32 xAbstractFile::GetFileRating()
++{
++    if (!m_bCommentLoaded)
++    {
++        LoadComment();
++    }
++    return m_uRating;
++}
++
++const wxString&amp; xAbstractFile::GetFileComment()
++{
++    if (!m_bCommentLoaded)
++    {
++        LoadComment();
++    }
++    return m_strComment;
++}
++
++void xAbstractFile::LoadComment()
++{
++/*    CIni ini(thePrefs.GetFileCommentsFilePath(), md4str(GetFileHash())); TODO:FILE COMMENTS
++    m_strComment = ini.GetStringUTF8(_T(&quot;Comment&quot;)).Left(MAXFILECOMMENTLEN);
++    m_uRating = ini.GetInt(_T(&quot;Rate&quot;), 0);
++    m_bCommentLoaded = true;*/
++}
++
++void xAbstractFile::CopyTags(const std::vector&lt;xTag*&gt;&amp; tags)
++{
++    for (int i = 0; i &lt; tags.size(); i++)
++        taglist.push_back(new xTag(*tags[i]));
++}
++
++void xAbstractFile::ClearTags()
++{
++    for (int i = 0; i &lt; taglist.size(); i++)
++        delete taglist[i];
++    taglist.clear();
++}
++
++void xAbstractFile::AddTagUnique(xTag* pTag)
++{
++    for (int i = 0; i &lt; taglist.size(); i++)
++    {
++        const xTag* pCurTag = taglist[i];
++        if ((  (pCurTag-&gt;GetNameID()!=0 &amp;&amp; pCurTag-&gt;GetNameID()==pTag-&gt;GetNameID())
++            || (pCurTag-&gt;GetName()!=NULL &amp;&amp; pTag-&gt;GetName()!=NULL &amp;&amp; CmpED2KTagName(pCurTag-&gt;GetName(), pTag-&gt;GetName())==0)
++            )
++            &amp;&amp; pCurTag-&gt;GetType() == pTag-&gt;GetType())
++        {
++            delete pCurTag;
++            taglist[i]=pTag;
++            return;
++        }
++    }
++    taglist.push_back(pTag);
++}
++
++void xAbstractFile::SetFileName(const wxChar* pszFileName, bool bReplaceInvalidFileSystemChars, bool bAutoSetFileType)
++{
++    m_strFileName = pszFileName;
++    if (bReplaceInvalidFileSystemChars)
++    {
++        m_strFileName.Replace(wxT('/'), wxT('-'));
++        m_strFileName.Replace(wxT('&gt;'), wxT('-'));
++        m_strFileName.Replace(wxT('&lt;'), wxT('-'));
++        m_strFileName.Replace(wxT('*'), wxT('-'));
++        m_strFileName.Replace(wxT(':'), wxT('-'));
++        m_strFileName.Replace(wxT('?'), wxT('-'));
++        m_strFileName.Replace(wxT('\&quot;'), wxT('-'));
++        m_strFileName.Replace(wxT('\\'), wxT('-'));
++        m_strFileName.Replace(wxT('|'), wxT('-'));
++    }
++    if (bAutoSetFileType)
++    {
++        SetFileType(GetFileTypeByName(m_strFileName));
++    }
++}
++
++void xAbstractFile::SetFileType(const wxChar* pszFileType)
++{
++    m_strFileType = pszFileType;
++}
++
++wxString xAbstractFile::GetFileTypeDisplayStr()const
++{
++    wxString strFileTypeDisplayStr(GetFileTypeDisplayStrFromED2KFileType(GetFileType()));
++    if (strFileTypeDisplayStr.IsEmpty())
++    {
++        strFileTypeDisplayStr = GetFileType();
++    }
++    return strFileTypeDisplayStr;
++}
++
++
++void xAbstractFile::SetFileHash(const unsigned char* pucFileHash)
++{
++    md4cpy(m_abyFileHash, pucFileHash);
++}
++
++bool xAbstractFile::HasNullHash()const
++{
++    return isnulmd4(m_abyFileHash);
++}
++
++wxUint32 xAbstractFile::GetIntTagValue(wxUint8 tagname) const
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        const xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsInt())
++        {
++            return pTag-&gt;GetInt();
++        }
++    }
++    return NULL;
++}
++
++bool xAbstractFile::GetIntTagValue(wxUint8 tagname, wxUint32&amp; ruValue) const
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        const xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsInt())
++        {
++            ruValue = pTag-&gt;GetInt();
++            return true;
++        }
++    }
++    return false;
++}
++
++wxUint64 xAbstractFile::GetInt64TagValue(const char* tagname)const
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        const xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==0 &amp;&amp; pTag-&gt;IsInt64(true) &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname)==0)
++        {
++            return pTag-&gt;GetInt64();
++        }
++    }
++    return NULL;
++}
++
++wxUint64 xAbstractFile::GetInt64TagValue(wxUint8 tagname)const
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        const xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsInt64(true))
++        {
++            return pTag-&gt;GetInt64();
++        }
++    }
++    return NULL;
++}
++
++bool xAbstractFile::GetInt64TagValue(wxUint8 tagname, wxUint64&amp; ruValue)const
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        const xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsInt64(true))
++        {
++            ruValue = pTag-&gt;GetInt64();
++            return true;
++        }
++    }
++    return false;
++}
++
++wxUint32 xAbstractFile::GetIntTagValue(const char* tagname)const
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        const xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==0 &amp;&amp; pTag-&gt;IsInt() &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname)==0)
++        {
++            return pTag-&gt;GetInt();
++        }
++    }
++    return NULL;
++}
++
++void xAbstractFile::SetIntTagValue(wxUint8 tagname, wxUint32 uValue)
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsInt())
++        {
++            pTag-&gt;SetInt(uValue);
++            return;
++        }
++    }
++    xTag* pTag = new xTag(tagname, uValue);
++    taglist.push_back(pTag);
++}
++
++void xAbstractFile::SetInt64TagValue(wxUint8 tagname, wxUint64 uValue)
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsInt64(true))
++        {
++            pTag-&gt;SetInt64(uValue);
++            return;
++        }
++    }
++    xTag* pTag = new xTag(tagname, uValue);
++    taglist.push_back(pTag);
++}
++
++const wxString&amp; xAbstractFile::GetStrTagValue(wxUint8 tagname) const
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        const xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsStr())
++        {
++            return pTag-&gt;GetStr();
++        }
++    }
++    return wxEmptyString;
++}
++
++const wxString&amp; xAbstractFile::GetStrTagValue(const char* tagname) const
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        const xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==0 &amp;&amp; pTag-&gt;IsStr() &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname)==0)
++        {
++            return pTag-&gt;GetStr();
++        }
++    }
++    return wxEmptyString;
++}
++
++void xAbstractFile::SetStrTagValue(wxUint8 tagname, const wxChar* pszValue)
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++){
++        xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsStr())
++        {
++            pTag-&gt;SetStr(pszValue);
++            return;
++        }
++    }
++    xTag* pTag = new xTag(tagname, pszValue);
++    taglist.push_back(pTag);
++}
++
++xTag* xAbstractFile::GetTag(wxUint8 tagname, wxUint8 tagtype) const
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;GetType()==tagtype)
++        {
++            return pTag;
++        }
++    }
++    return NULL;
++}
++
++xTag* xAbstractFile::GetTag(const char* tagname, wxUint8 tagtype) const
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==0 &amp;&amp; pTag-&gt;GetType()==tagtype &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname)==0)
++        {
++            return pTag;
++        }
++    }
++    return NULL;
++}
++
++xTag* xAbstractFile::GetTag(wxUint8 tagname) const
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==tagname)
++        {
++            return pTag;
++        }
++    }
++    return NULL;
++}
++
++xTag* xAbstractFile::GetTag(const char* tagname) const
++{
++    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID()==0 &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname)==0)
++        {
++            return pTag;
++        }
++    }
++    return NULL;
++}
+
+Added: trunk/xCore/xAbstractFile.h
+===================================================================
+--- trunk/xCore/xAbstractFile.h	2006-02-09 22:10:29 UTC (rev 29)
++++ trunk/xCore/xAbstractFile.h	2006-02-09 22:12:08 UTC (rev 30)
+@@ -0,0 +1,95 @@
++#ifndef _XABSTRACTFILE_H_
++#define _XABSTRACTFILE_H_
++
++#include &quot;xOpCodes.h&quot;
++
++#include &lt;wx/defs.h&gt;                   // wxWidgets definitions
++#include &lt;vector&gt;                      // std::vector
++
++//#include &lt;list&gt;                        // std::list TODO:KAD
++/*namespace Kademlia TODO:KAD
++{
++class CUInt128;
++class CEntry;
++typedef std::list&lt;CStringW&gt; WordList;
++};*/
++
++class xTag;
++
++// typedef CTypedPtrList&lt;CPtrList, Kademlia::CEntry*&gt; CKadEntryPtrList; TODO:KAD
++
++class xAbstractFile
++{
++public:
++    xAbstractFile();
++    xAbstractFile(const xAbstractFile* pAbstractFile);
++    virtual ~xAbstractFile();
++
++    const wxString&amp; GetFileName() const { return m_strFileName; }
++    virtual void SetFileName(const wxChar* pszFileName, bool bReplaceInvalidFileSystemChars = false, bool bAutoSetFileType = true); // 'bReplaceInvalidFileSystemChars' is set to 'false' for backward compatibility!
++
++    // returns the ED2K file type
++    const wxString&amp; GetFileType() const { return m_strFileType; }
++    virtual void SetFileType(const wxChar* pszFileType);
++
++    // returns the file type which is used to be shown in the GUI
++    wxString GetFileTypeDisplayStr() const;
++
++    const unsigned char* GetFileHash() const { return m_abyFileHash; }
++    void SetFileHash(const unsigned char* pucFileHash);
++    bool HasNullHash() const;
++
++    wxUint64 GetFileSize() const { return m_nFileSize; }
++    virtual void SetFileSize(wxUint64 nFileSize) { m_nFileSize = nFileSize; }
++    bool IsLargeFile() const { return m_nFileSize &gt; (wxUint64)OLD_MAX_EMULE_FILE_SIZE; }
++
++    uint32 GetIntTagValue(wxUint8 tagname) const;
++    uint32 GetIntTagValue(const char* tagname) const;
++    bool GetIntTagValue(wxUint8 tagname, wxUint32&amp; ruValue) const;
++    wxUint64 GetInt64TagValue(wxUint8 tagname) const;
++    wxUint64 GetInt64TagValue(const char* tagname) const;
++    bool GetInt64TagValue(wxUint8 tagname, wxUint64&amp; ruValue) const;
++    void SetIntTagValue(wxUint8 tagname, wxUint32 uValue);
++    void SetInt64TagValue(wxUint8 tagname, wxUint64 uValue);
++    const wxString&amp; GetStrTagValue(wxUint8 tagname) const;
++    const wxString&amp; GetStrTagValue(const char* tagname) const;
++    void SetStrTagValue(wxUint8 tagname, const wxChar*);
++    xTag* GetTag(wxUint8 tagname, wxUint8 tagtype) const;
++    xTag* GetTag(const char* tagname, wxUint8 tagtype) const;
++    xTag* GetTag(wxUint8 tagname) const;
++    xTag* GetTag(const char* tagname) const;
++    const std::vector&lt;xTag*&gt;&amp; GetTags() const { return taglist; }
++    void AddTagUnique(xTag* pTag);
++    void ClearTags();
++    void CopyTags(const std::vector&lt;xTag*&gt;&amp; tags);
++    virtual bool IsPartFile()const { return false; }
++
++    bool HasComment() const { return m_bHasComment; }
++    void SetHasComment(bool in) { m_bHasComment = in; }
++    wxUint32 UserRating() const { return m_uUserRating; }
++    bool HasRating() const { return m_uUserRating &gt; 0; }
++    bool HasBadRating() const { return ( HasRating() &amp;&amp; (m_uUserRating &lt; 2)); }
++    void SetUserRating(UINT in) { m_uUserRating = in; }
++    const wxString&amp; GetFileComment();
++    wxUint32 GetFileRating();
++    void LoadComment();
++    virtual void UpdateFileRatingCommentAvail() = 0;
++
++    // bool AddNote(Kademlia::CEntry* pEntry); TODO:KAD
++    // const CKadEntryPtrList&amp; getNotes() const { return m_kadNotes; }
++
++protected:
++    wxString m_strFileName;
++    unsigned char m_abyFileHash[16];
++    wxUint64 m_nFileSize;
++    wxString m_strComment;
++    wxUint32 m_uRating;
++    bool m_bCommentLoaded;
++    wxUint32 m_uUserRating;
++    bool m_bHasComment;
++    wxString m_strFileType;
++    std::vector&lt;xTag*&gt; taglist;
++    // CKadEntryPtrList m_kadNotes; TODO:KAD
++};
++
++#endif // _XABSTRACTFILE_H_
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000015.html">[xMule-svn] r29 - trunk/xCore
+</A></li>
+	<LI>Next message: <A HREF="000017.html">[xMule-svn] r31 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

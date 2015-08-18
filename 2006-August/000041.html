@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r55 - trunk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-August/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r55%20-%20trunk&In-Reply-To=%3C200608141438.k7EEcJCj022167%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r55 - trunk</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r55%20-%20trunk&In-Reply-To=%3C200608141438.k7EEcJCj022167%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r55 - trunk">avivahl at mail.berlios.de
+       </A><BR>
+    <I>Mon Aug 14 16:38:19 CEST 2006</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#41">[ date ]</a>
+              <a href="thread.html#41">[ thread ]</a>
+              <a href="subject.html#41">[ subject ]</a>
+              <a href="author.html#41">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-08-14 16:38:18 +0200 (Mon, 14 Aug 2006)
+New Revision: 55
+
+Modified:
+   trunk/xMule.vcproj
+Log:
+I'm now using wxWidgets 2.7.0... :)
+
+Modified: trunk/xMule.vcproj
+===================================================================
+--- trunk/xMule.vcproj	2006-07-11 19:43:16 UTC (rev 54)
++++ trunk/xMule.vcproj	2006-08-14 14:38:18 UTC (rev 55)
+@@ -40,7 +40,7 @@
+ 			&lt;Tool
+ 				Name=&quot;VCCLCompilerTool&quot;
+ 				Optimization=&quot;0&quot;
+-				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-CVS\include&quot;;&quot;C:\wxWidgets-CVS\lib\vc_lib\mswud&quot;&quot;
++				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\include&quot;;&quot;C:\wxWidgets-2.7.0-1\lib\vc_lib\mswud&quot;&quot;
+ 				PreprocessorDefinitions=&quot;__WXDEBUG__&quot;
+ 				MinimalRebuild=&quot;true&quot;
+ 				BasicRuntimeChecks=&quot;3&quot;
+@@ -55,7 +55,7 @@
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCResourceCompilerTool&quot;
+-				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-CVS\include&quot;&quot;
++				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\include&quot;&quot;
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCPreLinkEventTool&quot;
+@@ -65,7 +65,7 @@
+ 				AdditionalDependencies=&quot;comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxbase27ud.lib wxbase27ud_net.lib wxbase27ud_odbc.lib wxbase27ud_xml.lib wxexpatd.lib wxmsw27ud_adv.lib wxmsw27ud_core.lib wxmsw27ud_html.lib wxmsw27ud_xrc.lib&quot;
+ 				OutputFile=&quot;$(OutDir)/$(InputName)-Debug.exe&quot;
+ 				LinkIncremental=&quot;2&quot;
+-				AdditionalLibraryDirectories=&quot;&quot;C:\wxWidgets-CVS\lib\vc_lib&quot;&quot;
++				AdditionalLibraryDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\lib\vc_lib&quot;&quot;
+ 				GenerateDebugInformation=&quot;true&quot;
+ 				ProgramDatabaseFile=&quot;$(OutDir)/$(ProjectName).pdb&quot;
+ 				SubSystem=&quot;2&quot;
+@@ -122,7 +122,7 @@
+ 			&lt;Tool
+ 				Name=&quot;VCCLCompilerTool&quot;
+ 				Optimization=&quot;3&quot;
+-				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-CVS\include&quot;;&quot;C:\wxWidgets-CVS\lib\vc_lib\mswu&quot;&quot;
++				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\include&quot;;&quot;C:\wxWidgets-2.7.0-1\lib\vc_lib\mswu&quot;&quot;
+ 				RuntimeLibrary=&quot;2&quot;
+ 				UsePrecompiledHeader=&quot;0&quot;
+ 				WarningLevel=&quot;4&quot;
+@@ -134,7 +134,7 @@
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCResourceCompilerTool&quot;
+-				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-CVS\include&quot;&quot;
++				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\include&quot;&quot;
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCPreLinkEventTool&quot;
+@@ -144,7 +144,7 @@
+ 				AdditionalDependencies=&quot;comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib wxbase27u.lib wxbase27u_net.lib wxbase27u_odbc.lib wxbase27u_xml.lib wxexpat.lib wxmsw27u_adv.lib wxmsw27u_core.lib wxmsw27u_html.lib wxmsw27u_xrc.lib&quot;
+ 				OutputFile=&quot;$(OutDir)/$(InputName).exe&quot;
+ 				LinkIncremental=&quot;1&quot;
+-				AdditionalLibraryDirectories=&quot;&quot;C:\wxWidgets-CVS\lib\vc_lib&quot;&quot;
++				AdditionalLibraryDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\lib\vc_lib&quot;&quot;
+ 				GenerateDebugInformation=&quot;false&quot;
+ 				SubSystem=&quot;2&quot;
+ 				OptimizeReferences=&quot;2&quot;
+@@ -333,7 +333,7 @@
+ 					&gt;
+ 					&lt;Tool
+ 						Name=&quot;VCResourceCompilerTool&quot;
+-						AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-CVS\include&quot;&quot;
++						AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\include&quot;&quot;
+ 					/&gt;
+ 				&lt;/FileConfiguration&gt;
+ 				&lt;FileConfiguration
+@@ -341,7 +341,7 @@
+ 					&gt;
+ 					&lt;Tool
+ 						Name=&quot;VCResourceCompilerTool&quot;
+-						AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-CVS\include&quot;&quot;
++						AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\include&quot;&quot;
+ 					/&gt;
+ 				&lt;/FileConfiguration&gt;
+ 			&lt;/File&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#41">[ date ]</a>
+              <a href="thread.html#41">[ thread ]</a>
+              <a href="subject.html#41">[ subject ]</a>
+              <a href="author.html#41">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,455 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r53 - in trunk: . xCore xMainFrame
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-July/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r53%20-%20in%20trunk%3A%20.%20xCore%20xMainFrame&In-Reply-To=%3C200607111938.k6BJcG1K032107%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000038.html">
+   <LINK REL="Next"  HREF="000040.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r53 - in trunk: . xCore xMainFrame</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r53%20-%20in%20trunk%3A%20.%20xCore%20xMainFrame&In-Reply-To=%3C200607111938.k6BJcG1K032107%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r53 - in trunk: . xCore xMainFrame">avivahl at berlios.de
+       </A><BR>
+    <I>Tue Jul 11 21:38:16 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000038.html">[xMule-svn] r52 - trunk/xMainFrame
+</A></li>
+        <LI>Next message: <A HREF="000040.html">[xMule-svn] r54 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#39">[ date ]</a>
+              <a href="thread.html#39">[ thread ]</a>
+              <a href="subject.html#39">[ subject ]</a>
+              <a href="author.html#39">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-07-11 21:38:16 +0200 (Tue, 11 Jul 2006)
+New Revision: 53
+
+Modified:
+   trunk/xApp.cpp
+   trunk/xCore/xSafeFile.cpp
+   trunk/xCore/xSafeFile.h
+   trunk/xCore/xTag.h
+   trunk/xMainFrame/xAdvListCtrl.h
+   trunk/xMainFrame/xMainFrame.cpp
+   trunk/xMainFrame/xSharedFilesPanel.h
+   trunk/xMainFrame/xTransfersPanel.cpp
+Log:
+1) Tabs -&gt; Spaces.
+2) Trim Trailing Spaces.
+
+Modified: trunk/xApp.cpp
+===================================================================
+--- trunk/xApp.cpp	2006-07-11 19:10:09 UTC (rev 52)
++++ trunk/xApp.cpp	2006-07-11 19:38:16 UTC (rev 53)
+@@ -7,9 +7,9 @@
+ #include &quot;xCore/xServer.h&quot;             // xServer
+ #include &quot;xMainFrame/xMainFrame.h&quot;     // xMainFrame
+ #include &quot;xMainFrame/xServersPanel.h&quot;  // xServersPanel
+-#include &quot;xMainFrame/XPMs/SplashScreen.xpm&quot;	   // Splash Screen Image
++#include &quot;xMainFrame/XPMs/SplashScreen.xpm&quot;    // Splash Screen Image
+ 
+-#include &lt;wx/bitmap.h&gt;				   // wxBitmap
++#include &lt;wx/bitmap.h&gt;                 // wxBitmap
+ #include &lt;wx/filefn.h&gt;                 // wxFileExists
+ #include &lt;wx/listctrl.h&gt;               // wxListCtrl
+ #include &lt;wx/msgdlg.h&gt;                 // wxMessageBox
+@@ -140,11 +140,11 @@
+     wxToolTip::Enable(true); // Enable tooltips globally
+     wxToolTip::SetDelay(500);
+ 
+-	wxBitmap SplashScreenImage(SplashScreen_xpm);
+-	if (SplashScreenImage.Ok())
+-	{
+-		wxSplashScreen* Splash = new wxSplashScreen(SplashScreenImage, wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT, 3000, NULL, wxID_ANY);
+-	}
++    wxBitmap SplashScreenImage(SplashScreen_xpm);
++    if (SplashScreenImage.Ok())
++    {
++        wxSplashScreen* Splash = new wxSplashScreen(SplashScreenImage, wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT, 3000, NULL, wxID_ANY);
++    }
+     MainFrame = new xMainFrame(); // Create the main frame
+     SetTopWindow(MainFrame);
+     MainFrame-&gt;Show();
+
+Modified: trunk/xCore/xSafeFile.cpp
+===================================================================
+--- trunk/xCore/xSafeFile.cpp	2006-07-11 19:10:09 UTC (rev 52)
++++ trunk/xCore/xSafeFile.cpp	2006-07-11 19:38:16 UTC (rev 53)
+@@ -30,9 +30,9 @@
+ 
+ wxUint64 xFileDataIO::ReadUInt64()
+ {
+-	wxUint64 nVal;
+-	Read(&amp;nVal, sizeof(nVal));
+-	return nVal;
++    wxUint64 nVal;
++    Read(&amp;nVal, sizeof(nVal));
++    return nVal;
+ }
+ 
+ /*void CFileDataIO::ReadUInt128(Kademlia::CUInt128 *pVal)
+@@ -152,7 +152,7 @@
+ 
+ void xFileDataIO::WriteUInt64(wxUint64 nVal)
+ {
+-	Write(&amp;nVal, sizeof(nVal));
++    Write(&amp;nVal, sizeof(nVal));
+ }
+ 
+ /*void CFileDataIO::WriteUInt128(const Kademlia::CUInt128 *pVal)
+@@ -167,7 +167,7 @@
+ 
+ /*void CFileDataIO::WriteString(const CString&amp; rstr, EUtf8Str eEncode)
+ {
+-#define	WRITE_STR_LEN(n) WriteUInt16((wxUint16)(n))
++#define WRITE_STR_LEN(n) WriteUInt16((wxUint16)(n))
+     if (eEncode == utf8strRaw)
+     {
+         CUnicodeToUTF8 utf8(rstr);
+@@ -207,7 +207,7 @@
+ 
+ void CFileDataIO::WriteLongString(const CString&amp; rstr, EUtf8Str eEncode)
+ {
+-#define	WRITE_STR_LEN(n) WriteUInt32((wxUint32)n)
++#define WRITE_STR_LEN(n) WriteUInt32((wxUint32)n)
+     if (eEncode == utf8strRaw)
+     {
+         CUnicodeToUTF8 utf8(rstr);
+
+Modified: trunk/xCore/xSafeFile.h
+===================================================================
+--- trunk/xCore/xSafeFile.h	2006-07-11 19:10:09 UTC (rev 52)
++++ trunk/xCore/xSafeFile.h	2006-07-11 19:38:16 UTC (rev 53)
+@@ -90,7 +90,7 @@
+ 
+ inline wxUint64 PeekUInt64(const void* p)
+ {
+-	return *((wxUint64*)p);
++    return *((wxUint64*)p);
+ }
+ 
+ ///////////////////////////////////////////////////////////////////////////////
+@@ -113,7 +113,7 @@
+ 
+ inline void PokeUInt64(void* p, wxUint64 nVal)
+ {
+-	*((wxUint64*)p) = nVal;
++    *((wxUint64*)p) = nVal;
+ }
+ 
+ ///////////////////////////////////////////////////////////////////////////////
+
+Modified: trunk/xCore/xTag.h
+===================================================================
+--- trunk/xCore/xTag.h	2006-07-11 19:10:09 UTC (rev 52)
++++ trunk/xCore/xTag.h	2006-07-11 19:38:16 UTC (rev 53)
+@@ -37,9 +37,9 @@
+     bool IsHash() const { return m_uType == TAGTYPE_HASH; }
+     bool IsBlob() const { return m_uType == TAGTYPE_BLOB; }
+     bool IsInt64(bool bOrInt32 = true) const { return m_uType == TAGTYPE_UINT64 || (bOrInt32 &amp;&amp; IsInt()); }
+-	
++
+     wxUint32 GetInt() const { wxASSERT(IsInt()); return (wxUint32)m_uVal; }
+-	wxUint64 GetInt64() const { wxASSERT(IsInt64(true)); return m_uVal; }
++    wxUint64 GetInt64() const { wxASSERT(IsInt64(true)); return m_uVal; }
+     const wxString&amp; GetStr() const { wxASSERT(IsStr()); return* m_pstrVal; }
+     float GetFloat() const { wxASSERT(IsFloat()); return m_fVal; }
+     const wxByte* GetHash() const { wxASSERT(IsHash()); return m_pData; }
+
+Modified: trunk/xMainFrame/xAdvListCtrl.h
+===================================================================
+--- trunk/xMainFrame/xAdvListCtrl.h	2006-07-11 19:10:09 UTC (rev 52)
++++ trunk/xMainFrame/xAdvListCtrl.h	2006-07-11 19:38:16 UTC (rev 53)
+@@ -20,7 +20,7 @@
+ protected:
+     void OnPaint(wxPaintEvent&amp; event);
+     void OnErase(wxEraseEvent&amp;) { wxClientDC dc(this); dc.Clear(); dc.DrawIcon(wxIcon(xmule_xpm),0,50); }
+-    
++
+     DECLARE_EVENT_TABLE()
+ };
+ 
+
+Modified: trunk/xMainFrame/xMainFrame.cpp
+===================================================================
+--- trunk/xMainFrame/xMainFrame.cpp	2006-07-11 19:10:09 UTC (rev 52)
++++ trunk/xMainFrame/xMainFrame.cpp	2006-07-11 19:38:16 UTC (rev 53)
+@@ -27,7 +27,7 @@
+     CurrentPanel=NULL;
+ 
+     SetIcon(wxIcon(xmule_xpm));
+-    
++
+     CreateToolBar();
+     CreateStatusBar();
+     SetStatusBarPane(-1);
+@@ -50,32 +50,32 @@
+     // Create the main sizer of the xMainFrame
+     wxBoxSizer* MainSizer = new wxBoxSizer(wxVERTICAL);
+     SetSizer(MainSizer);
+-    
++
+     // Create the Kad panel
+     KadPanel = new xKadPanel(this);
+-	KadPanel-&gt;Hide();
++    KadPanel-&gt;Hide();
+     MainSizer-&gt;Add(KadPanel, 1, wxGROW, 0);
+ 
+     // Create the Servers panel
+     ServersPanel = new xServersPanel(this);
+-	MainSizer-&gt;Add(ServersPanel, 1, wxGROW, 0);
++    MainSizer-&gt;Add(ServersPanel, 1, wxGROW, 0);
+ 
+     // Create the Transfers panel
+     TransfersPanel = new xTransfersPanel(this);
+-	TransfersPanel-&gt;Hide();
+-	MainSizer-&gt;Add(TransfersPanel, 1, wxGROW, 0);
++    TransfersPanel-&gt;Hide();
++    MainSizer-&gt;Add(TransfersPanel, 1, wxGROW, 0);
+ 
+     // Create the Search panel
+     SearchPanel = new xSearchPanel(this);
+     SearchPanel-&gt;Hide();
+-	MainSizer-&gt;Add(SearchPanel, 1, wxGROW, 0);
++    MainSizer-&gt;Add(SearchPanel, 1, wxGROW, 0);
+ 
+     // Create the Shared Files panel
+     SharedFilesPanel = new xSharedFilesPanel(this);
+     SharedFilesPanel-&gt;Hide();
+-	MainSizer-&gt;Add(SharedFilesPanel, 1, wxGROW, 0);
++    MainSizer-&gt;Add(SharedFilesPanel, 1, wxGROW, 0);
+ 
+-	CurrentPanel=ServersPanel;
++    CurrentPanel=ServersPanel;
+ }
+ 
+ void xMainFrame::CreateToolBar()
+@@ -94,7 +94,7 @@
+     myToolBar-&gt;AddTool(TB_OPTIONS, wxT(&quot;Options&quot;), wxBitmap(options_xpm), _T(&quot;&quot;), wxITEM_NORMAL);
+     myToolBar-&gt;AddTool(TB_TOOLS, wxT(&quot;Tools&quot;), wxBitmap(tools_xpm), _T(&quot;&quot;), wxITEM_NORMAL);
+     myToolBar-&gt;Realize();
+-	myToolBar-&gt;ToggleTool(TB_SERVERS, true);
++    myToolBar-&gt;ToggleTool(TB_SERVERS, true);
+     SetToolBar(myToolBar);
+ }
+ 
+@@ -133,68 +133,68 @@
+ void xMainFrame::OnSwitchPanel(wxCommandEvent&amp; event)
+ {
+     switch (event.GetId())
+-	{
+-	case TB_KAD:
+-		{
+-		if (CurrentPanel==KadPanel)
+-		{
++    {
++    case TB_KAD:
++        {
++        if (CurrentPanel==KadPanel)
++        {
+             break;
+-		}
+-		CurrentPanel-&gt;Hide();
+-		KadPanel-&gt;Show();
+-		CurrentPanel=KadPanel;
+-		break;
+-		}
+-	case TB_SERVERS:
+-		{
+-		if (CurrentPanel==ServersPanel)
+-		{
++        }
++        CurrentPanel-&gt;Hide();
++        KadPanel-&gt;Show();
++        CurrentPanel=KadPanel;
++        break;
++        }
++    case TB_SERVERS:
++        {
++        if (CurrentPanel==ServersPanel)
++        {
+             break;
+-		}
+-		CurrentPanel-&gt;Hide();
+-		ServersPanel-&gt;Show();
+-		CurrentPanel=ServersPanel;
+-		break;
+-		}
++        }
++        CurrentPanel-&gt;Hide();
++        ServersPanel-&gt;Show();
++        CurrentPanel=ServersPanel;
++        break;
++        }
+     case TB_TRANSFERS:
+-		{
+-		if (CurrentPanel==TransfersPanel)
+-		{
++        {
++        if (CurrentPanel==TransfersPanel)
++        {
+             break;
+-		}
+-		CurrentPanel-&gt;Hide();
+-		TransfersPanel-&gt;Show();
+-		CurrentPanel=TransfersPanel;
+-		break;
+-		}
+-	case TB_SEARCH:
+-		{
+-		if (CurrentPanel==SearchPanel)
+-		{
++        }
++        CurrentPanel-&gt;Hide();
++        TransfersPanel-&gt;Show();
++        CurrentPanel=TransfersPanel;
++        break;
++        }
++    case TB_SEARCH:
++        {
++        if (CurrentPanel==SearchPanel)
++        {
+             break;
+-		}
+-		CurrentPanel-&gt;Hide();
+-		SearchPanel-&gt;Show();
+-		CurrentPanel=SearchPanel;
+-		break;
+-		}
+-	case TB_SHAREDFILES:
+-		{
+-		if (CurrentPanel==SharedFilesPanel)
+-		{
++        }
++        CurrentPanel-&gt;Hide();
++        SearchPanel-&gt;Show();
++        CurrentPanel=SearchPanel;
++        break;
++        }
++    case TB_SHAREDFILES:
++        {
++        if (CurrentPanel==SharedFilesPanel)
++        {
+             break;
+-		}
+-		CurrentPanel-&gt;Hide();
+-		SharedFilesPanel-&gt;Show();
+-		CurrentPanel=SharedFilesPanel;
+-		break;
+-		}
++        }
++        CurrentPanel-&gt;Hide();
++        SharedFilesPanel-&gt;Show();
++        CurrentPanel=SharedFilesPanel;
++        break;
++        }
+     default:
+-		{
+-		break;
+-		}
+-	}
+-	Layout();
++        {
++        break;
++        }
++    }
++    Layout();
+ }
+ 
+ void xMainFrame::SetServersLabel(const wxString&amp; toSet)
+
+Modified: trunk/xMainFrame/xSharedFilesPanel.h
+===================================================================
+--- trunk/xMainFrame/xSharedFilesPanel.h	2006-07-11 19:10:09 UTC (rev 52)
++++ trunk/xMainFrame/xSharedFilesPanel.h	2006-07-11 19:38:16 UTC (rev 53)
+@@ -27,7 +27,7 @@
+     wxListCtrl* SharedFilesListCtrl;
+ 
+     void InitListCtrl();
+-    
++
+     DECLARE_EVENT_TABLE()
+ };
+ 
+
+Modified: trunk/xMainFrame/xTransfersPanel.cpp
+===================================================================
+--- trunk/xMainFrame/xTransfersPanel.cpp	2006-07-11 19:10:09 UTC (rev 52)
++++ trunk/xMainFrame/xTransfersPanel.cpp	2006-07-11 19:38:16 UTC (rev 53)
+@@ -27,15 +27,15 @@
+     // First ToolBar
+     wxToolBar* SwitchToolBar = new wxToolBar( this, ID_SWITCHTOOLBAR, wxDefaultPosition, wxDefaultSize, wxTB_FLAT|wxTB_HORIZONTAL|wxTB_TEXT|wxTB_NODIVIDER|wxTB_HORZ_LAYOUT );
+     SwitchToolBar-&gt;SetBackgroundColour(GetBackgroundColour());
+-	SwitchToolBar-&gt;SetToolBitmapSize(wxSize(16, 16));
++    SwitchToolBar-&gt;SetToolBitmapSize(wxSize(16, 16));
+     SwitchToolBar-&gt;AddTool(ID_SWITCH1, wxT(&quot;Downloads (0)                    &quot;), wxBitmap(downloads_xpm), _T(&quot;&quot;), wxITEM_NORMAL);
+     SwitchToolBar-&gt;Realize();
+     ToolbarsSizer-&gt;Add(SwitchToolBar, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+ 
+     // Second ToolBar
+     wxToolBar* ViewsToolBar = new wxToolBar( this, ID_VIEWSTOOLBAR, wxDefaultPosition, wxDefaultSize, wxTB_FLAT|wxTB_HORIZONTAL|wxTB_NODIVIDER );
+-	ViewsToolBar-&gt;SetBackgroundColour(GetBackgroundColour());
+-	ViewsToolBar-&gt;SetToolBitmapSize(wxSize(16, 16));
++    ViewsToolBar-&gt;SetBackgroundColour(GetBackgroundColour());
++    ViewsToolBar-&gt;SetToolBitmapSize(wxSize(16, 16));
+     ViewsToolBar-&gt;AddTool(ID_SPLITWINDOW, _T(&quot;&quot;), wxBitmap(splitwindow_xpm), _T(&quot;Split Window&quot;), wxITEM_RADIO);
+     ViewsToolBar-&gt;AddTool(ID_DOWNLOADS, _T(&quot;&quot;), wxBitmap(downloads_xpm), _T(&quot;Downloads&quot;), wxITEM_RADIO);
+     ViewsToolBar-&gt;AddTool(ID_UPLOADING, _T(&quot;&quot;), wxBitmap(uploading_xpm), _T(&quot;Uploading&quot;), wxITEM_RADIO);
+@@ -44,13 +44,13 @@
+     ViewsToolBar-&gt;AddTool(ID_KNOWNCLIENTS, _T(&quot;&quot;), wxBitmap(knownclients_xpm), _T(&quot;Known Clients&quot;), wxITEM_RADIO);
+     ViewsToolBar-&gt;Realize();
+     ToolbarsSizer-&gt;Add(ViewsToolBar, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+-    
++
+     wxSplitterWindow* Splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3DSASH|wxSP_LIVE_UPDATE|wxNO_BORDER);
+-	MainSizer-&gt;Add(Splitter, 1, wxGROW|wxLEFT|wxRIGHT|wxBOTTOM, 10);
+-	Layout();
++    MainSizer-&gt;Add(Splitter, 1, wxGROW|wxLEFT|wxRIGHT|wxBOTTOM, 10);
++    Layout();
+     DownloadListCtrl = new xAdvListCtrl(Splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_VIRTUAL);
+     UploadListCtrl = new wxListCtrl(Splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT);
+-	Splitter-&gt;SplitHorizontally(DownloadListCtrl, UploadListCtrl);
++    Splitter-&gt;SplitHorizontally(DownloadListCtrl, UploadListCtrl);
+     Splitter-&gt;SetMinimumPaneSize(1);
+ 
+     InitListCtrls();
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000038.html">[xMule-svn] r52 - trunk/xMainFrame
+</A></li>
+	<LI>Next message: <A HREF="000040.html">[xMule-svn] r54 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#39">[ date ]</a>
+              <a href="thread.html#39">[ thread ]</a>
+              <a href="subject.html#39">[ subject ]</a>
+              <a href="author.html#39">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

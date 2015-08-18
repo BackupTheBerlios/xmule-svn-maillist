@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Xmule-svn] r14 - trunk/xCore
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2005-November/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BXmule-svn%5D%20r14%20-%20trunk/xCore&In-Reply-To=%3C200511281833.jASIXHXa003764%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000001.html">
+   <LINK REL="Next"  HREF="000003.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Xmule-svn] r14 - trunk/xCore</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BXmule-svn%5D%20r14%20-%20trunk/xCore&In-Reply-To=%3C200511281833.jASIXHXa003764%40sheep.berlios.de%3E"
+       TITLE="[Xmule-svn] r14 - trunk/xCore">avivahl at berlios.de
+       </A><BR>
+    <I>Mon Nov 28 19:33:17 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000001.html">[Xmule-svn] r13 - trunk
+</A></li>
+        <LI>Next message: <A HREF="000003.html">[Xmule-svn] r15 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2">[ date ]</a>
+              <a href="thread.html#2">[ thread ]</a>
+              <a href="subject.html#2">[ subject ]</a>
+              <a href="author.html#2">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2005-11-28 19:33:11 +0100 (Mon, 28 Nov 2005)
+New Revision: 14
+
+Modified:
+   trunk/xCore/xServer.h
+   trunk/xCore/xTag.cpp
+Log:
+Small changes
+
+Modified: trunk/xCore/xServer.h
+===================================================================
+--- trunk/xCore/xServer.h	2005-11-27 20:13:39 UTC (rev 13)
++++ trunk/xCore/xServer.h	2005-11-28 18:33:11 UTC (rev 14)
+@@ -8,7 +8,6 @@
+ #include &lt;wx/defs.h&gt;                   // wxWidgets definitions
+ #include &lt;wx/string.h&gt;                 // wxString
+ 
+-
+ class xTag;
+ class xFileDataIO;
+ 
+@@ -27,17 +26,17 @@
+ 
+ 
+ // Server TCP flags
+-#define SRV_TCPFLG_COMPRESSION   0x00000001
+-#define SRV_TCPFLG_NEWTAGS       0x00000008
+-#define SRV_TCPFLG_UNICODE       0x00000010
+-#define SRV_TCPFLG_RELATEDSEARCH 0x00000040
++#define SRV_TCPFLG_COMPRESSION   0x01
++#define SRV_TCPFLG_NEWTAGS       0x08
++#define SRV_TCPFLG_UNICODE       0x10
++#define SRV_TCPFLG_RELATEDSEARCH 0x40
+ 
+ // Server UDP flags
+-#define SRV_UDPFLG_EXT_GETSOURCES  0x00000001
+-#define SRV_UDPFLG_EXT_GETFILES    0x00000002
+-#define SRV_UDPFLG_NEWTAGS         0x00000008
+-#define SRV_UDPFLG_UNICODE         0x00000010
+-#define SRV_UDPFLG_EXT_GETSOURCES2 0x00000020
++#define SRV_UDPFLG_EXT_GETSOURCES  0x01
++#define SRV_UDPFLG_EXT_GETFILES    0x02
++#define SRV_UDPFLG_NEWTAGS         0x08
++#define SRV_UDPFLG_UNICODE         0x10
++#define SRV_UDPFLG_EXT_GETSOURCES2 0x20
+ 
+ class xServer
+ {
+
+Modified: trunk/xCore/xTag.cpp
+===================================================================
+--- trunk/xCore/xTag.cpp	2005-11-27 20:13:39 UTC (rev 13)
++++ trunk/xCore/xTag.cpp	2005-11-28 18:33:11 UTC (rev 14)
+@@ -66,7 +66,8 @@
+     m_nBlobSize = 0;
+ }
+ 
+-xTag::xTag(wxUint8 uName, wxUint32 nSize, const wxByte* pucData){
++xTag::xTag(wxUint8 uName, wxUint32 nSize, const wxByte* pucData)
++{
+     m_uType = TAGTYPE_BLOB;
+     m_uName = uName;
+     m_pszName = NULL;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000001.html">[Xmule-svn] r13 - trunk
+</A></li>
+	<LI>Next message: <A HREF="000003.html">[Xmule-svn] r15 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2">[ date ]</a>
+              <a href="thread.html#2">[ thread ]</a>
+              <a href="subject.html#2">[ subject ]</a>
+              <a href="author.html#2">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

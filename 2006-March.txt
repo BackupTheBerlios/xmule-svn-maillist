@@ -1,0 +1,505 @@
+From avivahl at berlios.de  Sat Mar  4 22:54:17 2006
+From: avivahl at berlios.de (avivahl at BerliOS)
+Date: Sat, 4 Mar 2006 22:54:17 +0100
+Subject: [xMule-svn] r36 - trunk/xCore
+Message-ID: <200603042154.k24LsH4x002535@sheep.berlios.de>
+
+Author: avivahl
+Date: 2006-03-04 22:54:17 +0100 (Sat, 04 Mar 2006)
+New Revision: 36
+
+Modified:
+   trunk/xCore/xUtils.h
+Log:
+Avoids unused parameters warnings.
+
+Modified: trunk/xCore/xUtils.h
+===================================================================
+--- trunk/xCore/xUtils.h	2006-02-24 19:39:23 UTC (rev 35)
++++ trunk/xCore/xUtils.h	2006-03-04 21:54:17 UTC (rev 36)
+@@ -51,12 +51,12 @@
+ // File Types - TODO
+ /////////////////////////////////////
+ 
+-inline wxString GetFileTypeByName(const wxString& notUsed)
++inline wxString GetFileTypeByName(const wxString& WXUNUSED(notUsed))
+ {
+     return wxString(wxT("GetFileTypeByName() TODO"));
+ }
+ 
+-inline wxString GetFileTypeDisplayStrFromED2KFileType(const wxString& notUsed)
++inline wxString GetFileTypeDisplayStrFromED2KFileType(const wxString& WXUNUSED(notUsed))
+ {
+     return wxString(wxT("GetFileTypeDisplayStrFromED2KFileType() TODO"));
+ }
+
+
+
+From avivahl at berlios.de  Fri Mar 17 12:25:52 2006
+From: avivahl at berlios.de (avivahl at BerliOS)
+Date: Fri, 17 Mar 2006 12:25:52 +0100
+Subject: [xMule-svn] r37 - trunk
+Message-ID: <200603171125.k2HBPqAR005695@sheep.berlios.de>
+
+Author: avivahl
+Date: 2006-03-17 12:25:51 +0100 (Fri, 17 Mar 2006)
+New Revision: 37
+
+Modified:
+   trunk/COMPILE
+   trunk/Makefile
+   trunk/xMule.make
+Log:
+Updated makefiles using Premake-3.1-RC3...
+
+Modified: trunk/COMPILE
+===================================================================
+--- trunk/COMPILE	2006-03-04 21:54:17 UTC (rev 36)
++++ trunk/COMPILE	2006-03-17 11:25:51 UTC (rev 37)
+@@ -8,4 +8,4 @@
+ --------
+ Compiler: GCC 4.x. Older versions may work as well, but untested.
+ Library: wxGTK-2.6.2 (--enable-unicode --enable-stl --enable-monolithic --enable-static --enable-debug).
+-Notes: Used Premake-3.0 for creating the makefiles.  Makefiles are provided.
++Notes: Used Premake-3.1-RC3 for creating the makefiles.  Makefiles are provided.
+
+Modified: trunk/Makefile
+===================================================================
+--- trunk/Makefile	2006-03-04 21:54:17 UTC (rev 36)
++++ trunk/Makefile	2006-03-17 11:25:51 UTC (rev 37)
+@@ -15,7 +15,7 @@
+ 
+ Makefile: premake.lua
+ 	@echo ==== Regenerating Makefiles ====
+-	@premake --target gnu
++	@premake --file $^ --target gnu
+ 
+ xMule:
+ 	@echo ==== Building xMule ====
+
+Modified: trunk/xMule.make
+===================================================================
+--- trunk/xMule.make	2006-03-04 21:54:17 UTC (rev 36)
++++ trunk/xMule.make	2006-03-17 11:25:51 UTC (rev 37)
+@@ -6,32 +6,32 @@
+ endif
+ 
+ ifeq ($(CONFIG),Debug)
+-  BINDIR = bin
+-  LIBDIR = .
+-  OBJDIR = obj/Debug
+-  OUTDIR = bin
+-  CPPFLAGS = -MD
++  BINDIR := bin
++  LIBDIR := .
++  OBJDIR := obj/Debug
++  OUTDIR := bin
++  CPPFLAGS := -MD
+   CFLAGS += $(CPPFLAGS) -g `wx-config --cxxflags`
+-  CXXFLAGS = $(CFLAGS)
++  CXXFLAGS := $(CFLAGS)
+   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) `wx-config --libs`
+-  LDDEPS =
+-  TARGET = xmule
++  LDDEPS :=
++  TARGET := xmule
+ endif
+ 
+ ifeq ($(CONFIG),Release)
+-  BINDIR = bin
+-  LIBDIR = .
+-  OBJDIR = obj/Release
+-  OUTDIR = bin
+-  CPPFLAGS = -MD
++  BINDIR := bin
++  LIBDIR := .
++  OBJDIR := obj/Release
++  OUTDIR := bin
++  CPPFLAGS := -MD
+   CFLAGS += $(CPPFLAGS) -O2 `wx-config --cxxflags`
+-  CXXFLAGS = $(CFLAGS)
++  CXXFLAGS := $(CFLAGS)
+   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -s `wx-config --libs`
+-  LDDEPS =
+-  TARGET = xmule
++  LDDEPS :=
++  TARGET := xmule
+ endif
+ 
+-OBJECTS = \
++OBJECTS := \
+ 	$(OBJDIR)/xApp.o \
+ 	$(OBJDIR)/xKadPanel.o \
+ 	$(OBJDIR)/xMainFrame.o \
+@@ -44,71 +44,86 @@
+ 	$(OBJDIR)/xServer.o \
+ 	$(OBJDIR)/xTag.o \
+ 
++RESOURCES := \
++
++CMD := $(subst \,\\,$(ComSpec)$(COMSPEC))
++ifeq (,$(CMD))
++  CMD_MKBINDIR := mkdir -p $(BINDIR)
++  CMD_MKLIBDIR := mkdir -p $(LIBDIR)
++  CMD_MKOUTDIR := mkdir -p $(OUTDIR)
++  CMD_MKOBJDIR := mkdir -p $(OBJDIR)
++else
++  CMD_MKBINDIR := $(CMD) /c if not exist $(subst /,\\,$(BINDIR)) mkdir $(subst /,\\,$(BINDIR))
++  CMD_MKLIBDIR := $(CMD) /c if not exist $(subst /,\\,$(LIBDIR)) mkdir $(subst /,\\,$(LIBDIR))
++  CMD_MKOUTDIR := $(CMD) /c if not exist $(subst /,\\,$(OUTDIR)) mkdir $(subst /,\\,$(OUTDIR))
++  CMD_MKOBJDIR := $(CMD) /c if not exist $(subst /,\\,$(OBJDIR)) mkdir $(subst /,\\,$(OBJDIR))
++endif
++
+ .PHONY: clean
+ 
+-$(OUTDIR)/$(TARGET): $(OBJECTS) $(LDDEPS)
++$(OUTDIR)/$(TARGET): $(OBJECTS) $(LDDEPS) $(RESOURCES)
+ 	@echo Linking xMule
+-	- at if [ ! -d $(BINDIR) ]; then mkdir -p $(BINDIR); fi
+-	- at if [ ! -d $(LIBDIR) ]; then mkdir -p $(LIBDIR); fi
+-	- at if [ ! -d $(OUTDIR) ]; then mkdir -p $(OUTDIR); fi
+-	@$(CXX) -o $@ $(OBJECTS) $(LDFLAGS)
++	-@$(CMD_MKBINDIR)
++	-@$(CMD_MKLIBDIR)
++	-@$(CMD_MKOUTDIR)
++	@$(CXX) -o $@ $(OBJECTS) $(LDFLAGS) $(RESOURCES)
+ 
+ clean:
+ 	@echo Cleaning xMule
+ 	- at rm -rf $(OUTDIR)/$(TARGET) $(OBJDIR)
+ 
+ $(OBJDIR)/xApp.o: xApp.cpp
+-	- at if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $<)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+ 
+ $(OBJDIR)/xKadPanel.o: xMainFrame/xKadPanel.cpp
+-	- at if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $<)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+ 
+ $(OBJDIR)/xMainFrame.o: xMainFrame/xMainFrame.cpp
+-	- at if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $<)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+ 
+ $(OBJDIR)/xSearchPanel.o: xMainFrame/xSearchPanel.cpp
+-	- at if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $<)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+ 
+ $(OBJDIR)/xServersPanel.o: xMainFrame/xServersPanel.cpp
+-	- at if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $<)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+ 
+ $(OBJDIR)/xSharedFilesPanel.o: xMainFrame/xSharedFilesPanel.cpp
+-	- at if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $<)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+ 
+ $(OBJDIR)/xTransfersPanel.o: xMainFrame/xTransfersPanel.cpp
+-	- at if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $<)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+ 
+ $(OBJDIR)/xOptionsDialog.o: xMainFrame/xOptions/xOptionsDialog.cpp
+-	- at if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $<)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+ 
+ $(OBJDIR)/xSafeFile.o: xCore/xSafeFile.cpp
+-	- at if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $<)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+ 
+ $(OBJDIR)/xServer.o: xCore/xServer.cpp
+-	- at if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $<)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+ 
+ $(OBJDIR)/xTag.o: xCore/xTag.cpp
+-	- at if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $<)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+ 
+
+
+
+From avivahl at berlios.de  Fri Mar 24 09:02:13 2006
+From: avivahl at berlios.de (avivahl at BerliOS)
+Date: Fri, 24 Mar 2006 09:02:13 +0100
+Subject: [xMule-svn] r38 - trunk
+Message-ID: <200603240802.k2O82DVP004084@sheep.berlios.de>
+
+Author: avivahl
+Date: 2006-03-24 09:02:08 +0100 (Fri, 24 Mar 2006)
+New Revision: 38
+
+Modified:
+   trunk/xMule.manifest
+Log:
+Well, it's wxWidgets... not wxWindows ;)
+
+Modified: trunk/xMule.manifest
+===================================================================
+--- trunk/xMule.manifest	2006-03-17 11:25:51 UTC (rev 37)
++++ trunk/xMule.manifest	2006-03-24 08:02:08 UTC (rev 38)
+@@ -6,7 +6,7 @@
+     name="Controls"
+     type="win32"
+ />
+-<description>wxWindows application</description>
++<description>wxWidgets application</description>
+ <dependency>
+     <dependentAssembly>
+         <assemblyIdentity
+
+
+
+From avivahl at berlios.de  Mon Mar 27 21:09:17 2006
+From: avivahl at berlios.de (avivahl at BerliOS)
+Date: Mon, 27 Mar 2006 21:09:17 +0200
+Subject: [xMule-svn] r39 - trunk
+Message-ID: <200603271909.k2RJ9HdG024390@sheep.berlios.de>
+
+Author: avivahl
+Date: 2006-03-27 21:08:35 +0200 (Mon, 27 Mar 2006)
+New Revision: 39
+
+Modified:
+   trunk/COMPILE
+Log:
+Now using wxWidgets 2.6.3... And wxUSE_STL is turned off ATM...
+
+Modified: trunk/COMPILE
+===================================================================
+--- trunk/COMPILE	2006-03-24 08:02:08 UTC (rev 38)
++++ trunk/COMPILE	2006-03-27 19:08:35 UTC (rev 39)
+@@ -1,11 +1,11 @@
+ Windows:
+ --------
+ Compiler: Microsoft Visual Studio 2005.
+-Library: wxMSW-2.6.2 (Unicode ON, STL usage ON, Static library).
++Library: wxMSW-2.6.3 (Unicode ON, Static library).
+ Notes: Solution file is provided.
+ 
+ Linux:
+ --------
+ Compiler: GCC 4.x. Older versions may work as well, but untested.
+-Library: wxGTK-2.6.2 (--enable-unicode --enable-stl --enable-monolithic --enable-static --enable-debug).
++Library: wxGTK-2.6.3 (--enable-unicode --enable-monolithic --enable-static --enable-debug).
+ Notes: Used Premake-3.1-RC3 for creating the makefiles.  Makefiles are provided.
+
+
+
+From avivahl at berlios.de  Mon Mar 27 21:11:11 2006
+From: avivahl at berlios.de (avivahl at BerliOS)
+Date: Mon, 27 Mar 2006 21:11:11 +0200
+Subject: [xMule-svn] r40 - trunk
+Message-ID: <200603271911.k2RJBBAL024844@sheep.berlios.de>
+
+Author: avivahl
+Date: 2006-03-27 21:11:04 +0200 (Mon, 27 Mar 2006)
+New Revision: 40
+
+Modified:
+   trunk/xMule.vcproj
+Log:
+Updating the Visual Studio project file to use the default wxWidgets path... (c:\wxWidgets-2.6.3)
+
+Modified: trunk/xMule.vcproj
+===================================================================
+--- trunk/xMule.vcproj	2006-03-27 19:08:35 UTC (rev 39)
++++ trunk/xMule.vcproj	2006-03-27 19:11:04 UTC (rev 40)
+@@ -40,7 +40,7 @@
+ 			<Tool
+ 				Name="VCCLCompilerTool"
+ 				Optimization="0"
+-				AdditionalIncludeDirectories="&quot;C:\wxWidgets\include&quot;;&quot;C:\wxWidgets\lib\vc_lib\mswud&quot;"
++				AdditionalIncludeDirectories="&quot;C:\wxWidgets-2.6.3\include&quot;;&quot;C:\wxWidgets-2.6.3\lib\vc_lib\mswud&quot;"
+ 				PreprocessorDefinitions="__WXDEBUG__;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE"
+ 				MinimalRebuild="true"
+ 				BasicRuntimeChecks="3"
+@@ -55,7 +55,7 @@
+ 			/>
+ 			<Tool
+ 				Name="VCResourceCompilerTool"
+-				AdditionalIncludeDirectories="&quot;C:\wxWidgets\include&quot;"
++				AdditionalIncludeDirectories="&quot;C:\wxWidgets-2.6.3\include&quot;"
+ 			/>
+ 			<Tool
+ 				Name="VCPreLinkEventTool"
+@@ -65,7 +65,7 @@
+ 				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxbase27ud.lib wxbase27ud_net.lib wxbase27ud_odbc.lib wxbase27ud_xml.lib wxexpatd.lib wxmsw27ud_adv.lib wxmsw27ud_core.lib wxmsw27ud_html.lib wxmsw27ud_xrc.lib"
+ 				OutputFile="$(OutDir)/$(InputName)-Debug.exe"
+ 				LinkIncremental="2"
+-				AdditionalLibraryDirectories="&quot;C:\wxWidgets\lib\vc_lib&quot;"
++				AdditionalLibraryDirectories="&quot;C:\wxWidgets-2.6.3\lib\vc_lib&quot;"
+ 				GenerateDebugInformation="true"
+ 				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
+ 				SubSystem="2"
+@@ -122,7 +122,7 @@
+ 			<Tool
+ 				Name="VCCLCompilerTool"
+ 				Optimization="3"
+-				AdditionalIncludeDirectories="&quot;C:\wxWidgets\include&quot;;&quot;C:\wxWidgets\lib\vc_lib\mswu&quot;"
++				AdditionalIncludeDirectories="&quot;C:\wxWidgets-2.6.3\include&quot;;&quot;C:\wxWidgets-2.6.3\lib\vc_lib\mswu&quot;"
+ 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE"
+ 				RuntimeLibrary="2"
+ 				UsePrecompiledHeader="0"
+@@ -135,7 +135,7 @@
+ 			/>
+ 			<Tool
+ 				Name="VCResourceCompilerTool"
+-				AdditionalIncludeDirectories="&quot;C:\wxWidgets\include&quot;"
++				AdditionalIncludeDirectories="&quot;C:\wxWidgets-2.6.3\include&quot;"
+ 			/>
+ 			<Tool
+ 				Name="VCPreLinkEventTool"
+@@ -145,7 +145,7 @@
+ 				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib wxbase27u.lib wxbase27u_net.lib wxbase27u_odbc.lib wxbase27u_xml.lib wxexpat.lib wxmsw27u_adv.lib wxmsw27u_core.lib wxmsw27u_html.lib wxmsw27u_xrc.lib"
+ 				OutputFile="$(OutDir)/$(InputName).exe"
+ 				LinkIncremental="1"
+-				AdditionalLibraryDirectories="&quot;C:\wxWidgets\lib\vc_lib&quot;"
++				AdditionalLibraryDirectories="&quot;C:\wxWidgets-2.6.3\lib\vc_lib&quot;"
+ 				GenerateDebugInformation="false"
+ 				SubSystem="2"
+ 				OptimizeReferences="2"
+@@ -335,7 +335,7 @@
+ 					>
+ 					<Tool
+ 						Name="VCResourceCompilerTool"
+-						AdditionalIncludeDirectories="&quot;C:\wxWidgets\include&quot;"
++						AdditionalIncludeDirectories="&quot;C:\wxWidgets-2.6.3\include&quot;"
+ 					/>
+ 				</FileConfiguration>
+ 				<FileConfiguration
+@@ -343,7 +343,7 @@
+ 					>
+ 					<Tool
+ 						Name="VCResourceCompilerTool"
+-						AdditionalIncludeDirectories="&quot;C:\wxWidgets\include&quot;"
++						AdditionalIncludeDirectories="&quot;C:\wxWidgets-2.6.3\include&quot;"
+ 					/>
+ 				</FileConfiguration>
+ 			</File>
+
+
+
+From avivahl at berlios.de  Mon Mar 27 21:15:10 2006
+From: avivahl at berlios.de (avivahl at BerliOS)
+Date: Mon, 27 Mar 2006 21:15:10 +0200
+Subject: [xMule-svn] r41 - trunk
+Message-ID: <200603271915.k2RJFAlO027712@sheep.berlios.de>
+
+Author: avivahl
+Date: 2006-03-27 21:15:09 +0200 (Mon, 27 Mar 2006)
+New Revision: 41
+
+Modified:
+   trunk/xMule.rc
+Log:
+wxWidgets 2.6.3 adds the Common Controls manifest (for themes support) inside wx/defs.h... No need to include their wx.rc anymore...
+
+Modified: trunk/xMule.rc
+===================================================================
+--- trunk/xMule.rc	2006-03-27 19:11:04 UTC (rev 40)
++++ trunk/xMule.rc	2006-03-27 19:15:09 UTC (rev 41)
+@@ -1,3 +1 @@
+-#define wxUSE_NO_MANIFEST 0
+-//#include <wx/msw/wx.rc>
+ AppIcon ICON "xMule.ico"
+
+
+
+From avivahl at berlios.de  Mon Mar 27 21:18:19 2006
+From: avivahl at berlios.de (avivahl at BerliOS)
+Date: Mon, 27 Mar 2006 21:18:19 +0200
+Subject: [xMule-svn] r42 - trunk
+Message-ID: <200603271918.k2RJIJNm029468@sheep.berlios.de>
+
+Author: avivahl
+Date: 2006-03-27 21:18:17 +0200 (Mon, 27 Mar 2006)
+New Revision: 42
+
+Modified:
+   trunk/xMule.vcproj
+Log:
+Updated .lib names to 26 (wxWidgets-CVS-HEAD used 27).
+
+Modified: trunk/xMule.vcproj
+===================================================================
+--- trunk/xMule.vcproj	2006-03-27 19:15:09 UTC (rev 41)
++++ trunk/xMule.vcproj	2006-03-27 19:18:17 UTC (rev 42)
+@@ -62,7 +62,7 @@
+ 			/>
+ 			<Tool
+ 				Name="VCLinkerTool"
+-				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxbase27ud.lib wxbase27ud_net.lib wxbase27ud_odbc.lib wxbase27ud_xml.lib wxexpatd.lib wxmsw27ud_adv.lib wxmsw27ud_core.lib wxmsw27ud_html.lib wxmsw27ud_xrc.lib"
++				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxbase26ud.lib wxbase26ud_net.lib wxbase26ud_odbc.lib wxbase26ud_xml.lib wxexpatd.lib wxmsw26ud_adv.lib wxmsw26ud_core.lib wxmsw26ud_html.lib wxmsw26ud_xrc.lib"
+ 				OutputFile="$(OutDir)/$(InputName)-Debug.exe"
+ 				LinkIncremental="2"
+ 				AdditionalLibraryDirectories="&quot;C:\wxWidgets-2.6.3\lib\vc_lib&quot;"
+@@ -142,7 +142,7 @@
+ 			/>
+ 			<Tool
+ 				Name="VCLinkerTool"
+-				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib wxbase27u.lib wxbase27u_net.lib wxbase27u_odbc.lib wxbase27u_xml.lib wxexpat.lib wxmsw27u_adv.lib wxmsw27u_core.lib wxmsw27u_html.lib wxmsw27u_xrc.lib"
++				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib wxbase26u.lib wxbase26u_net.lib wxbase26u_odbc.lib wxbase26u_xml.lib wxexpat.lib wxmsw26u_adv.lib wxmsw26u_core.lib wxmsw26u_html.lib wxmsw26u_xrc.lib"
+ 				OutputFile="$(OutDir)/$(InputName).exe"
+ 				LinkIncremental="1"
+ 				AdditionalLibraryDirectories="&quot;C:\wxWidgets-2.6.3\lib\vc_lib&quot;"
+
+
+
+From avivahl at berlios.de  Wed Mar 29 11:42:47 2006
+From: avivahl at berlios.de (avivahl at BerliOS)
+Date: Wed, 29 Mar 2006 11:42:47 +0200
+Subject: [xMule-svn] r43 - trunk
+Message-ID: <200603290942.k2T9gltQ019842@sheep.berlios.de>
+
+Author: avivahl
+Date: 2006-03-29 11:42:46 +0200 (Wed, 29 Mar 2006)
+New Revision: 43
+
+Modified:
+   trunk/xMule.vcproj
+Log:
+No need to define _CRT_SECURE_NO_DEPRECATE and _CRT_NONSTDC_NO_DEPRECATE ourselves... wxWidgets-2.5.3 does it for us...
+
+Modified: trunk/xMule.vcproj
+===================================================================
+--- trunk/xMule.vcproj	2006-03-27 19:18:17 UTC (rev 42)
++++ trunk/xMule.vcproj	2006-03-29 09:42:46 UTC (rev 43)
+@@ -41,7 +41,7 @@
+ 				Name="VCCLCompilerTool"
+ 				Optimization="0"
+ 				AdditionalIncludeDirectories="&quot;C:\wxWidgets-2.6.3\include&quot;;&quot;C:\wxWidgets-2.6.3\lib\vc_lib\mswud&quot;"
+-				PreprocessorDefinitions="__WXDEBUG__;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE"
++				PreprocessorDefinitions="__WXDEBUG__"
+ 				MinimalRebuild="true"
+ 				BasicRuntimeChecks="3"
+ 				RuntimeLibrary="3"
+@@ -123,7 +123,6 @@
+ 				Name="VCCLCompilerTool"
+ 				Optimization="3"
+ 				AdditionalIncludeDirectories="&quot;C:\wxWidgets-2.6.3\include&quot;;&quot;C:\wxWidgets-2.6.3\lib\vc_lib\mswu&quot;"
+-				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE"
+ 				RuntimeLibrary="2"
+ 				UsePrecompiledHeader="0"
+ 				WarningLevel="4"
+
+
+

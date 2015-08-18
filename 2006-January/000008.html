@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r22 - trunk/xCore
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r22%20-%20trunk/xCore&In-Reply-To=%3C200601270937.k0R9bkMB008541%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000007.html">
+   <LINK REL="Next"  HREF="000009.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r22 - trunk/xCore</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r22%20-%20trunk/xCore&In-Reply-To=%3C200601270937.k0R9bkMB008541%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r22 - trunk/xCore">avivahl at berlios.de
+       </A><BR>
+    <I>Fri Jan 27 10:37:46 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000007.html">[xMule-svn] r21 - trunk/xCore
+</A></li>
+        <LI>Next message: <A HREF="000009.html">[xMule-svn] r23 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8">[ date ]</a>
+              <a href="thread.html#8">[ thread ]</a>
+              <a href="subject.html#8">[ subject ]</a>
+              <a href="author.html#8">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-01-27 10:37:45 +0100 (Fri, 27 Jan 2006)
+New Revision: 22
+
+Modified:
+   trunk/xCore/xTag.cpp
+   trunk/xCore/xTag.h
+Log:
+Updated to eMule-0.47a's tag class.
+
+Modified: trunk/xCore/xTag.cpp
+===================================================================
+--- trunk/xCore/xTag.cpp	2006-01-27 09:14:12 UTC (rev 21)
++++ trunk/xCore/xTag.cpp	2006-01-27 09:37:45 UTC (rev 22)
+@@ -2,21 +2,35 @@
+ #include &quot;xTag.h&quot;
+ #include &quot;xSafeFile.h&quot;
+ 
+-xTag::xTag(const char* pszName, wxUint32 uVal)
++xTag::xTag(const char* pszName, wxUint64 uVal, bool bInt64)
+ {
+-    m_uType = TAGTYPE_UINT32;
++    wxASSERT( uVal &lt;= 0xFFFFFFFF || bInt64 );
++    if (bInt64)
++    {
++        m_uType = TAGTYPE_UINT64;
++    }
++    else
++    {
++        m_uType = TAGTYPE_UINT32;
++    }
++    m_uVal = uVal;
+     m_uName = 0;
+     m_pszName = nstrdup(pszName);
+-    m_uVal = uVal;
+     m_nBlobSize = 0;
+ }
+ 
+-xTag::xTag(wxUint8 uName, wxUint32 uVal)
++xTag::xTag(wxUint8 uName, wxUint64 uVal, bool bInt64)
+ {
+-    m_uType = TAGTYPE_UINT32;
++    wxASSERT( uVal &lt;= 0xFFFFFFFF || bInt64 );
++    if (bInt64){
++        m_uType = TAGTYPE_UINT64;
++    }
++    else{
++        m_uType = TAGTYPE_UINT32;
++    }
++    m_uVal = uVal;
+     m_uName = uName;
+     m_pszName = NULL;
+-    m_uVal = uVal;
+     m_nBlobSize = 0;
+ }
+ 
+@@ -86,6 +100,8 @@
+         m_pstrVal = new wxString(rTag.GetStr());
+     else if (rTag.IsInt())
+         m_uVal = rTag.GetInt();
++    else if (rTag.IsInt64(false))
++        m_uVal = rTag.GetInt64();
+     else if (rTag.IsFloat())
+         m_fVal = rTag.GetFloat();
+     else if (rTag.IsHash()){
+@@ -150,6 +166,10 @@
+     {
+         m_uVal = data-&gt;ReadUInt32();
+     }
++    else if (m_uType == TAGTYPE_UINT64)
++    {
++        m_uVal = data-&gt;ReadUInt64();
++    }
+     else if (m_uType == TAGTYPE_UINT16)
+     {
+         m_uVal = data-&gt;ReadUInt16();
+@@ -409,6 +429,16 @@
+         m_uVal = uVal;
+ }
+ 
++void xTag::SetInt64(wxUint64 uVal)
++{
++    wxASSERT( IsInt64(true) );
++    if (IsInt64(true))
++    {
++        m_uVal = uVal;
++        m_uType = TAGTYPE_UINT64;
++    }
++}
++
+ void xTag::SetStr(const wxChar* pszVal)
+ {
+     wxASSERT( IsStr() );
+@@ -431,7 +461,7 @@
+     }
+     else
+     {
+-        strTag.Printf(wxT(&quot;0x%02X&quot;), m_uName);
++        strTag.Printf(wxT(&quot;Tag0x%02X&quot;), m_uName);
+     }
+     strTag += wxT(&quot;=&quot;);
+     if (m_uType == TAGTYPE_STRING)
+@@ -446,8 +476,12 @@
+     }
+     else if (m_uType == TAGTYPE_UINT32)
+     {
+-        strTag.Append(wxString::Format(wxT(&quot;(Int32)%u&quot;), m_uVal));
++        strTag.Append(wxString::Format(wxT(&quot;(Int32)%u&quot;), (wxUint32)m_uVal));
+     }
++    else if (m_uType == TAGTYPE_UINT64)
++    {
++        strTag.Append(wxString::Format(wxT(&quot;(Int64)%I64u&quot;), m_uVal));
++    }
+     else if (m_uType == TAGTYPE_UINT16)
+     {
+         strTag.Append(wxString::Format(wxT(&quot;(Int16)%u&quot;), m_uVal));
+
+Modified: trunk/xCore/xTag.h
+===================================================================
+--- trunk/xCore/xTag.h	2006-01-27 09:14:12 UTC (rev 21)
++++ trunk/xCore/xTag.h	2006-01-27 09:37:45 UTC (rev 22)
+@@ -15,6 +15,7 @@
+ #define TAGTYPE_UINT16          0x08
+ #define TAGTYPE_UINT8           0x09
+ #define TAGTYPE_BSOB            0x0A
++#define	TAGTYPE_UINT64          0x0B
+ 
+ #define TAGTYPE_STR1			0x11
+ #define TAGTYPE_STR2			0x12
+@@ -42,8 +43,8 @@
+ class xTag
+ {
+ public:
+-    xTag(const char* pszName, wxUint32 uVal);
+-    xTag(wxUint8 uName, wxUint32 uVal);
++    xTag(const char* pszName, wxUint64 uVal, bool bInt64 = false);
++    xTag(wxUint8 uName, wxUint64 uVal, bool bInt64 = false);
+ 
+     xTag(const char* pszName, const wxChar* pszVal);
+     xTag(wxUint8 uName, const wxChar* pszVal);
+@@ -68,8 +69,10 @@
+     bool IsFloat() const { return m_uType == TAGTYPE_FLOAT32; }
+     bool IsHash() const { return m_uType == TAGTYPE_HASH; }
+     bool IsBlob() const { return m_uType == TAGTYPE_BLOB; }
+-
+-    wxUint32 GetInt() const { wxASSERT(IsInt()); return m_uVal; }
++    bool IsInt64(bool bOrInt32 = true) const { return m_uType == TAGTYPE_UINT64 || (bOrInt32 &amp;&amp; IsInt()); }
++	
++    wxUint32 GetInt() const { wxASSERT(IsInt()); return (wxUint32)m_uVal; }
++	wxUint64 GetInt64() const { ASSERT(IsInt64(true)); return m_uVal; }
+     const wxString&amp; GetStr() const { wxASSERT(IsStr()); return* m_pstrVal; }
+     float GetFloat() const { wxASSERT(IsFloat()); return m_fVal; }
+     const wxByte* GetHash() const { wxASSERT(IsHash()); return m_pData; }
+@@ -77,6 +80,7 @@
+     const wxByte* GetBlob() const { wxASSERT(IsBlob()); return m_pData; }
+ 
+     void SetInt(wxUint32 uVal);
++    void SetInt64(wxUint64 uVal);
+     void SetStr(const wxChar* pszVal);
+ 
+     xTag* CloneTag() { return new xTag(*this); }
+@@ -94,7 +98,7 @@
+     union
+     {
+         wxString* m_pstrVal;
+-        wxUint32 m_uVal;
++        wxUint64 m_uVal;
+         float m_fVal;
+         wxByte* m_pData;
+     };
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000007.html">[xMule-svn] r21 - trunk/xCore
+</A></li>
+	<LI>Next message: <A HREF="000009.html">[xMule-svn] r23 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8">[ date ]</a>
+              <a href="thread.html#8">[ thread ]</a>
+              <a href="subject.html#8">[ subject ]</a>
+              <a href="author.html#8">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

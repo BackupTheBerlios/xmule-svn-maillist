@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r40 - trunk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-March/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r40%20-%20trunk&In-Reply-To=%3C200603271911.k2RJBBAL024844%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000025.html">
+   <LINK REL="Next"  HREF="000027.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r40 - trunk</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r40%20-%20trunk&In-Reply-To=%3C200603271911.k2RJBBAL024844%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r40 - trunk">avivahl at berlios.de
+       </A><BR>
+    <I>Mon Mar 27 21:11:11 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000025.html">[xMule-svn] r39 - trunk
+</A></li>
+        <LI>Next message: <A HREF="000027.html">[xMule-svn] r41 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#26">[ date ]</a>
+              <a href="thread.html#26">[ thread ]</a>
+              <a href="subject.html#26">[ subject ]</a>
+              <a href="author.html#26">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-03-27 21:11:04 +0200 (Mon, 27 Mar 2006)
+New Revision: 40
+
+Modified:
+   trunk/xMule.vcproj
+Log:
+Updating the Visual Studio project file to use the default wxWidgets path... (c:\wxWidgets-2.6.3)
+
+Modified: trunk/xMule.vcproj
+===================================================================
+--- trunk/xMule.vcproj	2006-03-27 19:08:35 UTC (rev 39)
++++ trunk/xMule.vcproj	2006-03-27 19:11:04 UTC (rev 40)
+@@ -40,7 +40,7 @@
+ 			&lt;Tool
+ 				Name=&quot;VCCLCompilerTool&quot;
+ 				Optimization=&quot;0&quot;
+-				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets\include&quot;;&quot;C:\wxWidgets\lib\vc_lib\mswud&quot;&quot;
++				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.6.3\include&quot;;&quot;C:\wxWidgets-2.6.3\lib\vc_lib\mswud&quot;&quot;
+ 				PreprocessorDefinitions=&quot;__WXDEBUG__;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE&quot;
+ 				MinimalRebuild=&quot;true&quot;
+ 				BasicRuntimeChecks=&quot;3&quot;
+@@ -55,7 +55,7 @@
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCResourceCompilerTool&quot;
+-				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets\include&quot;&quot;
++				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.6.3\include&quot;&quot;
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCPreLinkEventTool&quot;
+@@ -65,7 +65,7 @@
+ 				AdditionalDependencies=&quot;comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxbase27ud.lib wxbase27ud_net.lib wxbase27ud_odbc.lib wxbase27ud_xml.lib wxexpatd.lib wxmsw27ud_adv.lib wxmsw27ud_core.lib wxmsw27ud_html.lib wxmsw27ud_xrc.lib&quot;
+ 				OutputFile=&quot;$(OutDir)/$(InputName)-Debug.exe&quot;
+ 				LinkIncremental=&quot;2&quot;
+-				AdditionalLibraryDirectories=&quot;&quot;C:\wxWidgets\lib\vc_lib&quot;&quot;
++				AdditionalLibraryDirectories=&quot;&quot;C:\wxWidgets-2.6.3\lib\vc_lib&quot;&quot;
+ 				GenerateDebugInformation=&quot;true&quot;
+ 				ProgramDatabaseFile=&quot;$(OutDir)/$(ProjectName).pdb&quot;
+ 				SubSystem=&quot;2&quot;
+@@ -122,7 +122,7 @@
+ 			&lt;Tool
+ 				Name=&quot;VCCLCompilerTool&quot;
+ 				Optimization=&quot;3&quot;
+-				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets\include&quot;;&quot;C:\wxWidgets\lib\vc_lib\mswu&quot;&quot;
++				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.6.3\include&quot;;&quot;C:\wxWidgets-2.6.3\lib\vc_lib\mswu&quot;&quot;
+ 				PreprocessorDefinitions=&quot;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE&quot;
+ 				RuntimeLibrary=&quot;2&quot;
+ 				UsePrecompiledHeader=&quot;0&quot;
+@@ -135,7 +135,7 @@
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCResourceCompilerTool&quot;
+-				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets\include&quot;&quot;
++				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.6.3\include&quot;&quot;
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCPreLinkEventTool&quot;
+@@ -145,7 +145,7 @@
+ 				AdditionalDependencies=&quot;comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib wxbase27u.lib wxbase27u_net.lib wxbase27u_odbc.lib wxbase27u_xml.lib wxexpat.lib wxmsw27u_adv.lib wxmsw27u_core.lib wxmsw27u_html.lib wxmsw27u_xrc.lib&quot;
+ 				OutputFile=&quot;$(OutDir)/$(InputName).exe&quot;
+ 				LinkIncremental=&quot;1&quot;
+-				AdditionalLibraryDirectories=&quot;&quot;C:\wxWidgets\lib\vc_lib&quot;&quot;
++				AdditionalLibraryDirectories=&quot;&quot;C:\wxWidgets-2.6.3\lib\vc_lib&quot;&quot;
+ 				GenerateDebugInformation=&quot;false&quot;
+ 				SubSystem=&quot;2&quot;
+ 				OptimizeReferences=&quot;2&quot;
+@@ -335,7 +335,7 @@
+ 					&gt;
+ 					&lt;Tool
+ 						Name=&quot;VCResourceCompilerTool&quot;
+-						AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets\include&quot;&quot;
++						AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.6.3\include&quot;&quot;
+ 					/&gt;
+ 				&lt;/FileConfiguration&gt;
+ 				&lt;FileConfiguration
+@@ -343,7 +343,7 @@
+ 					&gt;
+ 					&lt;Tool
+ 						Name=&quot;VCResourceCompilerTool&quot;
+-						AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets\include&quot;&quot;
++						AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.6.3\include&quot;&quot;
+ 					/&gt;
+ 				&lt;/FileConfiguration&gt;
+ 			&lt;/File&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000025.html">[xMule-svn] r39 - trunk
+</A></li>
+	<LI>Next message: <A HREF="000027.html">[xMule-svn] r41 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#26">[ date ]</a>
+              <a href="thread.html#26">[ thread ]</a>
+              <a href="subject.html#26">[ subject ]</a>
+              <a href="author.html#26">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

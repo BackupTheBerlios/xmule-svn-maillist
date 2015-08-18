@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r47 - trunk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-July/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r47%20-%20trunk&In-Reply-To=%3C200607102055.k6AKt5Ew031255%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000034.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r47 - trunk</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r47%20-%20trunk&In-Reply-To=%3C200607102055.k6AKt5Ew031255%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r47 - trunk">avivahl at berlios.de
+       </A><BR>
+    <I>Mon Jul 10 22:55:05 CEST 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000034.html">[xMule-svn] r48 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#33">[ date ]</a>
+              <a href="thread.html#33">[ thread ]</a>
+              <a href="subject.html#33">[ subject ]</a>
+              <a href="author.html#33">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-07-10 22:55:04 +0200 (Mon, 10 Jul 2006)
+New Revision: 47
+
+Modified:
+   trunk/COMPILE
+   trunk/xMule.make
+Log:
+Updated to using Premake-3.1...
+
+Modified: trunk/COMPILE
+===================================================================
+--- trunk/COMPILE	2006-06-24 08:18:01 UTC (rev 46)
++++ trunk/COMPILE	2006-07-10 20:55:04 UTC (rev 47)
+@@ -8,4 +8,4 @@
+ --------
+ Compiler: GCC 4.x. Older versions may work as well, but untested.
+ Library: wxGTK-2.6.3 (--enable-unicode --enable-monolithic --enable-static --enable-debug).
+-Notes: Used Premake-3.1-RC3 for creating the makefiles.  Makefiles are provided.
++Notes: Used Premake-3.1 for creating the makefiles.  Makefiles are provided.
+
+Modified: trunk/xMule.make
+===================================================================
+--- trunk/xMule.make	2006-06-24 08:18:01 UTC (rev 46)
++++ trunk/xMule.make	2006-07-10 20:55:04 UTC (rev 47)
+@@ -16,6 +16,7 @@
+   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) `wx-config --libs`
+   LDDEPS :=
+   TARGET := xmule
++  BLDCMD = $(CXX) -o $(OUTDIR)/$(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES)
+ endif
+ 
+ ifeq ($(CONFIG),Release)
+@@ -29,6 +30,7 @@
+   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -s `wx-config --libs`
+   LDDEPS :=
+   TARGET := xmule
++  BLDCMD = $(CXX) -o $(OUTDIR)/$(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES)
+ endif
+ 
+ OBJECTS := \
+@@ -66,7 +68,7 @@
+ 	-@$(CMD_MKBINDIR)
+ 	-@$(CMD_MKLIBDIR)
+ 	-@$(CMD_MKOUTDIR)
+-	@$(CXX) -o $@ $(OBJECTS) $(LDFLAGS) $(RESOURCES)
++	@$(BLDCMD)
+ 
+ clean:
+ 	@echo Cleaning xMule
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000034.html">[xMule-svn] r48 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#33">[ date ]</a>
+              <a href="thread.html#33">[ thread ]</a>
+              <a href="subject.html#33">[ subject ]</a>
+              <a href="author.html#33">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r27 - trunk/xCore
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r27%20-%20trunk/xCore&In-Reply-To=%3C200601281500.k0SF03j4016707%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000012.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r27 - trunk/xCore</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r27%20-%20trunk/xCore&In-Reply-To=%3C200601281500.k0SF03j4016707%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r27 - trunk/xCore">avivahl at berlios.de
+       </A><BR>
+    <I>Sat Jan 28 16:00:03 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000012.html">[xMule-svn] r26 - in trunk: . xCore
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13">[ date ]</a>
+              <a href="thread.html#13">[ thread ]</a>
+              <a href="subject.html#13">[ subject ]</a>
+              <a href="author.html#13">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-01-28 16:00:03 +0100 (Sat, 28 Jan 2006)
+New Revision: 27
+
+Modified:
+   trunk/xCore/xOpCodes.h
+   trunk/xCore/xSafeFile.h
+   trunk/xCore/xServer.h
+   trunk/xCore/xUtils.h
+Log:
+More moving of stuff...
+
+Modified: trunk/xCore/xOpCodes.h
+===================================================================
+--- trunk/xCore/xOpCodes.h	2006-01-28 13:46:57 UTC (rev 26)
++++ trunk/xCore/xOpCodes.h	2006-01-28 15:00:03 UTC (rev 27)
+@@ -1,7 +1,61 @@
+ #ifndef _XOPCODES_H_
+ #define _XOPCODES_H_
+ 
++#include &lt;wx/defs.h&gt;                   // wxWidgets Definitions
++
+ ///////////////////////////////////////////
++// Server TCP flags
++///////////////////////////////////////////
++
++#define SRV_TCPFLG_COMPRESSION    0x00000001
++#define SRV_TCPFLG_NEWTAGS        0x00000008
++#define SRV_TCPFLG_UNICODE        0x00000010
++#define SRV_TCPFLG_RELATEDSEARCH  0x00000040
++#define SRV_TCPFLG_TYPETAGINTEGER 0x00000080
++#define SRV_TCPFLG_LARGEFILES     0x00000100
++
++///////////////////////////////////////////
++// Server UDP flags
++///////////////////////////////////////////
++
++#define SRV_UDPFLG_EXT_GETSOURCES  0x00000001
++#define SRV_UDPFLG_EXT_GETFILES    0x00000002
++#define SRV_UDPFLG_NEWTAGS         0x00000008
++#define SRV_UDPFLG_UNICODE         0x00000010
++#define SRV_UDPFLG_EXT_GETSOURCES2 0x00000020
++#define SRV_UDPFLG_LARGEFILES      0x00000100
++
++///////////////////////////////////////////
++// server.met
++///////////////////////////////////////////
++
++#define ST_SERVERNAME			0x01	// &lt;string&gt;
++#define ST_DESCRIPTION			0x0B	// &lt;string&gt;
++#define ST_PING					0x0C	// &lt;uint32&gt;
++#define ST_FAIL					0x0D	// &lt;uint32&gt;
++#define ST_PREFERENCE			0x0E	// &lt;uint32&gt;
++#define	ST_PORT					0x0F	// &lt;uint32&gt;
++#define	ST_IP					0x10	// &lt;uint32&gt;
++#define	ST_DYNIP				0x85	// &lt;string&gt;
++#define ST_MAXUSERS				0x87	// &lt;uint32&gt;
++#define ST_SOFTFILES			0x88	// &lt;uint32&gt;
++#define ST_HARDFILES			0x89	// &lt;uint32&gt;
++#define ST_LASTPING				0x90	// &lt;uint32&gt;
++#define	ST_VERSION				0x91	// &lt;string&gt;|&lt;uint32&gt;
++#define	ST_UDPFLAGS				0x92	// &lt;uint32&gt;
++#define	ST_AUXPORTSLIST			0x93	// &lt;string&gt;
++#define	ST_LOWIDUSERS			0x94	// &lt;uint32&gt;
++
++#pragma pack(1)
++struct ServerMet_Struct
++{
++    wxUint32 ip;
++    wxUint16 port;
++    wxUint32 tagcount;
++};
++#pragma pack()
++
++///////////////////////////////////////////
+ // xTag Types
+ ///////////////////////////////////////////
+ 
+@@ -43,26 +97,16 @@
+ #define TAGTYPE_STR21           0x25
+ #define TAGTYPE_STR22           0x26
+ 
+-///////////////////////////////////////////
+-// Server TCP flags
+-///////////////////////////////////////////
++#define	MAX_EMULE_FILE_SIZE	0x4000000000ui64 // = 2^38 = 256GB
++#define OLD_MAX_EMULE_FILE_SIZE	4290048000ui64	// (4294967295/PARTSIZE)*PARTSIZE = ~4GB
+ 
+-#define SRV_TCPFLG_COMPRESSION    0x00000001
+-#define SRV_TCPFLG_NEWTAGS        0x00000008
+-#define SRV_TCPFLG_UNICODE        0x00000010
+-#define SRV_TCPFLG_RELATEDSEARCH  0x00000040
+-#define SRV_TCPFLG_TYPETAGINTEGER 0x00000080
+-#define SRV_TCPFLG_LARGEFILES     0x00000100
++#define	ED2KFTSTR_AUDIO			&quot;Audio&quot;	// value for eD2K tag FT_FILETYPE
++#define	ED2KFTSTR_VIDEO			&quot;Video&quot;	// value for eD2K tag FT_FILETYPE
++#define	ED2KFTSTR_IMAGE			&quot;Image&quot;	// value for eD2K tag FT_FILETYPE
++#define	ED2KFTSTR_DOCUMENT		&quot;Doc&quot;	// value for eD2K tag FT_FILETYPE
++#define	ED2KFTSTR_PROGRAM		&quot;Pro&quot;	// value for eD2K tag FT_FILETYPE
++#define	ED2KFTSTR_ARCHIVE		&quot;Arc&quot;	// eMule internal use only
++#define	ED2KFTSTR_CDIMAGE		&quot;Iso&quot;	// eMule internal use only
++#define ED2KFTSTR_EMULECOLLECTION	&quot;EmuleCollection&quot; // Value for eD2K tag FT_FILETYPE
+ 
+-///////////////////////////////////////////
+-// Server UDP flags
+-///////////////////////////////////////////
+-
+-#define SRV_UDPFLG_EXT_GETSOURCES  0x00000001
+-#define SRV_UDPFLG_EXT_GETFILES    0x00000002
+-#define SRV_UDPFLG_NEWTAGS         0x00000008
+-#define SRV_UDPFLG_UNICODE         0x00000010
+-#define SRV_UDPFLG_EXT_GETSOURCES2 0x00000020
+-#define SRV_UDPFLG_LARGEFILES      0x00000100
+-
+ #endif // _XOPCODES_H_
+
+Modified: trunk/xCore/xSafeFile.h
+===================================================================
+--- trunk/xCore/xSafeFile.h	2006-01-28 13:46:57 UTC (rev 26)
++++ trunk/xCore/xSafeFile.h	2006-01-28 15:00:03 UTC (rev 27)
+@@ -36,7 +36,7 @@
+     virtual wxUint16 ReadUInt16();
+     virtual wxUint32 ReadUInt32();
+     virtual wxUint64 ReadUInt64();
+-//  virtual void ReadUInt128(Kademlia::CUInt128 *pVal); // TODO: Kad
++//  virtual void ReadUInt128(Kademlia::CUInt128 *pVal); // TODO:KAD
+     virtual void ReadHash16(unsigned char* pVal);
+     virtual wxString ReadString(bool bOptUTF8);
+     virtual wxString ReadString(bool bOptUTF8, wxUint32 uRawSize);
+@@ -46,7 +46,7 @@
+     virtual void WriteUInt16(wxUint16 nVal);
+     virtual void WriteUInt32(wxUint32 nVal);
+     virtual void WriteUInt64(wxUint64 nVal);
+-//  virtual void WriteUInt128(const Kademlia::CUInt128 *pVal); // TODO: Kad
++//  virtual void WriteUInt128(const Kademlia::CUInt128 *pVal); // TODO:KAD
+     virtual void WriteHash16(const unsigned char* pVal);
+ //  virtual void WriteString(const CString&amp; rstr, EUtf8Str eEncode = utf8strNone);
+ //  virtual void WriteString(LPCSTR psz);
+
+Modified: trunk/xCore/xServer.h
+===================================================================
+--- trunk/xCore/xServer.h	2006-01-28 13:46:57 UTC (rev 26)
++++ trunk/xCore/xServer.h	2006-01-28 15:00:03 UTC (rev 27)
+@@ -13,15 +13,6 @@
+ class xTag;
+ class xFileDataIO;
+ 
+-#pragma pack(1)
+-struct ServerMet_Struct
+-{
+-    wxUint32 ip;
+-    wxUint16 port;
+-    wxUint32 tagcount;
+-};
+-#pragma pack()
+-
+ #define SRV_PR_LOW    2
+ #define SRV_PR_NORMAL 0
+ #define SRV_PR_HIGH   1
+@@ -143,22 +134,4 @@
+     wxUint32 m_uLowIDUsers;
+ };
+ 
+-// server.met
+-#define ST_SERVERNAME			0x01	// &lt;string&gt;
+-#define ST_DESCRIPTION			0x0B	// &lt;string&gt;
+-#define ST_PING					0x0C	// &lt;uint32&gt;
+-#define ST_FAIL					0x0D	// &lt;uint32&gt;
+-#define ST_PREFERENCE			0x0E	// &lt;uint32&gt;
+-#define	ST_PORT					0x0F	// &lt;uint32&gt;
+-#define	ST_IP					0x10	// &lt;uint32&gt;
+-#define	ST_DYNIP				0x85	// &lt;string&gt;
+-#define ST_MAXUSERS				0x87	// &lt;uint32&gt;
+-#define ST_SOFTFILES			0x88	// &lt;uint32&gt;
+-#define ST_HARDFILES			0x89	// &lt;uint32&gt;
+-#define ST_LASTPING				0x90	// &lt;uint32&gt;
+-#define	ST_VERSION				0x91	// &lt;string&gt;|&lt;uint32&gt;
+-#define	ST_UDPFLAGS				0x92	// &lt;uint32&gt;
+-#define	ST_AUXPORTSLIST			0x93	// &lt;string&gt;
+-#define	ST_LOWIDUSERS			0x94	// &lt;uint32&gt;
+-
+ #endif // _XSERVER_H_
+
+Modified: trunk/xCore/xUtils.h
+===================================================================
+--- trunk/xCore/xUtils.h	2006-01-28 13:46:57 UTC (rev 26)
++++ trunk/xCore/xUtils.h	2006-01-28 15:00:03 UTC (rev 27)
+@@ -1,6 +1,9 @@
+ #ifndef _XUTILS_H_
+ #define _XUTILS_H_
+ 
++#include &lt;wx/defs.h&gt;                   // wxWidgets definitions
++#include &lt;wx/string.h&gt;                 // wxString
++
+ // Takes a C-style string and makes a copy of it. Returns a pointer to the new string.
+ inline char* nstrdup(const char* todup)
+ {
+@@ -12,10 +15,25 @@
+ inline wxString ipstr(wxUint32 nIP)
+ {
+     const wxByte* pucIP = (wxByte*)&nIP;
+-	wxString strIP = wxString::Format(wxT(&quot;%u.%u.%u.%u&quot;), pucIP[0], pucIP[1], pucIP[2], pucIP[3]);
+-	return strIP;
++    wxString strIP = wxString::Format(wxT(&quot;%u.%u.%u.%u&quot;), pucIP[0], pucIP[1], pucIP[2], pucIP[3]);
++    return strIP;
+ }
+ 
++// md4clr -- replacement for memset(hash,0,16)
++inline void md4clr(const void* hash)
++{
++    ((wxUint32*)hash)[0] = ((wxUint32*)hash)[1] = ((wxUint32*)hash)[2] = ((wxUint32*)hash)[3] = 0;
++}
++
++// md4cpy -- replacement for memcpy(dst,src,16)
++inline void md4cpy(void* dst, const void* src)
++{
++    ((wxUint32*)dst)[0] = ((wxUint32*)src)[0];
++    ((wxUint32*)dst)[1] = ((wxUint32*)src)[1];
++    ((wxUint32*)dst)[2] = ((wxUint32*)src)[2];
++    ((wxUint32*)dst)[3] = ((wxUint32*)src)[3];
++}
++
+ inline int CmpED2KTagName(const char* pszTagName1, const char* pszTagName2)
+ {
+     return wxString(pszTagName1, wxConvLibc).Cmp(wxString(pszTagName2, wxConvLibc));
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000012.html">[xMule-svn] r26 - in trunk: . xCore
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13">[ date ]</a>
+              <a href="thread.html#13">[ thread ]</a>
+              <a href="subject.html#13">[ subject ]</a>
+              <a href="author.html#13">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,657 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r26 - in trunk: . xCore
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r26%20-%20in%20trunk%3A%20.%20xCore&In-Reply-To=%3C200601281347.k0SDlD0h005849%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000011.html">
+   <LINK REL="Next"  HREF="000013.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r26 - in trunk: . xCore</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r26%20-%20in%20trunk%3A%20.%20xCore&In-Reply-To=%3C200601281347.k0SDlD0h005849%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r26 - in trunk: . xCore">avivahl at berlios.de
+       </A><BR>
+    <I>Sat Jan 28 14:47:13 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000011.html">[xMule-svn] r25 - in trunk: . XRC
+</A></li>
+        <LI>Next message: <A HREF="000013.html">[xMule-svn] r27 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12">[ date ]</a>
+              <a href="thread.html#12">[ thread ]</a>
+              <a href="subject.html#12">[ subject ]</a>
+              <a href="author.html#12">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-01-28 14:46:57 +0100 (Sat, 28 Jan 2006)
+New Revision: 26
+
+Added:
+   trunk/xCore/xOpCodes.h
+   trunk/xCore/xUtils.h
+Modified:
+   trunk/xCore/xSafeFile.cpp
+   trunk/xCore/xSafeFile.h
+   trunk/xCore/xServer.cpp
+   trunk/xCore/xServer.h
+   trunk/xCore/xTag.cpp
+   trunk/xCore/xTag.h
+   trunk/xMule.vcproj
+Log:
+Reorganization of some functions and definitions.
+Two new files: xOpCodes.h and xUtils.h.
+
+Added: trunk/xCore/xOpCodes.h
+===================================================================
+--- trunk/xCore/xOpCodes.h	2006-01-27 10:33:14 UTC (rev 25)
++++ trunk/xCore/xOpCodes.h	2006-01-28 13:46:57 UTC (rev 26)
+@@ -0,0 +1,68 @@
++#ifndef _XOPCODES_H_
++#define _XOPCODES_H_
++
++///////////////////////////////////////////
++// xTag Types
++///////////////////////////////////////////
++
++#define TAGTYPE_HASH            0x01
++#define TAGTYPE_STRING          0x02
++#define TAGTYPE_UINT32          0x03
++#define TAGTYPE_FLOAT32         0x04
++#define TAGTYPE_BOOL            0x05
++#define TAGTYPE_BOOLARRAY       0x06
++#define TAGTYPE_BLOB            0x07
++#define TAGTYPE_UINT16          0x08
++#define TAGTYPE_UINT8           0x09
++#define TAGTYPE_BSOB            0x0A
++#define TAGTYPE_UINT64          0x0B
++
++#define TAGTYPE_STR1            0x11
++#define TAGTYPE_STR2            0x12
++#define TAGTYPE_STR3            0x13
++#define TAGTYPE_STR4            0x14
++#define TAGTYPE_STR5            0x15
++#define TAGTYPE_STR6            0x16
++#define TAGTYPE_STR7            0x17
++#define TAGTYPE_STR8            0x18
++#define TAGTYPE_STR9            0x19
++#define TAGTYPE_STR10           0x1A
++#define TAGTYPE_STR11           0x1B
++#define TAGTYPE_STR12           0x1C
++#define TAGTYPE_STR13           0x1D
++#define TAGTYPE_STR14           0x1E
++#define TAGTYPE_STR15           0x1F
++#define TAGTYPE_STR16           0x20
++// The following 6 tag types are accepted by eMule 0.42f (02-Mai-2004) in receiving
++// code only because of a flaw, those tags are handled correctly, but should not be
++// handled at all
++#define TAGTYPE_STR17           0x21
++#define TAGTYPE_STR18           0x22
++#define TAGTYPE_STR19           0x23
++#define TAGTYPE_STR20           0x24
++#define TAGTYPE_STR21           0x25
++#define TAGTYPE_STR22           0x26
++
++///////////////////////////////////////////
++// Server TCP flags
++///////////////////////////////////////////
++
++#define SRV_TCPFLG_COMPRESSION    0x00000001
++#define SRV_TCPFLG_NEWTAGS        0x00000008
++#define SRV_TCPFLG_UNICODE        0x00000010
++#define SRV_TCPFLG_RELATEDSEARCH  0x00000040
++#define SRV_TCPFLG_TYPETAGINTEGER 0x00000080
++#define SRV_TCPFLG_LARGEFILES     0x00000100
++
++///////////////////////////////////////////
++// Server UDP flags
++///////////////////////////////////////////
++
++#define SRV_UDPFLG_EXT_GETSOURCES  0x00000001
++#define SRV_UDPFLG_EXT_GETFILES    0x00000002
++#define SRV_UDPFLG_NEWTAGS         0x00000008
++#define SRV_UDPFLG_UNICODE         0x00000010
++#define SRV_UDPFLG_EXT_GETSOURCES2 0x00000020
++#define SRV_UDPFLG_LARGEFILES      0x00000100
++
++#endif // _XOPCODES_H_
+
+Modified: trunk/xCore/xSafeFile.cpp
+===================================================================
+--- trunk/xCore/xSafeFile.cpp	2006-01-27 10:33:14 UTC (rev 25)
++++ trunk/xCore/xSafeFile.cpp	2006-01-28 13:46:57 UTC (rev 26)
+@@ -3,130 +3,7 @@
+  */
+ 
+ #include &quot;xSafeFile.h&quot;                 // Class declarations
+-
+-//////////////////////////////////
+-// TODO: MOVE AWAY FROM HERE! :/
+-int utf8towc(const char* pcUtf8, wxUint32 uUtf8Size, wxChar* pwc, wxUint32 uWideCharSize)
+-{
+-    wxChar* pwc0 = pwc;
+-
+-    while (uUtf8Size &amp;&amp; uWideCharSize)
+-    {
+-        wxByte ucChar = *pcUtf8++;
+-        if (ucChar &lt; 0x80)
+-        {
+-            uUtf8Size--;
+-            uWideCharSize--;
+-            *(pwc++) = ucChar;
+-        }
+-        else if ((ucChar &amp; 0xC0) != 0xC0)
+-        {
+-            return -1; // Invalid UTF8 string..
+-        }
+-        else
+-        {
+-            wxByte ucMask = 0xE0;
+-            wxUint32 uExpectedBytes = 1;
+-            while ((ucChar &amp; ucMask) == ucMask)
+-            {
+-                ucMask |= ucMask &gt;&gt; 1;
+-                if (++uExpectedBytes &gt; 3)
+-                {
+-                    return -1; // Invalid UTF8 string..
+-                }
+-            }
+-
+-            if (uUtf8Size &lt;= uExpectedBytes)
+-                return -1; // Invalid UTF8 string..
+-
+-            wxUint32 uProcessedBytes = 1 + uExpectedBytes;
+-            wxUint32 uWideChar = (wxUint32)(ucChar &amp; ~ucMask);
+-            if (uExpectedBytes == 1)
+-            {
+-                if ((uWideChar &amp; 0x1E) == 0)
+-                {
+-                    return -1; // Invalid UTF8 string..
+-                }
+-            }
+-            else
+-            {
+-                if (uWideChar == 0 &amp;&amp; ((wxByte)*pcUtf8 &amp; 0x3F &amp; (ucMask &lt;&lt; 1)) == 0)
+-                {
+-                    return -1; // Invalid UTF8 string..
+-                }
+-                if (uExpectedBytes == 2)
+-                {
+-                    //if (uWideChar == 0x0D &amp;&amp; ((wxByte)*pcUtf8 &amp; 0x20))
+-                    //    return -1;
+-                }
+-                else if (uExpectedBytes == 3)
+-                {
+-                    if (uWideChar &gt; 4)
+-                    {
+-                        return -1; // Invalid UTF8 string..
+-                    }
+-                    if (uWideChar == 4 &amp;&amp; ((wxByte)*pcUtf8 &amp; 0x30))
+-                    {
+-                        return -1; // Invalid UTF8 string..
+-                    }
+-                }
+-            }
+-
+-            if (uWideCharSize &lt; (wxUint32)(uExpectedBytes &gt; 2) + 1)
+-            {
+-                break; // buffer full
+-            }
+-
+-            while (uExpectedBytes--)
+-            {
+-                if (((ucChar = (wxByte)*(pcUtf8++)) &amp; 0xC0) != 0x80)
+-                {
+-                    return -1; // Invalid UTF8 string..
+-                }
+-                uWideChar &lt;&lt;= 6;
+-                uWideChar |= (ucChar &amp; 0x3F);
+-            }
+-            uUtf8Size -= uProcessedBytes;
+-
+-            if (uWideChar &lt; 0x10000)
+-            {
+-                uWideCharSize--;
+-                *(pwc++) = uWideChar;
+-            }
+-            else
+-            {
+-                uWideCharSize -= 2;
+-                uWideChar -= 0x10000;
+-                *(pwc++) = 0xD800 | (uWideChar &gt;&gt; 10);
+-                *(pwc++) = 0xDC00 | (uWideChar &amp; 0x03FF);
+-            }
+-        }
+-    }
+-    return pwc - pwc0;
+-}
+-
+-int ByteStreamToWideChar(const char* pcUtf8, wxUint32 uUtf8Size, wxChar* pwc, wxUint32 uWideCharSize)
+-{
+-    int iWideChars = utf8towc(pcUtf8, uUtf8Size, pwc, uWideCharSize);
+-    if (iWideChars &lt; 0)
+-    {
+-        wxChar* pwc0 = pwc;
+-        while (uUtf8Size &amp;&amp; uWideCharSize)
+-        {
+-            if ((*pwc++ = (wxByte)*pcUtf8++) == wxT('\0'))
+-            {
+-                break;
+-            }
+-            uUtf8Size--;
+-            uWideCharSize--;
+-        }
+-        iWideChars = pwc - pwc0;
+-    }
+-    return iWideChars;
+-}
+-
+-//////////////////////////////////
+-
++#include &quot;xUtils.h&quot;                    // String convertion functions
+ ///////////////////////////////////////////////////////////////////////////////
+ // xFileDataIO
+ 
+@@ -398,14 +275,3 @@
+ {
+     return wxFFile::Length();
+ }
+-
+-/*int CSafeBufferedFile::printf(LPCTSTR pszFmt, ...)
+-{
+-    va_list args;
+-    va_start(args, pszFmt);
+-    int iResult = _vftprintf(m_pStream, pszFmt, args);
+-    va_end(args);
+-    if (iResult &lt; 0)
+-        AfxThrowFileException(CFileException::generic, _doserrno, m_strFileName);
+-    return iResult;
+-}*/
+
+Modified: trunk/xCore/xSafeFile.h
+===================================================================
+--- trunk/xCore/xSafeFile.h	2006-01-27 10:33:14 UTC (rev 25)
++++ trunk/xCore/xSafeFile.h	2006-01-28 13:46:57 UTC (rev 26)
+@@ -68,8 +68,6 @@
+     virtual bool Seek(wxFileOffset lOff, wxSeekMode mode);
+     virtual wxFileOffset GetPosition() const;
+     virtual wxFileOffset GetLength() const;
+-
+-//    int printf(const wxChar* pszFmt, ...);
+ };
+ 
+ ///////////////////////////////////////////////////////////////////////////////
+@@ -143,7 +141,4 @@
+     T* m_aT;
+ };
+ 
+-int utf8towc(const char* pcUtf8, wxUint32 uUtf8Size, wxChar* pwc, wxUint32 uWideCharSize);
+-int ByteStreamToWideChar(const char* pcUtf8, wxUint32 uUtf8Size, wxChar* pwc, wxUint32 uWideCharSize);
+-
+ #endif // _XSAFEFILE_H_
+
+Modified: trunk/xCore/xServer.cpp
+===================================================================
+--- trunk/xCore/xServer.cpp	2006-01-27 10:33:14 UTC (rev 25)
++++ trunk/xCore/xServer.cpp	2006-01-28 13:46:57 UTC (rev 26)
+@@ -5,6 +5,7 @@
+ #include &quot;xServer.h&quot;                   // xServer
+ #include &quot;../xApp.h&quot;                   // wxGetApp()
+ #include &quot;xTag.h&quot;
++#include &quot;xUtils.h&quot;                    // ipstr()
+ 
+ #ifdef __UNIX__
+ #include &lt;arpa/inet.h&gt;                 // inet_addr()
+
+Modified: trunk/xCore/xServer.h
+===================================================================
+--- trunk/xCore/xServer.h	2006-01-27 10:33:14 UTC (rev 25)
++++ trunk/xCore/xServer.h	2006-01-28 13:46:57 UTC (rev 26)
+@@ -5,6 +5,8 @@
+ #ifndef _XSERVER_H_
+ #define _XSERVER_H_
+ 
++#include &quot;xOpCodes.h&quot;                  // xServer opcodes
++
+ #include &lt;wx/defs.h&gt;                   // wxWidgets definitions
+ #include &lt;wx/string.h&gt;                 // wxString
+ 
+@@ -24,23 +26,6 @@
+ #define SRV_PR_NORMAL 0
+ #define SRV_PR_HIGH   1
+ 
+-
+-// Server TCP flags
+-#define SRV_TCPFLG_COMPRESSION    0x00000001
+-#define SRV_TCPFLG_NEWTAGS        0x00000008
+-#define SRV_TCPFLG_UNICODE        0x00000010
+-#define SRV_TCPFLG_RELATEDSEARCH  0x00000040
+-#define SRV_TCPFLG_TYPETAGINTEGER 0x00000080
+-#define SRV_TCPFLG_LARGEFILES     0x00000100
+-
+-// Server UDP flags
+-#define SRV_UDPFLG_EXT_GETSOURCES  0x00000001
+-#define SRV_UDPFLG_EXT_GETFILES    0x00000002
+-#define SRV_UDPFLG_NEWTAGS         0x00000008
+-#define SRV_UDPFLG_UNICODE         0x00000010
+-#define SRV_UDPFLG_EXT_GETSOURCES2 0x00000020
+-#define SRV_UDPFLG_LARGEFILES      0x00000100
+-
+ class xServer
+ {
+ public:
+@@ -158,15 +143,6 @@
+     wxUint32 m_uLowIDUsers;
+ };
+ 
+-// TODO: MOVE AWAY FROM HERE
+-inline wxString ipstr(wxUint32 nIP)
+-{
+-	// Following gives the same string as 'inet_ntoa(*(in_addr*)&amp;nIP)' but is not restricted to ASCII strings
+-	const wxByte* pucIP = (wxByte*)&nIP;
+-	wxString strIP = wxString::Format(wxT(&quot;%u.%u.%u.%u&quot;), pucIP[0], pucIP[1], pucIP[2], pucIP[3]);
+-	return strIP;
+-}
+-
+ // server.met
+ #define ST_SERVERNAME			0x01	// &lt;string&gt;
+ #define ST_DESCRIPTION			0x0B	// &lt;string&gt;
+@@ -185,9 +161,4 @@
+ #define	ST_AUXPORTSLIST			0x93	// &lt;string&gt;
+ #define	ST_LOWIDUSERS			0x94	// &lt;uint32&gt;
+ 
+-inline int CmpED2KTagName(const char* pszTagName1, const char* pszTagName2)
+-{
+-    return wxString(pszTagName1, wxConvLibc).Cmp(wxString(pszTagName2, wxConvLibc));
+-}
+-
+ #endif // _XSERVER_H_
+
+Modified: trunk/xCore/xTag.cpp
+===================================================================
+--- trunk/xCore/xTag.cpp	2006-01-27 10:33:14 UTC (rev 25)
++++ trunk/xCore/xTag.cpp	2006-01-28 13:46:57 UTC (rev 26)
+@@ -1,6 +1,7 @@
+ #include &quot;../xApp.h&quot;                   // wxGetApp()
+ #include &quot;xTag.h&quot;
+ #include &quot;xSafeFile.h&quot;
++#include &quot;xUtils.h&quot;                    // nstrup()
+ 
+ xTag::xTag(const char* pszName, wxUint64 uVal, bool bInt64)
+ {
+
+Modified: trunk/xCore/xTag.h
+===================================================================
+--- trunk/xCore/xTag.h	2006-01-27 10:33:14 UTC (rev 25)
++++ trunk/xCore/xTag.h	2006-01-28 13:46:57 UTC (rev 26)
+@@ -1,45 +1,12 @@
+ #ifndef _XTAG_H_
+ #define _XTAG_H_
+ 
++#include &quot;xOpCodes.h&quot;                  // xTag opcodes
++
+ #include &lt;wx/defs.h&gt;                   // wxWidgets definitions
+ 
+ class xFileDataIO;
+ 
+-#define TAGTYPE_HASH            0x01
+-#define TAGTYPE_STRING          0x02
+-#define TAGTYPE_UINT32          0x03
+-#define TAGTYPE_FLOAT32         0x04
+-#define TAGTYPE_BOOL            0x05
+-#define TAGTYPE_BOOLARRAY       0x06
+-#define TAGTYPE_BLOB            0x07
+-#define TAGTYPE_UINT16          0x08
+-#define TAGTYPE_UINT8           0x09
+-#define TAGTYPE_BSOB            0x0A
+-#define	TAGTYPE_UINT64          0x0B
+-
+-#define TAGTYPE_STR1			0x11
+-#define TAGTYPE_STR2			0x12
+-#define TAGTYPE_STR3			0x13
+-#define TAGTYPE_STR4			0x14
+-#define TAGTYPE_STR5			0x15
+-#define TAGTYPE_STR6			0x16
+-#define TAGTYPE_STR7			0x17
+-#define TAGTYPE_STR8			0x18
+-#define TAGTYPE_STR9			0x19
+-#define TAGTYPE_STR10			0x1A
+-#define TAGTYPE_STR11			0x1B
+-#define TAGTYPE_STR12			0x1C
+-#define TAGTYPE_STR13			0x1D
+-#define TAGTYPE_STR14			0x1E
+-#define TAGTYPE_STR15			0x1F
+-#define TAGTYPE_STR16			0x20
+-#define TAGTYPE_STR17			0x21	// accepted by eMule 0.42f (02-Mai-2004) in receiving code only because of a flaw, those tags are handled correctly, but should not be handled at all
+-#define TAGTYPE_STR18			0x22	// accepted by eMule 0.42f (02-Mai-2004) in receiving code only because of a flaw, those tags are handled correctly, but should not be handled at all
+-#define TAGTYPE_STR19			0x23	// accepted by eMule 0.42f (02-Mai-2004) in receiving code only because of a flaw, those tags are handled correctly, but should not be handled at all
+-#define TAGTYPE_STR20			0x24	// accepted by eMule 0.42f (02-Mai-2004) in receiving code only because of a flaw, those tags are handled correctly, but should not be handled at all
+-#define TAGTYPE_STR21			0x25	// accepted by eMule 0.42f (02-Mai-2004) in receiving code only because of a flaw, those tags are handled correctly, but should not be handled at all
+-#define TAGTYPE_STR22			0x26	// accepted by eMule 0.42f (02-Mai-2004) in receiving code only because of a flaw, those tags are handled correctly, but should not be handled at all
+-
+ class xTag
+ {
+ public:
+@@ -104,10 +71,4 @@
+     };
+ };
+ 
+-// TODO: Move this function away
+-inline char* nstrdup(const char* todup)
+-{
+-   size_t len = strlen(todup) + 1;
+-   return (char*)memcpy(new char[len], todup, len);
+-}
+ #endif // _XTAG_H_
+
+Added: trunk/xCore/xUtils.h
+===================================================================
+--- trunk/xCore/xUtils.h	2006-01-27 10:33:14 UTC (rev 25)
++++ trunk/xCore/xUtils.h	2006-01-28 13:46:57 UTC (rev 26)
+@@ -0,0 +1,142 @@
++#ifndef _XUTILS_H_
++#define _XUTILS_H_
++
++// Takes a C-style string and makes a copy of it. Returns a pointer to the new string.
++inline char* nstrdup(const char* todup)
++{
++   size_t len = strlen(todup) + 1;
++   return (char*)memcpy(new char[len], todup, len);
++}
++
++// Gives the same string as 'inet_ntoa(*(in_addr*)&amp;nIP)' but is not restricted to ASCII strings
++inline wxString ipstr(wxUint32 nIP)
++{
++    const wxByte* pucIP = (wxByte*)&nIP;
++	wxString strIP = wxString::Format(wxT(&quot;%u.%u.%u.%u&quot;), pucIP[0], pucIP[1], pucIP[2], pucIP[3]);
++	return strIP;
++}
++
++inline int CmpED2KTagName(const char* pszTagName1, const char* pszTagName2)
++{
++    return wxString(pszTagName1, wxConvLibc).Cmp(wxString(pszTagName2, wxConvLibc));
++}
++
++inline int utf8towc(const char* pcUtf8, wxUint32 uUtf8Size, wxChar* pwc, wxUint32 uWideCharSize)
++{
++    wxChar* pwc0 = pwc;
++
++    while (uUtf8Size &amp;&amp; uWideCharSize)
++    {
++        wxByte ucChar = *pcUtf8++;
++        if (ucChar &lt; 0x80)
++        {
++            uUtf8Size--;
++            uWideCharSize--;
++            *(pwc++) = ucChar;
++        }
++        else if ((ucChar &amp; 0xC0) != 0xC0)
++        {
++            return -1; // Invalid UTF8 string..
++        }
++        else
++        {
++            wxByte ucMask = 0xE0;
++            wxUint32 uExpectedBytes = 1;
++            while ((ucChar &amp; ucMask) == ucMask)
++            {
++                ucMask |= ucMask &gt;&gt; 1;
++                if (++uExpectedBytes &gt; 3)
++                {
++                    return -1; // Invalid UTF8 string..
++                }
++            }
++
++            if (uUtf8Size &lt;= uExpectedBytes)
++                return -1; // Invalid UTF8 string..
++
++            wxUint32 uProcessedBytes = 1 + uExpectedBytes;
++            wxUint32 uWideChar = (wxUint32)(ucChar &amp; ~ucMask);
++            if (uExpectedBytes == 1)
++            {
++                if ((uWideChar &amp; 0x1E) == 0)
++                {
++                    return -1; // Invalid UTF8 string..
++                }
++            }
++            else
++            {
++                if (uWideChar == 0 &amp;&amp; ((wxByte)*pcUtf8 &amp; 0x3F &amp; (ucMask &lt;&lt; 1)) == 0)
++                {
++                    return -1; // Invalid UTF8 string..
++                }
++                if (uExpectedBytes == 2)
++                {
++                    //if (uWideChar == 0x0D &amp;&amp; ((wxByte)*pcUtf8 &amp; 0x20))
++                    //    return -1;
++                }
++                else if (uExpectedBytes == 3)
++                {
++                    if (uWideChar &gt; 4)
++                    {
++                        return -1; // Invalid UTF8 string..
++                    }
++                    if (uWideChar == 4 &amp;&amp; ((wxByte)*pcUtf8 &amp; 0x30))
++                    {
++                        return -1; // Invalid UTF8 string..
++                    }
++                }
++            }
++
++            if (uWideCharSize &lt; (wxUint32)(uExpectedBytes &gt; 2) + 1)
++            {
++                break; // buffer full
++            }
++
++            while (uExpectedBytes--)
++            {
++                if (((ucChar = (wxByte)*(pcUtf8++)) &amp; 0xC0) != 0x80)
++                {
++                    return -1; // Invalid UTF8 string..
++                }
++                uWideChar &lt;&lt;= 6;
++                uWideChar |= (ucChar &amp; 0x3F);
++            }
++            uUtf8Size -= uProcessedBytes;
++
++            if (uWideChar &lt; 0x10000)
++            {
++                uWideCharSize--;
++                *(pwc++) = uWideChar;
++            }
++            else
++            {
++                uWideCharSize -= 2;
++                uWideChar -= 0x10000;
++                *(pwc++) = 0xD800 | (uWideChar &gt;&gt; 10);
++                *(pwc++) = 0xDC00 | (uWideChar &amp; 0x03FF);
++            }
++        }
++    }
++    return pwc - pwc0;
++}
++
++inline int ByteStreamToWideChar(const char* pcUtf8, wxUint32 uUtf8Size, wxChar* pwc, wxUint32 uWideCharSize)
++{
++    int iWideChars = utf8towc(pcUtf8, uUtf8Size, pwc, uWideCharSize);
++    if (iWideChars &lt; 0)
++    {
++        wxChar* pwc0 = pwc;
++        while (uUtf8Size &amp;&amp; uWideCharSize)
++        {
++            if ((*pwc++ = (wxByte)*pcUtf8++) == wxT('\0'))
++            {
++                break;
++            }
++            uUtf8Size--;
++            uWideCharSize--;
++        }
++        iWideChars = pwc - pwc0;
++    }
++    return iWideChars;
++}
++#endif // _XUTILS_H_
+
+Modified: trunk/xMule.vcproj
+===================================================================
+--- trunk/xMule.vcproj	2006-01-27 10:33:14 UTC (rev 25)
++++ trunk/xMule.vcproj	2006-01-28 13:46:57 UTC (rev 26)
+@@ -271,6 +271,10 @@
+ 				&gt;
+ 			&lt;/File&gt;
+ 			&lt;File
++				RelativePath=&quot;.\xCore\xOpCodes.h&quot;
++				&gt;
++			&lt;/File&gt;
++			&lt;File
+ 				RelativePath=&quot;.\xMainFrame\xOptions\xOptionsDialog.h&quot;
+ 				&gt;
+ 			&lt;/File&gt;
+@@ -314,6 +318,10 @@
+ 				RelativePath=&quot;.\xMainFrame\xTransfersPanel.h&quot;
+ 				&gt;
+ 			&lt;/File&gt;
++			&lt;File
++				RelativePath=&quot;.\xCore\xUtils.h&quot;
++				&gt;
++			&lt;/File&gt;
+ 		&lt;/Filter&gt;
+ 		&lt;Filter
+ 			Name=&quot;Resource Files&quot;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000011.html">[xMule-svn] r25 - in trunk: . XRC
+</A></li>
+	<LI>Next message: <A HREF="000013.html">[xMule-svn] r27 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12">[ date ]</a>
+              <a href="thread.html#12">[ thread ]</a>
+              <a href="subject.html#12">[ subject ]</a>
+              <a href="author.html#12">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

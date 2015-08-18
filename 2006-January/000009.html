@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r23 - trunk/xCore
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r23%20-%20trunk/xCore&In-Reply-To=%3C200601270940.k0R9epVl009088%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000008.html">
+   <LINK REL="Next"  HREF="000010.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r23 - trunk/xCore</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r23%20-%20trunk/xCore&In-Reply-To=%3C200601270940.k0R9epVl009088%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r23 - trunk/xCore">avivahl at berlios.de
+       </A><BR>
+    <I>Fri Jan 27 10:40:51 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000008.html">[xMule-svn] r22 - trunk/xCore
+</A></li>
+        <LI>Next message: <A HREF="000010.html">[xMule-svn] r24 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-01-27 10:40:51 +0100 (Fri, 27 Jan 2006)
+New Revision: 23
+
+Modified:
+   trunk/xCore/xSafeFile.cpp
+   trunk/xCore/xTag.h
+Log:
+Woops. Fixed compilation errors.
+
+Modified: trunk/xCore/xSafeFile.cpp
+===================================================================
+--- trunk/xCore/xSafeFile.cpp	2006-01-27 09:37:45 UTC (rev 22)
++++ trunk/xCore/xSafeFile.cpp	2006-01-27 09:40:51 UTC (rev 23)
+@@ -151,7 +151,7 @@
+     return nVal;
+ }
+ 
+-wxUint64 CFileDataIO::ReadUInt64()
++wxUint64 xFileDataIO::ReadUInt64()
+ {
+ 	wxUint64 nVal;
+ 	Read(&amp;nVal, sizeof(nVal));
+@@ -273,7 +273,7 @@
+     Write(&amp;nVal, sizeof(nVal));
+ }
+ 
+-void CFileDataIO::WriteUInt64(wxUint64 nVal)
++void xFileDataIO::WriteUInt64(wxUint64 nVal)
+ {
+ 	Write(&amp;nVal, sizeof(nVal));
+ }
+
+Modified: trunk/xCore/xTag.h
+===================================================================
+--- trunk/xCore/xTag.h	2006-01-27 09:37:45 UTC (rev 22)
++++ trunk/xCore/xTag.h	2006-01-27 09:40:51 UTC (rev 23)
+@@ -72,7 +72,7 @@
+     bool IsInt64(bool bOrInt32 = true) const { return m_uType == TAGTYPE_UINT64 || (bOrInt32 &amp;&amp; IsInt()); }
+ 	
+     wxUint32 GetInt() const { wxASSERT(IsInt()); return (wxUint32)m_uVal; }
+-	wxUint64 GetInt64() const { ASSERT(IsInt64(true)); return m_uVal; }
++	wxUint64 GetInt64() const { wxASSERT(IsInt64(true)); return m_uVal; }
+     const wxString&amp; GetStr() const { wxASSERT(IsStr()); return* m_pstrVal; }
+     float GetFloat() const { wxASSERT(IsFloat()); return m_fVal; }
+     const wxByte* GetHash() const { wxASSERT(IsHash()); return m_pData; }
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000008.html">[xMule-svn] r22 - trunk/xCore
+</A></li>
+	<LI>Next message: <A HREF="000010.html">[xMule-svn] r24 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

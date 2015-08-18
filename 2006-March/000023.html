@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r37 - trunk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-March/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r37%20-%20trunk&In-Reply-To=%3C200603171125.k2HBPqAR005695%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000022.html">
+   <LINK REL="Next"  HREF="000024.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r37 - trunk</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r37%20-%20trunk&In-Reply-To=%3C200603171125.k2HBPqAR005695%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r37 - trunk">avivahl at berlios.de
+       </A><BR>
+    <I>Fri Mar 17 12:25:52 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000022.html">[xMule-svn] r36 - trunk/xCore
+</A></li>
+        <LI>Next message: <A HREF="000024.html">[xMule-svn] r38 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23">[ date ]</a>
+              <a href="thread.html#23">[ thread ]</a>
+              <a href="subject.html#23">[ subject ]</a>
+              <a href="author.html#23">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-03-17 12:25:51 +0100 (Fri, 17 Mar 2006)
+New Revision: 37
+
+Modified:
+   trunk/COMPILE
+   trunk/Makefile
+   trunk/xMule.make
+Log:
+Updated makefiles using Premake-3.1-RC3...
+
+Modified: trunk/COMPILE
+===================================================================
+--- trunk/COMPILE	2006-03-04 21:54:17 UTC (rev 36)
++++ trunk/COMPILE	2006-03-17 11:25:51 UTC (rev 37)
+@@ -8,4 +8,4 @@
+ --------
+ Compiler: GCC 4.x. Older versions may work as well, but untested.
+ Library: wxGTK-2.6.2 (--enable-unicode --enable-stl --enable-monolithic --enable-static --enable-debug).
+-Notes: Used Premake-3.0 for creating the makefiles.  Makefiles are provided.
++Notes: Used Premake-3.1-RC3 for creating the makefiles.  Makefiles are provided.
+
+Modified: trunk/Makefile
+===================================================================
+--- trunk/Makefile	2006-03-04 21:54:17 UTC (rev 36)
++++ trunk/Makefile	2006-03-17 11:25:51 UTC (rev 37)
+@@ -15,7 +15,7 @@
+ 
+ Makefile: premake.lua
+ 	@echo ==== Regenerating Makefiles ====
+-	@premake --target gnu
++	@premake --file $^ --target gnu
+ 
+ xMule:
+ 	@echo ==== Building xMule ====
+
+Modified: trunk/xMule.make
+===================================================================
+--- trunk/xMule.make	2006-03-04 21:54:17 UTC (rev 36)
++++ trunk/xMule.make	2006-03-17 11:25:51 UTC (rev 37)
+@@ -6,32 +6,32 @@
+ endif
+ 
+ ifeq ($(CONFIG),Debug)
+-  BINDIR = bin
+-  LIBDIR = .
+-  OBJDIR = obj/Debug
+-  OUTDIR = bin
+-  CPPFLAGS = -MD
++  BINDIR := bin
++  LIBDIR := .
++  OBJDIR := obj/Debug
++  OUTDIR := bin
++  CPPFLAGS := -MD
+   CFLAGS += $(CPPFLAGS) -g `wx-config --cxxflags`
+-  CXXFLAGS = $(CFLAGS)
++  CXXFLAGS := $(CFLAGS)
+   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) `wx-config --libs`
+-  LDDEPS =
+-  TARGET = xmule
++  LDDEPS :=
++  TARGET := xmule
+ endif
+ 
+ ifeq ($(CONFIG),Release)
+-  BINDIR = bin
+-  LIBDIR = .
+-  OBJDIR = obj/Release
+-  OUTDIR = bin
+-  CPPFLAGS = -MD
++  BINDIR := bin
++  LIBDIR := .
++  OBJDIR := obj/Release
++  OUTDIR := bin
++  CPPFLAGS := -MD
+   CFLAGS += $(CPPFLAGS) -O2 `wx-config --cxxflags`
+-  CXXFLAGS = $(CFLAGS)
++  CXXFLAGS := $(CFLAGS)
+   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -s `wx-config --libs`
+-  LDDEPS =
+-  TARGET = xmule
++  LDDEPS :=
++  TARGET := xmule
+ endif
+ 
+-OBJECTS = \
++OBJECTS := \
+ 	$(OBJDIR)/xApp.o \
+ 	$(OBJDIR)/xKadPanel.o \
+ 	$(OBJDIR)/xMainFrame.o \
+@@ -44,71 +44,86 @@
+ 	$(OBJDIR)/xServer.o \
+ 	$(OBJDIR)/xTag.o \
+ 
++RESOURCES := \
++
++CMD := $(subst \,\\,$(ComSpec)$(COMSPEC))
++ifeq (,$(CMD))
++  CMD_MKBINDIR := mkdir -p $(BINDIR)
++  CMD_MKLIBDIR := mkdir -p $(LIBDIR)
++  CMD_MKOUTDIR := mkdir -p $(OUTDIR)
++  CMD_MKOBJDIR := mkdir -p $(OBJDIR)
++else
++  CMD_MKBINDIR := $(CMD) /c if not exist $(subst /,\\,$(BINDIR)) mkdir $(subst /,\\,$(BINDIR))
++  CMD_MKLIBDIR := $(CMD) /c if not exist $(subst /,\\,$(LIBDIR)) mkdir $(subst /,\\,$(LIBDIR))
++  CMD_MKOUTDIR := $(CMD) /c if not exist $(subst /,\\,$(OUTDIR)) mkdir $(subst /,\\,$(OUTDIR))
++  CMD_MKOBJDIR := $(CMD) /c if not exist $(subst /,\\,$(OBJDIR)) mkdir $(subst /,\\,$(OBJDIR))
++endif
++
+ .PHONY: clean
+ 
+-$(OUTDIR)/$(TARGET): $(OBJECTS) $(LDDEPS)
++$(OUTDIR)/$(TARGET): $(OBJECTS) $(LDDEPS) $(RESOURCES)
+ 	@echo Linking xMule
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(BINDIR) ]; then mkdir -p $(BINDIR); fi
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(LIBDIR) ]; then mkdir -p $(LIBDIR); fi
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OUTDIR) ]; then mkdir -p $(OUTDIR); fi
+-	@$(CXX) -o $@ $(OBJECTS) $(LDFLAGS)
++	-@$(CMD_MKBINDIR)
++	-@$(CMD_MKLIBDIR)
++	-@$(CMD_MKOUTDIR)
++	@$(CXX) -o $@ $(OBJECTS) $(LDFLAGS) $(RESOURCES)
+ 
+ clean:
+ 	@echo Cleaning xMule
+ 	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at rm</A> -rf $(OUTDIR)/$(TARGET) $(OBJDIR)
+ 
+ $(OBJDIR)/xApp.o: xApp.cpp
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $&lt;)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $&lt;
+ 
+ $(OBJDIR)/xKadPanel.o: xMainFrame/xKadPanel.cpp
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $&lt;)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $&lt;
+ 
+ $(OBJDIR)/xMainFrame.o: xMainFrame/xMainFrame.cpp
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $&lt;)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $&lt;
+ 
+ $(OBJDIR)/xSearchPanel.o: xMainFrame/xSearchPanel.cpp
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $&lt;)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $&lt;
+ 
+ $(OBJDIR)/xServersPanel.o: xMainFrame/xServersPanel.cpp
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $&lt;)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $&lt;
+ 
+ $(OBJDIR)/xSharedFilesPanel.o: xMainFrame/xSharedFilesPanel.cpp
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $&lt;)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $&lt;
+ 
+ $(OBJDIR)/xTransfersPanel.o: xMainFrame/xTransfersPanel.cpp
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $&lt;)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $&lt;
+ 
+ $(OBJDIR)/xOptionsDialog.o: xMainFrame/xOptions/xOptionsDialog.cpp
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $&lt;)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $&lt;
+ 
+ $(OBJDIR)/xSafeFile.o: xCore/xSafeFile.cpp
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $&lt;)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $&lt;
+ 
+ $(OBJDIR)/xServer.o: xCore/xServer.cpp
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $&lt;)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $&lt;
+ 
+ $(OBJDIR)/xTag.o: xCore/xTag.cpp
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
++	-@$(CMD_MKOBJDIR)
+ 	@echo $(notdir $&lt;)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $&lt;
+ 
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000022.html">[xMule-svn] r36 - trunk/xCore
+</A></li>
+	<LI>Next message: <A HREF="000024.html">[xMule-svn] r38 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23">[ date ]</a>
+              <a href="thread.html#23">[ thread ]</a>
+              <a href="subject.html#23">[ subject ]</a>
+              <a href="author.html#23">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,1324 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r58 - in trunk: . xCore xMainFrame xMainFrame/xOptions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-November/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r58%20-%20in%20trunk%3A%20.%20xCore%20xMainFrame%20xMainFrame/xOptions&In-Reply-To=%3C200611101512.kAAFCYZB028739%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000045.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r58 - in trunk: . xCore xMainFrame xMainFrame/xOptions</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r58%20-%20in%20trunk%3A%20.%20xCore%20xMainFrame%20xMainFrame/xOptions&In-Reply-To=%3C200611101512.kAAFCYZB028739%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r58 - in trunk: . xCore xMainFrame xMainFrame/xOptions">avivahl at mail.berlios.de
+       </A><BR>
+    <I>Fri Nov 10 16:12:34 CET 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000045.html">[xMule-svn] r59 - in trunk: . xMainFrame
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#44">[ date ]</a>
+              <a href="thread.html#44">[ thread ]</a>
+              <a href="subject.html#44">[ subject ]</a>
+              <a href="author.html#44">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-11-10 16:12:31 +0100 (Fri, 10 Nov 2006)
+New Revision: 58
+
+Modified:
+   trunk/xApp.cpp
+   trunk/xApp.h
+   trunk/xCore/xAbstractFile.cpp
+   trunk/xCore/xAbstractFile.h
+   trunk/xCore/xOpCodes.h
+   trunk/xCore/xSafeFile.cpp
+   trunk/xCore/xSafeFile.h
+   trunk/xCore/xServer.cpp
+   trunk/xCore/xServer.h
+   trunk/xCore/xTag.cpp
+   trunk/xCore/xTag.h
+   trunk/xCore/xUtils.h
+   trunk/xMainFrame/xAdvListCtrl.h
+   trunk/xMainFrame/xKadPanel.cpp
+   trunk/xMainFrame/xKadPanel.h
+   trunk/xMainFrame/xMainFrame.cpp
+   trunk/xMainFrame/xMainFrame.h
+   trunk/xMainFrame/xOptions/xOptionsDialog.cpp
+   trunk/xMainFrame/xOptions/xOptionsDialog.h
+   trunk/xMainFrame/xOptions/xOptionsIcons.h
+   trunk/xMainFrame/xOptions/xOptionsPage.h
+   trunk/xMainFrame/xResources.h
+   trunk/xMainFrame/xSearchPanel.cpp
+   trunk/xMainFrame/xSearchPanel.h
+   trunk/xMainFrame/xServersPanel.cpp
+   trunk/xMainFrame/xServersPanel.h
+   trunk/xMainFrame/xSharedFilesPanel.cpp
+   trunk/xMainFrame/xSharedFilesPanel.h
+   trunk/xMainFrame/xTransfersPanel.cpp
+   trunk/xMainFrame/xTransfersPanel.h
+Log:
+Code updates... did it 2 weeks ago and don't remember what it includes :O
+
+Modified: trunk/xApp.cpp
+===================================================================
+--- trunk/xApp.cpp	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xApp.cpp	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,6 +1,19 @@
+-/**
+- * xMuleApp.cpp
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #include &quot;xApp.h&quot;                      // xApp
+ #include &quot;xCore/xSafeFile.h&quot;           // xSafeFile
+
+Modified: trunk/xApp.h
+===================================================================
+--- trunk/xApp.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xApp.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,6 +1,19 @@
+-/**
+- * xApp - xMule's Main Application Class
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #ifndef _XAPP_H_
+ #define _XAPP_H_
+
+Modified: trunk/xCore/xAbstractFile.cpp
+===================================================================
+--- trunk/xCore/xAbstractFile.cpp	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xCore/xAbstractFile.cpp	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,3 +1,22 @@
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
++
++// Status: eMule 0.47c (TODO:KAD, TODO:FILE COMMENTS)
++
+ #include &quot;xAbstractFile.h&quot;             // xAbstractFile
+ #include &quot;xUtils.h&quot;                    // md4cpy(), md4clr()
+ 
+@@ -15,6 +34,7 @@
+     m_bCommentLoaded = false;
+     m_uUserRating = 0;
+     m_bHasComment = false;
++    // m_bKadCommentSearchRunning = false; TODO:KAD
+ }
+ 
+ xAbstractFile::xAbstractFile(const xAbstractFile* pAbstractFile)
+@@ -28,8 +48,9 @@
+     m_uUserRating = pAbstractFile-&gt;m_uUserRating;
+     m_bHasComment = pAbstractFile-&gt;m_bHasComment;
+     m_strFileType = pAbstractFile-&gt;m_strFileType;
++/*	m_bKadCommentSearchRunning = pAbstractFile-&gt;m_bKadCommentSearchRunning; TODO:KAD
+ 
+-/*    const CTypedPtrList&lt;CPtrList, Kademlia::CEntry*&gt;&amp; list = pAbstractFile-&gt;getNotes(); TODO:KAD
++    const CTypedPtrList&lt;CPtrList, Kademlia::CEntry*&gt;&amp; list = pAbstractFile-&gt;getNotes();
+     for(POSITION pos = list.GetHeadPosition(); pos != NULL; )
+     {
+         Kademlia::CEntry* entry = list.GetNext(pos);
+@@ -94,13 +115,17 @@
+ void xAbstractFile::CopyTags(const std::vector&lt;xTag*&gt;&amp; tags)
+ {
+     for (int i = 0; i &lt; tags.size(); i++)
++    {
+         taglist.push_back(new xTag(*tags[i]));
++    }
+ }
+ 
+ void xAbstractFile::ClearTags()
+ {
+     for (int i = 0; i &lt; taglist.size(); i++)
++    {
+         delete taglist[i];
++    }
+     taglist.clear();
+ }
+ 
+@@ -164,30 +189,30 @@
+     md4cpy(m_abyFileHash, pucFileHash);
+ }
+ 
+-bool xAbstractFile::HasNullHash()const
++bool xAbstractFile::HasNullHash() const
+ {
+     return isnulmd4(m_abyFileHash);
+ }
+ 
+ wxUint32 xAbstractFile::GetIntTagValue(wxUint8 tagname) const
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         const xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsInt())
++        if (pTag-&gt;GetNameID() == tagname &amp;&amp; pTag-&gt;IsInt())
+         {
+             return pTag-&gt;GetInt();
+         }
+     }
+-    return NULL;
++    return 0;
+ }
+ 
+ bool xAbstractFile::GetIntTagValue(wxUint8 tagname, wxUint32&amp; ruValue) const
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         const xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsInt())
++        if (pTag-&gt;GetNameID() == tagname &amp;&amp; pTag-&gt;IsInt())
+         {
+             ruValue = pTag-&gt;GetInt();
+             return true;
+@@ -196,38 +221,38 @@
+     return false;
+ }
+ 
+-wxUint64 xAbstractFile::GetInt64TagValue(const char* tagname)const
++wxUint64 xAbstractFile::GetInt64TagValue(const char* tagname) const
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         const xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==0 &amp;&amp; pTag-&gt;IsInt64(true) &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname)==0)
++        if (pTag-&gt;GetNameID() == 0 &amp;&amp; pTag-&gt;IsInt64(true) &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname) == 0)
+         {
+             return pTag-&gt;GetInt64();
+         }
+     }
+-    return NULL;
++    return 0;
+ }
+ 
+-wxUint64 xAbstractFile::GetInt64TagValue(wxUint8 tagname)const
++wxUint64 xAbstractFile::GetInt64TagValue(wxUint8 tagname) const
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         const xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsInt64(true))
++        if (pTag-&gt;GetNameID() == tagname &amp;&amp; pTag-&gt;IsInt64(true))
+         {
+             return pTag-&gt;GetInt64();
+         }
+     }
+-    return NULL;
++    return 0;
+ }
+ 
+-bool xAbstractFile::GetInt64TagValue(wxUint8 tagname, wxUint64&amp; ruValue)const
++bool xAbstractFile::GetInt64TagValue(wxUint8 tagname, wxUint64&amp; ruValue) const
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         const xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsInt64(true))
++        if (pTag-&gt;GetNameID() == tagname &amp;&amp; pTag-&gt;IsInt64(true))
+         {
+             ruValue = pTag-&gt;GetInt64();
+             return true;
+@@ -236,25 +261,25 @@
+     return false;
+ }
+ 
+-wxUint32 xAbstractFile::GetIntTagValue(const char* tagname)const
++wxUint32 xAbstractFile::GetIntTagValue(const char* tagname) const
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         const xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==0 &amp;&amp; pTag-&gt;IsInt() &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname)==0)
++        if (pTag-&gt;GetNameID() == 0 &amp;&amp; pTag-&gt;IsInt() &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname) == 0)
+         {
+             return pTag-&gt;GetInt();
+         }
+     }
+-    return NULL;
++    return 0;
+ }
+ 
+ void xAbstractFile::SetIntTagValue(wxUint8 tagname, wxUint32 uValue)
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsInt())
++        if (pTag-&gt;GetNameID() == tagname &amp;&amp; pTag-&gt;IsInt())
+         {
+             pTag-&gt;SetInt(uValue);
+             return;
+@@ -266,10 +291,10 @@
+ 
+ void xAbstractFile::SetInt64TagValue(wxUint8 tagname, wxUint64 uValue)
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsInt64(true))
++        if (pTag-&gt;GetNameID() == tagname &amp;&amp; pTag-&gt;IsInt64(true))
+         {
+             pTag-&gt;SetInt64(uValue);
+             return;
+@@ -281,10 +306,10 @@
+ 
+ const wxString&amp; xAbstractFile::GetStrTagValue(wxUint8 tagname) const
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         const xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsStr())
++        if (pTag-&gt;GetNameID() == tagname &amp;&amp; pTag-&gt;IsStr())
+         {
+             return pTag-&gt;GetStr();
+         }
+@@ -294,10 +319,10 @@
+ 
+ const wxString&amp; xAbstractFile::GetStrTagValue(const char* tagname) const
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         const xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==0 &amp;&amp; pTag-&gt;IsStr() &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname)==0)
++        if (pTag-&gt;GetNameID() == 0 &amp;&amp; pTag-&gt;IsStr() &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname) == 0)
+         {
+             return pTag-&gt;GetStr();
+         }
+@@ -307,9 +332,10 @@
+ 
+ void xAbstractFile::SetStrTagValue(wxUint8 tagname, const wxChar* pszValue)
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++){
++    for (int i = 0; i &lt; taglist.size(); i++)
++    {
+         xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;IsStr())
++        if (pTag-&gt;GetNameID() == tagname &amp;&amp; pTag-&gt;IsStr())
+         {
+             pTag-&gt;SetStr(pszValue);
+             return;
+@@ -321,10 +347,10 @@
+ 
+ xTag* xAbstractFile::GetTag(wxUint8 tagname, wxUint8 tagtype) const
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==tagname &amp;&amp; pTag-&gt;GetType()==tagtype)
++        if (pTag-&gt;GetNameID() == tagname &amp;&amp; pTag-&gt;GetType() == tagtype)
+         {
+             return pTag;
+         }
+@@ -334,10 +360,10 @@
+ 
+ xTag* xAbstractFile::GetTag(const char* tagname, wxUint8 tagtype) const
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==0 &amp;&amp; pTag-&gt;GetType()==tagtype &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname)==0)
++        if (pTag-&gt;GetNameID() == 0 &amp;&amp; pTag-&gt;GetType() == tagtype &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname) == 0)
+         {
+             return pTag;
+         }
+@@ -347,10 +373,10 @@
+ 
+ xTag* xAbstractFile::GetTag(wxUint8 tagname) const
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==tagname)
++        if (pTag-&gt;GetNameID() == tagname)
+         {
+             return pTag;
+         }
+@@ -360,13 +386,47 @@
+ 
+ xTag* xAbstractFile::GetTag(const char* tagname) const
+ {
+-    for (int i = 0; i &lt; taglist.GetSize(); i++)
++    for (int i = 0; i &lt; taglist.size(); i++)
+     {
+         xTag* pTag = taglist[i];
+-        if (pTag-&gt;GetNameID()==0 &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname)==0)
++        if (pTag-&gt;GetNameID() == 0 &amp;&amp; CmpED2KTagName(pTag-&gt;GetName(), tagname) == 0)
+         {
+             return pTag;
+         }
+     }
+     return NULL;
+ }
++
++void xAbstractFile::DeleteTag(xTag* pTag)
++{
++    for (int i = 0; i &lt; taglist.size(); i++)
++    {
++        if (taglist[i] == pTag)
++        {
++            taglist.RemoveAt(i);
++            delete pTag;
++            return;
++        }
++    }
++}
++
++void xAbstractFile::DeleteTag(wxUint8 tagname)
++{
++	for (int i = 0; i &lt; taglist.GetSize(); i++)
++    {
++        xTag* pTag = taglist[i];
++        if (pTag-&gt;GetNameID() == tagname)
++        {
++            taglist.RemoveAt(i);
++            delete pTag;
++            return;
++        }
++    }
++}
++
++/*void xAbstractFile::SetKadCommentSearchRunning(bool bVal){ TODO:KAD
++	if (bVal != m_bKadCommentSearchRunning){
++		m_bKadCommentSearchRunning = bVal;
++		UpdateFileRatingCommentAvail(true);
++	}
++}*/
+
+Modified: trunk/xCore/xAbstractFile.h
+===================================================================
+--- trunk/xCore/xAbstractFile.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xCore/xAbstractFile.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,3 +1,22 @@
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
++
++// Status: eMule 0.47c (TODO:KAD)
++
+ #ifndef _XABSTRACTFILE_H_
+ #define _XABSTRACTFILE_H_
+ 
+@@ -28,7 +47,7 @@
+     const wxString&amp; GetFileName() const { return m_strFileName; }
+     virtual void SetFileName(const wxChar* pszFileName, bool bReplaceInvalidFileSystemChars = false, bool bAutoSetFileType = true); // 'bReplaceInvalidFileSystemChars' is set to 'false' for backward compatibility!
+ 
+-    // returns the ED2K file type
++    // returns the ED2K file type (an ASCII string)
+     const wxString&amp; GetFileType() const { return m_strFileType; }
+     virtual void SetFileType(const wxChar* pszFileType);
+ 
+@@ -43,8 +62,8 @@
+     virtual void SetFileSize(wxUint64 nFileSize) { m_nFileSize = nFileSize; }
+     bool IsLargeFile() const { return m_nFileSize &gt; (wxUint64)OLD_MAX_EMULE_FILE_SIZE; }
+ 
+-    uint32 GetIntTagValue(wxUint8 tagname) const;
+-    uint32 GetIntTagValue(const char* tagname) const;
++    wxUint32 GetIntTagValue(wxUint8 tagname) const;
++    wxUint32 GetIntTagValue(const char* tagname) const;
+     bool GetIntTagValue(wxUint8 tagname, wxUint32&amp; ruValue) const;
+     wxUint64 GetInt64TagValue(wxUint8 tagname) const;
+     wxUint64 GetInt64TagValue(const char* tagname) const;
+@@ -60,24 +79,29 @@
+     xTag* GetTag(const char* tagname) const;
+     const std::vector&lt;xTag*&gt;&amp; GetTags() const { return taglist; }
+     void AddTagUnique(xTag* pTag);
++	void DeleteTag(wxUint8 tagname);
++	void DeleteTag(xTag* pTag);
+     void ClearTags();
+     void CopyTags(const std::vector&lt;xTag*&gt;&amp; tags);
+     virtual bool IsPartFile()const { return false; }
+ 
+     bool HasComment() const { return m_bHasComment; }
+     void SetHasComment(bool in) { m_bHasComment = in; }
+-    wxUint32 UserRating() const { return m_uUserRating; }
++    wxUint32 UserRating(/*bool bKadSearchIndicator = false TODO:KAD*/) const { return /*(bKadSearchIndicator &amp;&amp; m_bKadCommentSearchRunning) ? 6 :*/ m_uUserRating; }
+     bool HasRating() const { return m_uUserRating &gt; 0; }
+     bool HasBadRating() const { return ( HasRating() &amp;&amp; (m_uUserRating &lt; 2)); }
+-    void SetUserRating(UINT in) { m_uUserRating = in; }
++    void SetUserRating(wxUint32 in) { m_uUserRating = in; }
+     const wxString&amp; GetFileComment();
+     wxUint32 GetFileRating();
+     void LoadComment();
+-    virtual void UpdateFileRatingCommentAvail() = 0;
++    virtual void UpdateFileRatingCommentAvail(bool bForceUpdate = false) = 0;
+ 
+-    // bool AddNote(Kademlia::CEntry* pEntry); TODO:KAD
+-    // const CKadEntryPtrList&amp; getNotes() const { return m_kadNotes; }
++/*    bool AddNote(Kademlia::CEntry* pEntry); TODO:KAD
++    const CKadEntryPtrList&amp; getNotes() const { return m_kadNotes; }
+ 
++    bool IsKadCommentSearchRunning() const { return m_bKadCommentSearchRunning; }
++    void SetKadCommentSearchRunning(bool bVal); TODO:KAD*/
++
+ protected:
+     wxString m_strFileName;
+     unsigned char m_abyFileHash[16];
+@@ -87,6 +111,7 @@
+     bool m_bCommentLoaded;
+     wxUint32 m_uUserRating;
+     bool m_bHasComment;
++    // bool m_bKadCommentSearchRunning; TODO:KAD
+     wxString m_strFileType;
+     std::vector&lt;xTag*&gt; taglist;
+     // CKadEntryPtrList m_kadNotes; TODO:KAD
+
+Modified: trunk/xCore/xOpCodes.h
+===================================================================
+--- trunk/xCore/xOpCodes.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xCore/xOpCodes.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,3 +1,20 @@
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
++
+ #ifndef _XOPCODES_H_
+ #define _XOPCODES_H_
+ 
+@@ -87,7 +104,7 @@
+ #define TAGTYPE_STR14           0x1E
+ #define TAGTYPE_STR15           0x1F
+ #define TAGTYPE_STR16           0x20
+-// The following 6 tag types are accepted by eMule 0.42f (02-Mai-2004) in receiving
++// The following 6 tag types are accepted by eMule 0.42f (02-May-2004) in receiving
+ // code only because of a flaw, those tags are handled correctly, but should not be
+ // handled at all
+ #define TAGTYPE_STR17           0x21
+@@ -97,8 +114,8 @@
+ #define TAGTYPE_STR21           0x25
+ #define TAGTYPE_STR22           0x26
+ 
+-#define MAX_EMULE_FILE_SIZE 0x4000000000ui64 // = 2^38 = 256GB
+-#define OLD_MAX_EMULE_FILE_SIZE 4290048000ui64  // (4294967295/PARTSIZE)*PARTSIZE = ~4GB
++#define	MAX_EMULE_FILE_SIZE 0x4000000000ui64 // = 2^38 = 256GB
++#define OLD_MAX_EMULE_FILE_SIZE	4290048000ui64 // (4294967295/PARTSIZE)*PARTSIZE = ~4GB
+ 
+ #define ED2KFTSTR_AUDIO         &quot;Audio&quot; // value for eD2K tag FT_FILETYPE
+ #define ED2KFTSTR_VIDEO         &quot;Video&quot; // value for eD2K tag FT_FILETYPE
+
+Modified: trunk/xCore/xSafeFile.cpp
+===================================================================
+--- trunk/xCore/xSafeFile.cpp	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xCore/xSafeFile.cpp	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,6 +1,19 @@
+-/**
+- * xSafeFile.cpp
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #include &quot;xSafeFile.h&quot;                 // Class declarations
+ #include &quot;xUtils.h&quot;                    // String convertion functions
+
+Modified: trunk/xCore/xSafeFile.h
+===================================================================
+--- trunk/xCore/xSafeFile.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xCore/xSafeFile.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * File operating classes: xFileDataIO (base class), xSafeBufferedFile (wxFFile)
+- * Array template: Array
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #ifndef _XSAFEFILE_H_
+ #define _XSAFEFILE_H_
+
+Modified: trunk/xCore/xServer.cpp
+===================================================================
+--- trunk/xCore/xServer.cpp	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xCore/xServer.cpp	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,6 +1,19 @@
+-/**
+- * xServer.cpp
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #include &quot;xServer.h&quot;                   // xServer
+ #include &quot;../xApp.h&quot;                   // wxGetApp()
+
+Modified: trunk/xCore/xServer.h
+===================================================================
+--- trunk/xCore/xServer.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xCore/xServer.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,6 +1,19 @@
+-/**
+- * xServer - A Server Class
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #ifndef _XSERVER_H_
+ #define _XSERVER_H_
+
+Modified: trunk/xCore/xTag.cpp
+===================================================================
+--- trunk/xCore/xTag.cpp	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xCore/xTag.cpp	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,3 +1,20 @@
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
++
+ #include &quot;../xApp.h&quot;                   // wxGetApp()
+ #include &quot;xTag.h&quot;
+ #include &quot;xSafeFile.h&quot;
+
+Modified: trunk/xCore/xTag.h
+===================================================================
+--- trunk/xCore/xTag.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xCore/xTag.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,3 +1,20 @@
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
++
+ #ifndef _XTAG_H_
+ #define _XTAG_H_
+ 
+
+Modified: trunk/xCore/xUtils.h
+===================================================================
+--- trunk/xCore/xUtils.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xCore/xUtils.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,3 +1,20 @@
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
++
+ #ifndef _XUTILS_H_
+ #define _XUTILS_H_
+ 
+
+Modified: trunk/xMainFrame/xAdvListCtrl.h
+===================================================================
+--- trunk/xMainFrame/xAdvListCtrl.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xAdvListCtrl.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,6 +1,19 @@
+-/**
+- * xAdvListCtrl - Advanced wxListCtrl
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #ifndef _XADVLISTCTRL_H_
+ #define _XADVLISTCTRL_H_
+
+Modified: trunk/xMainFrame/xKadPanel.cpp
+===================================================================
+--- trunk/xMainFrame/xKadPanel.cpp	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xKadPanel.cpp	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xKadPanel.cpp
+- * xMule's Kad Panel
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #include &quot;xKadPanel.h&quot;                 // xKadPanel
+ #include &quot;xResources.h&quot;                // IDs and XPMs
+
+Modified: trunk/xMainFrame/xKadPanel.h
+===================================================================
+--- trunk/xMainFrame/xKadPanel.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xKadPanel.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xKadPanel.h
+- * xMule's Kad Panel
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #ifndef _XKADPANEL_H_
+ #define _XKADPANEL_H_
+
+Modified: trunk/xMainFrame/xMainFrame.cpp
+===================================================================
+--- trunk/xMainFrame/xMainFrame.cpp	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xMainFrame.cpp	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xMainFrame.cpp
+- * xMule's main frame class
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #include &quot;xMainFrame.h&quot;                // xMainFrame
+ #include &quot;xOptions/xOptionsDialog.h&quot;   // xOptionsDialog
+
+Modified: trunk/xMainFrame/xMainFrame.h
+===================================================================
+--- trunk/xMainFrame/xMainFrame.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xMainFrame.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xMainFrame.h
+- * xMule's main frame class
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #ifndef _XMAINFRAME_H_
+ #define _XMAINFRAME_H_
+
+Modified: trunk/xMainFrame/xOptions/xOptionsDialog.cpp
+===================================================================
+--- trunk/xMainFrame/xOptions/xOptionsDialog.cpp	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xOptions/xOptionsDialog.cpp	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xOptionsDialog.cpp
+- * xMule's preferences dialog class
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #include &quot;xOptionsDialog.h&quot;            // xOptionsDialog
+ #include &quot;xOptionsPage.h&quot;              // xOptionsPage
+
+Modified: trunk/xMainFrame/xOptions/xOptionsDialog.h
+===================================================================
+--- trunk/xMainFrame/xOptions/xOptionsDialog.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xOptions/xOptionsDialog.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xOptionsDialog.h
+- * xMule's options dialog class
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #ifndef _XOPTIONSDIALOG_H_
+ #define _XOPTIONSDIALOG_H_
+
+Modified: trunk/xMainFrame/xOptions/xOptionsIcons.h
+===================================================================
+--- trunk/xMainFrame/xOptions/xOptionsIcons.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xOptions/xOptionsIcons.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,5 +1,22 @@
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
++
+ /*
+-This file simply includes all the XPM icons of the options panel list.
++   This file simply includes all the XPM icons of the options panel list.
+ */
+ 
+ #ifndef _XOPTIONSICONS_H_
+
+Modified: trunk/xMainFrame/xOptions/xOptionsPage.h
+===================================================================
+--- trunk/xMainFrame/xOptions/xOptionsPage.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xOptions/xOptionsPage.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,3 +1,20 @@
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
++
+ #ifndef _XOPTIONSPAGE_
+ #define _XOPTIONSPAGE_
+ 
+
+Modified: trunk/xMainFrame/xResources.h
+===================================================================
+--- trunk/xMainFrame/xResources.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xResources.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/*
+- * xResources.h
+- * IDs for controls and Images (XPM format)
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #ifndef _XRESOURCES_H_
+ #define _XRESOURCES_H_
+
+Modified: trunk/xMainFrame/xSearchPanel.cpp
+===================================================================
+--- trunk/xMainFrame/xSearchPanel.cpp	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xSearchPanel.cpp	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xSearchPanel.cpp
+- * xMule's Search Panel
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #include &quot;xSearchPanel.h&quot;              // xSearchPanel
+ #include &quot;xResources.h&quot;                // IDs and XPMs
+
+Modified: trunk/xMainFrame/xSearchPanel.h
+===================================================================
+--- trunk/xMainFrame/xSearchPanel.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xSearchPanel.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xSearchPanel.h
+- * xMule's Search Panel
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #ifndef _XSEARCHPANEL_H_
+ #define _XSEARCHPANEL_H_
+
+Modified: trunk/xMainFrame/xServersPanel.cpp
+===================================================================
+--- trunk/xMainFrame/xServersPanel.cpp	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xServersPanel.cpp	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xServersPanel.cpp
+- * xMule's Servers Panel
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #include &quot;xServersPanel.h&quot;             // xServersPanel
+ 
+
+Modified: trunk/xMainFrame/xServersPanel.h
+===================================================================
+--- trunk/xMainFrame/xServersPanel.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xServersPanel.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xServersPanel.h
+- * xMule's Servers Panel
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #ifndef _XSERVERSPANEL_H_
+ #define _XSERVERSPANEL_H_
+
+Modified: trunk/xMainFrame/xSharedFilesPanel.cpp
+===================================================================
+--- trunk/xMainFrame/xSharedFilesPanel.cpp	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xSharedFilesPanel.cpp	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xSharedFilesPanel.cpp
+- * xMule's Shared Files Panel
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #include &quot;xSharedFilesPanel.h&quot;         // xSharedFilesPanel
+ #include &quot;xResources.h&quot;                // IDs and XPMs
+
+Modified: trunk/xMainFrame/xSharedFilesPanel.h
+===================================================================
+--- trunk/xMainFrame/xSharedFilesPanel.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xSharedFilesPanel.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xSharedFilesPanel.h
+- * xMule's Shared Files Panel
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #ifndef _XSHAREDFILESPANEL_H_
+ #define _XSHAREDFILESPANEL_H_
+
+Modified: trunk/xMainFrame/xTransfersPanel.cpp
+===================================================================
+--- trunk/xMainFrame/xTransfersPanel.cpp	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xTransfersPanel.cpp	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xTransfersPanel.cpp
+- * xMule's Transfers Panel
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #include &quot;xTransfersPanel.h&quot;           // xTransfersPanel
+ #include &quot;xResources.h&quot;                // IDs and XPMs
+
+Modified: trunk/xMainFrame/xTransfersPanel.h
+===================================================================
+--- trunk/xMainFrame/xTransfersPanel.h	2006-10-15 03:29:21 UTC (rev 57)
++++ trunk/xMainFrame/xTransfersPanel.h	2006-11-10 15:12:31 UTC (rev 58)
+@@ -1,7 +1,19 @@
+-/**
+- * xTransfersPanel.h
+- * xMule's Transfers Panel
+- */
++// The xMule Project - A Peer-2-Peer File Sharing Program
++//
++// Copyright (C) 2004-2006 Avi Vahl ( avivahl [AT] gmail.com )
++//
++// This program is free software; you can redistribute it and/or
++// modify it under the terms of Version 2 of the GNU General Public
++// License as published by the Free Software Foundation.
++//
++// This program is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this program; if not, write to the Free Software
++// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ 
+ #ifndef _XTRANSFERSPANEL_H_
+ #define _XTRANSFERSPANEL_H_
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000045.html">[xMule-svn] r59 - in trunk: . xMainFrame
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#44">[ date ]</a>
+              <a href="thread.html#44">[ thread ]</a>
+              <a href="subject.html#44">[ subject ]</a>
+              <a href="author.html#44">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

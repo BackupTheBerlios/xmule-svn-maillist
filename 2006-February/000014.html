@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r28 - trunk/xCore
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r28%20-%20trunk/xCore&In-Reply-To=%3C200602092159.k19Lxf9Z030391%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000015.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r28 - trunk/xCore</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r28%20-%20trunk/xCore&In-Reply-To=%3C200602092159.k19Lxf9Z030391%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r28 - trunk/xCore">avivahl at berlios.de
+       </A><BR>
+    <I>Thu Feb  9 22:59:41 CET 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000015.html">[xMule-svn] r29 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14">[ date ]</a>
+              <a href="thread.html#14">[ thread ]</a>
+              <a href="subject.html#14">[ subject ]</a>
+              <a href="author.html#14">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-02-09 22:59:40 +0100 (Thu, 09 Feb 2006)
+New Revision: 28
+
+Modified:
+   trunk/xCore/xOpCodes.h
+Log:
+Tabs-&gt;Spaces...
+
+Modified: trunk/xCore/xOpCodes.h
+===================================================================
+--- trunk/xCore/xOpCodes.h	2006-01-28 15:00:03 UTC (rev 27)
++++ trunk/xCore/xOpCodes.h	2006-02-09 21:59:40 UTC (rev 28)
+@@ -29,22 +29,22 @@
+ // server.met
+ ///////////////////////////////////////////
+ 
+-#define ST_SERVERNAME			0x01	// &lt;string&gt;
+-#define ST_DESCRIPTION			0x0B	// &lt;string&gt;
+-#define ST_PING					0x0C	// &lt;uint32&gt;
+-#define ST_FAIL					0x0D	// &lt;uint32&gt;
+-#define ST_PREFERENCE			0x0E	// &lt;uint32&gt;
+-#define	ST_PORT					0x0F	// &lt;uint32&gt;
+-#define	ST_IP					0x10	// &lt;uint32&gt;
+-#define	ST_DYNIP				0x85	// &lt;string&gt;
+-#define ST_MAXUSERS				0x87	// &lt;uint32&gt;
+-#define ST_SOFTFILES			0x88	// &lt;uint32&gt;
+-#define ST_HARDFILES			0x89	// &lt;uint32&gt;
+-#define ST_LASTPING				0x90	// &lt;uint32&gt;
+-#define	ST_VERSION				0x91	// &lt;string&gt;|&lt;uint32&gt;
+-#define	ST_UDPFLAGS				0x92	// &lt;uint32&gt;
+-#define	ST_AUXPORTSLIST			0x93	// &lt;string&gt;
+-#define	ST_LOWIDUSERS			0x94	// &lt;uint32&gt;
++#define ST_SERVERNAME           0x01    // &lt;string&gt;
++#define ST_DESCRIPTION          0x0B    // &lt;string&gt;
++#define ST_PING                 0x0C    // &lt;uint32&gt;
++#define ST_FAIL                 0x0D    // &lt;uint32&gt;
++#define ST_PREFERENCE           0x0E    // &lt;uint32&gt;
++#define ST_PORT                 0x0F    // &lt;uint32&gt;
++#define ST_IP                   0x10    // &lt;uint32&gt;
++#define ST_DYNIP                0x85    // &lt;string&gt;
++#define ST_MAXUSERS             0x87    // &lt;uint32&gt;
++#define ST_SOFTFILES            0x88    // &lt;uint32&gt;
++#define ST_HARDFILES            0x89    // &lt;uint32&gt;
++#define ST_LASTPING             0x90    // &lt;uint32&gt;
++#define ST_VERSION              0x91    // &lt;string&gt;|&lt;uint32&gt;
++#define ST_UDPFLAGS             0x92    // &lt;uint32&gt;
++#define ST_AUXPORTSLIST         0x93    // &lt;string&gt;
++#define ST_LOWIDUSERS           0x94    // &lt;uint32&gt;
+ 
+ #pragma pack(1)
+ struct ServerMet_Struct
+@@ -97,16 +97,16 @@
+ #define TAGTYPE_STR21           0x25
+ #define TAGTYPE_STR22           0x26
+ 
+-#define	MAX_EMULE_FILE_SIZE	0x4000000000ui64 // = 2^38 = 256GB
+-#define OLD_MAX_EMULE_FILE_SIZE	4290048000ui64	// (4294967295/PARTSIZE)*PARTSIZE = ~4GB
++#define MAX_EMULE_FILE_SIZE 0x4000000000ui64 // = 2^38 = 256GB
++#define OLD_MAX_EMULE_FILE_SIZE 4290048000ui64  // (4294967295/PARTSIZE)*PARTSIZE = ~4GB
+ 
+-#define	ED2KFTSTR_AUDIO			&quot;Audio&quot;	// value for eD2K tag FT_FILETYPE
+-#define	ED2KFTSTR_VIDEO			&quot;Video&quot;	// value for eD2K tag FT_FILETYPE
+-#define	ED2KFTSTR_IMAGE			&quot;Image&quot;	// value for eD2K tag FT_FILETYPE
+-#define	ED2KFTSTR_DOCUMENT		&quot;Doc&quot;	// value for eD2K tag FT_FILETYPE
+-#define	ED2KFTSTR_PROGRAM		&quot;Pro&quot;	// value for eD2K tag FT_FILETYPE
+-#define	ED2KFTSTR_ARCHIVE		&quot;Arc&quot;	// eMule internal use only
+-#define	ED2KFTSTR_CDIMAGE		&quot;Iso&quot;	// eMule internal use only
+-#define ED2KFTSTR_EMULECOLLECTION	&quot;EmuleCollection&quot; // Value for eD2K tag FT_FILETYPE
++#define ED2KFTSTR_AUDIO         &quot;Audio&quot; // value for eD2K tag FT_FILETYPE
++#define ED2KFTSTR_VIDEO         &quot;Video&quot; // value for eD2K tag FT_FILETYPE
++#define ED2KFTSTR_IMAGE         &quot;Image&quot; // value for eD2K tag FT_FILETYPE
++#define ED2KFTSTR_DOCUMENT      &quot;Doc&quot;   // value for eD2K tag FT_FILETYPE
++#define ED2KFTSTR_PROGRAM       &quot;Pro&quot;   // value for eD2K tag FT_FILETYPE
++#define ED2KFTSTR_ARCHIVE       &quot;Arc&quot;   // eMule internal use only
++#define ED2KFTSTR_CDIMAGE       &quot;Iso&quot;   // eMule internal use only
++#define ED2KFTSTR_EMULECOLLECTION &quot;EmuleCollection&quot; // Value for eD2K tag FT_FILETYPE
+ 
+ #endif // _XOPCODES_H_
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000015.html">[xMule-svn] r29 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14">[ date ]</a>
+              <a href="thread.html#14">[ thread ]</a>
+              <a href="subject.html#14">[ subject ]</a>
+              <a href="author.html#14">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

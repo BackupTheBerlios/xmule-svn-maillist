@@ -1,0 +1,1027 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r35 - in trunk: . XRC
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r35%20-%20in%20trunk%3A%20.%20XRC&In-Reply-To=%3C200602241939.k1OJdjSZ001139%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000020.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r35 - in trunk: . XRC</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r35%20-%20in%20trunk%3A%20.%20XRC&In-Reply-To=%3C200602241939.k1OJdjSZ001139%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r35 - in trunk: . XRC">avivahl at berlios.de
+       </A><BR>
+    <I>Fri Feb 24 20:39:45 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000020.html">[xMule-svn] r34 - in trunk: . XRC
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-02-24 20:39:23 +0100 (Fri, 24 Feb 2006)
+New Revision: 35
+
+Modified:
+   trunk/XRC/xMainFrame.pjd
+   trunk/XRC/xOptions.pjd
+   trunk/xMainFrame.xrc
+Log:
+Updated project options to generate makefiles for wxWidgets 2.6.2+...
+
+Modified: trunk/XRC/xMainFrame.pjd
+===================================================================
+--- trunk/XRC/xMainFrame.pjd	2006-02-24 10:31:34 UTC (rev 34)
++++ trunk/XRC/xMainFrame.pjd	2006-02-24 19:39:23 UTC (rev 35)
+@@ -19,7 +19,7 @@
+     &lt;string name=&quot;resource_prefix&quot;&gt;&quot;&quot;&lt;/string&gt;
+     &lt;bool name=&quot;use_two_step_construction&quot;&gt;0&lt;/bool&gt;
+     &lt;string name=&quot;current_platform&quot;&gt;&quot;&lt;All platforms&gt;&quot;&lt;/string&gt;
+-    &lt;string name=&quot;target_wx_version&quot;&gt;&quot;&lt;Any&gt;&quot;&lt;/string&gt;
++    &lt;string name=&quot;target_wx_version&quot;&gt;&quot;2.6.2&quot;&lt;/string&gt;
+     &lt;string name=&quot;cpp_header_comment&quot;&gt;&quot;/////////////////////////////////////////////////////////////////////////////
+ // Name:        %HEADER-FILENAME%
+ // Purpose:     
+@@ -94,7 +94,9 @@
+     &lt;string name=&quot;source_encoding&quot;&gt;&quot;&lt;System&gt;&quot;&lt;/string&gt;
+     &lt;string name=&quot;project_encoding&quot;&gt;&quot;&lt;System&gt;&quot;&lt;/string&gt;
+     &lt;string name=&quot;resource_archive&quot;&gt;&quot;&quot;&lt;/string&gt;
++    &lt;string name=&quot;resource_xrc_cpp&quot;&gt;&quot;&quot;&lt;/string&gt;
+     &lt;bool name=&quot;use_resource_archive&quot;&gt;0&lt;/bool&gt;
++    &lt;bool name=&quot;use_generated_xrc_cpp&quot;&gt;0&lt;/bool&gt;
+     &lt;bool name=&quot;archive_xrc_files&quot;&gt;1&lt;/bool&gt;
+     &lt;bool name=&quot;archive_image_files&quot;&gt;1&lt;/bool&gt;
+   &lt;/header&gt;
+@@ -364,6 +366,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Contacts (0)&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -851,6 +854,7 @@
+                         &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Label&quot;&gt;&quot;IP or Address:&quot;&lt;/string&gt;
++                        &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                         &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -1001,6 +1005,7 @@
+                         &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Port:&quot;&lt;/string&gt;
++                        &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                         &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -1468,6 +1473,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Current Searches (0)&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -1735,6 +1741,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Name&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -2037,6 +2044,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Type&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -2166,6 +2174,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Method&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -2630,6 +2639,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Search Results&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3056,6 +3066,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Shared Files (0)&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3289,6 +3300,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Current Session&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3345,6 +3357,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Requests:&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3401,6 +3414,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Accepted Uploads:&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3457,6 +3471,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Transferred:&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3565,6 +3580,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;-&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3621,6 +3637,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;-&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3677,6 +3694,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;-&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3785,6 +3803,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;?&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3841,6 +3860,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;?&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3897,6 +3917,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;?&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3979,6 +4000,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Total&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -4035,6 +4057,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Requests:&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -4091,6 +4114,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Accepted Uploads:&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -4147,6 +4171,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Transferred:&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -4255,6 +4280,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;-&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -4311,6 +4337,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;-&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -4367,6 +4394,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;-&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -4475,6 +4503,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;?&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -4531,6 +4560,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;?&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -4587,6 +4617,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;?&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -4788,6 +4819,14 @@
+             &lt;string name=&quot;proxy-type&quot;&gt;&quot;wbBoxSizerProxy&quot;&lt;/string&gt;
+             &lt;string name=&quot;proxy-Orientation&quot;&gt;&quot;Vertical&quot;&lt;/string&gt;
+             &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
++            &lt;string name=&quot;proxy-AlignH&quot;&gt;&quot;Centre&quot;&lt;/string&gt;
++            &lt;string name=&quot;proxy-AlignV&quot;&gt;&quot;Centre&quot;&lt;/string&gt;
++            &lt;long name=&quot;proxy-Stretch factor&quot;&gt;0&lt;/long&gt;
++            &lt;long name=&quot;proxy-Border&quot;&gt;5&lt;/long&gt;
++            &lt;bool name=&quot;proxy-wxLEFT&quot;&gt;1&lt;/bool&gt;
++            &lt;bool name=&quot;proxy-wxRIGHT&quot;&gt;1&lt;/bool&gt;
++            &lt;bool name=&quot;proxy-wxTOP&quot;&gt;1&lt;/bool&gt;
++            &lt;bool name=&quot;proxy-wxBOTTOM&quot;&gt;1&lt;/bool&gt;
+             &lt;bool name=&quot;proxy-wxSHAPED&quot;&gt;0&lt;/bool&gt;
+             &lt;bool name=&quot;proxy-wxADJUST_MINSIZE&quot;&gt;0&lt;/bool&gt;
+             &lt;bool name=&quot;proxy-wxFIXED_MINSIZE&quot;&gt;0&lt;/bool&gt;
+@@ -4883,6 +4922,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Servers (0)&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -5236,8 +5276,6 @@
+                         &lt;string name=&quot;proxy-Id name&quot;&gt;&quot;ID_TEXTCTRL2&quot;&lt;/string&gt;
+                         &lt;long name=&quot;proxy-Id value&quot;&gt;10015&lt;/long&gt;
+                         &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxTextCtrl&quot;&lt;/string&gt;
+-                        &lt;string name=&quot;proxy-Tab label&quot;&gt;&quot;Server Info&quot;&lt;/string&gt;
+-                        &lt;string name=&quot;proxy-Tab icon&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Initial value&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;long name=&quot;proxy-Max length&quot;&gt;0&lt;/long&gt;
+@@ -5291,6 +5329,8 @@
+                         &lt;bool name=&quot;proxy-wxFIXED_MINSIZE&quot;&gt;0&lt;/bool&gt;
+                         &lt;string name=&quot;proxy-Custom arguments&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Custom ctor arguments&quot;&gt;&quot;&quot;&lt;/string&gt;
++                        &lt;string name=&quot;proxy-Tab label&quot;&gt;&quot;Server Info&quot;&lt;/string&gt;
++                        &lt;string name=&quot;proxy-Tab icon&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;/document&gt;
+                       &lt;document&gt;
+                         &lt;string name=&quot;title&quot;&gt;&quot;wxTextCtrl: ID_TEXTCTRL3&quot;&lt;/string&gt;
+@@ -5306,8 +5346,6 @@
+                         &lt;string name=&quot;proxy-Id name&quot;&gt;&quot;ID_TEXTCTRL3&quot;&lt;/string&gt;
+                         &lt;long name=&quot;proxy-Id value&quot;&gt;10016&lt;/long&gt;
+                         &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxTextCtrl&quot;&lt;/string&gt;
+-                        &lt;string name=&quot;proxy-Tab label&quot;&gt;&quot;Log&quot;&lt;/string&gt;
+-                        &lt;string name=&quot;proxy-Tab icon&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Initial value&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;long name=&quot;proxy-Max length&quot;&gt;0&lt;/long&gt;
+@@ -5361,6 +5399,8 @@
+                         &lt;bool name=&quot;proxy-wxFIXED_MINSIZE&quot;&gt;0&lt;/bool&gt;
+                         &lt;string name=&quot;proxy-Custom arguments&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Custom ctor arguments&quot;&gt;&quot;&quot;&lt;/string&gt;
++                        &lt;string name=&quot;proxy-Tab label&quot;&gt;&quot;Log&quot;&lt;/string&gt;
++                        &lt;string name=&quot;proxy-Tab icon&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;/document&gt;
+                     &lt;/document&gt;
+                     &lt;document&gt;
+@@ -5670,6 +5710,7 @@
+                         &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Label&quot;&gt;&quot;IP or Address:&quot;&lt;/string&gt;
++                        &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                         &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -5820,6 +5861,7 @@
+                         &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Port:&quot;&lt;/string&gt;
++                        &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                         &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                         &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -5946,6 +5988,7 @@
+                     &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Name:&quot;&lt;/string&gt;
++                    &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                     &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+
+Modified: trunk/XRC/xOptions.pjd
+===================================================================
+--- trunk/XRC/xOptions.pjd	2006-02-24 10:31:34 UTC (rev 34)
++++ trunk/XRC/xOptions.pjd	2006-02-24 19:39:23 UTC (rev 35)
+@@ -19,7 +19,7 @@
+     &lt;string name=&quot;resource_prefix&quot;&gt;&quot;&quot;&lt;/string&gt;
+     &lt;bool name=&quot;use_two_step_construction&quot;&gt;0&lt;/bool&gt;
+     &lt;string name=&quot;current_platform&quot;&gt;&quot;&lt;All platforms&gt;&quot;&lt;/string&gt;
+-    &lt;string name=&quot;target_wx_version&quot;&gt;&quot;2.6.0&quot;&lt;/string&gt;
++    &lt;string name=&quot;target_wx_version&quot;&gt;&quot;2.6.2&quot;&lt;/string&gt;
+     &lt;string name=&quot;cpp_header_comment&quot;&gt;&quot;/////////////////////////////////////////////////////////////////////////////
+ // Name:        %HEADER-FILENAME%
+ // Purpose:     
+@@ -94,7 +94,9 @@
+     &lt;string name=&quot;source_encoding&quot;&gt;&quot;&lt;System&gt;&quot;&lt;/string&gt;
+     &lt;string name=&quot;project_encoding&quot;&gt;&quot;&lt;System&gt;&quot;&lt;/string&gt;
+     &lt;string name=&quot;resource_archive&quot;&gt;&quot;&quot;&lt;/string&gt;
++    &lt;string name=&quot;resource_xrc_cpp&quot;&gt;&quot;&quot;&lt;/string&gt;
+     &lt;bool name=&quot;use_resource_archive&quot;&gt;0&lt;/bool&gt;
++    &lt;bool name=&quot;use_generated_xrc_cpp&quot;&gt;0&lt;/bool&gt;
+     &lt;bool name=&quot;archive_xrc_files&quot;&gt;1&lt;/bool&gt;
+     &lt;bool name=&quot;archive_image_files&quot;&gt;1&lt;/bool&gt;
+   &lt;/header&gt;
+@@ -1019,6 +1021,7 @@
+                     &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Label&quot;&gt;&quot;2 Days&quot;&lt;/string&gt;
++                    &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                     &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -1360,6 +1363,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Progressbar style:&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -1505,6 +1509,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Tooltip delay time (in seconds):&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -2276,6 +2281,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Font for Server-, Message-, and IRC-Window:&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -2675,6 +2681,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Download&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -2826,6 +2833,7 @@
+                     &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Label&quot;&gt;&quot;KB/s&quot;&lt;/string&gt;
++                    &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                     &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -2883,6 +2891,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Upload&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3034,6 +3043,7 @@
+                     &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Label&quot;&gt;&quot;KB/s&quot;&lt;/string&gt;
++                    &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                     &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3201,6 +3211,7 @@
+                     &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Label&quot;&gt;&quot;32 KB/s&quot;&lt;/string&gt;
++                    &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                     &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3401,6 +3412,7 @@
+                     &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Label&quot;&gt;&quot;8 KB/s&quot;&lt;/string&gt;
++                    &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                     &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                     &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3633,6 +3645,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;TCP&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -3809,6 +3822,7 @@
+                       &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Label&quot;&gt;&quot;UDP&quot;&lt;/string&gt;
++                      &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                       &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                       &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -4178,6 +4192,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Hard limit&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -4340,6 +4355,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Max. connections&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -5078,6 +5094,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Proxy type:&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -5207,6 +5224,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Proxy host:&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -5357,6 +5375,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Proxy port:&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -5592,6 +5611,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Username:&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -5746,6 +5766,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Password:&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -6053,6 +6074,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Remove dead servers after&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -6181,6 +6203,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;retries&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -8865,6 +8888,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;(Empty = default)&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -9847,6 +9871,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Update delay: 3 seconds&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -9970,6 +9995,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Time for average graph: 5 minutes&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -10252,6 +10278,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Connection statistics Y-axis scale:&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -10406,6 +10433,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Active connections ratio:&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -10548,6 +10576,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Update delay: 5 seconds&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -10884,6 +10913,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Filter level:&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -10942,6 +10972,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;&lt;&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -11173,6 +11204,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Update from URL: (filter.dat or PeerGuardian-format)&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -11465,6 +11497,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Filter messages containing: (Separator | )&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -11784,6 +11817,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Ignore comments containing: (Separator | )&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -12316,6 +12350,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Port:&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -12492,6 +12527,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Template:&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -12770,6 +12806,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Session timeout:&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -12894,6 +12931,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Minutes&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -12985,6 +13023,7 @@
+                 &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Password:&quot;&lt;/string&gt;
++                &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                 &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                 &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+@@ -13223,6 +13262,7 @@
+                   &lt;string name=&quot;proxy-Class&quot;&gt;&quot;wxStaticText&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Member variable name&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Label&quot;&gt;&quot;Password:&quot;&lt;/string&gt;
++                  &lt;long name=&quot;proxy-Wrapping width&quot;&gt;-1&lt;/long&gt;
+                   &lt;string name=&quot;proxy-Help text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Tooltip text&quot;&gt;&quot;&quot;&lt;/string&gt;
+                   &lt;string name=&quot;proxy-Background colour&quot;&gt;&quot;&quot;&lt;/string&gt;
+
+Modified: trunk/xMainFrame.xrc
+===================================================================
+--- trunk/xMainFrame.xrc	2006-02-24 10:31:34 UTC (rev 34)
++++ trunk/xMainFrame.xrc	2006-02-24 19:39:23 UTC (rev 35)
+@@ -17,7 +17,7 @@
+                         &lt;/object&gt;
+                     &lt;/object&gt;
+                     &lt;object class=&quot;sizeritem&quot;&gt;
+-                        &lt;flag&gt;wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                        &lt;flag&gt;wxALIGN_CENTER_VERTICAL|wxALL&lt;/flag&gt;
+                         &lt;border&gt;5&lt;/border&gt;
+                         &lt;option&gt;1&lt;/option&gt;
+                         &lt;object class=&quot;wxStaticText&quot; name=&quot;ST_CONTACTS&quot;&gt;
+@@ -103,7 +103,7 @@
+                                                 &lt;object class=&quot;wxBoxSizer&quot;&gt;
+                                                     &lt;orient&gt;wxVERTICAL&lt;/orient&gt;
+                                                     &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                        &lt;flag&gt;wxGROW|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                        &lt;flag&gt;wxGROW&lt;/flag&gt;
+                                                         &lt;border&gt;5&lt;/border&gt;
+                                                         &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                             &lt;label&gt;IP or Address:&lt;/label&gt;
+@@ -123,7 +123,7 @@
+                                                 &lt;object class=&quot;wxBoxSizer&quot;&gt;
+                                                     &lt;orient&gt;wxVERTICAL&lt;/orient&gt;
+                                                     &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                        &lt;flag&gt;wxGROW|wxLEFT|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                        &lt;flag&gt;wxGROW|wxLEFT&lt;/flag&gt;
+                                                         &lt;border&gt;5&lt;/border&gt;
+                                                         &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                             &lt;label&gt;Port:&lt;/label&gt;
+@@ -206,7 +206,7 @@
+                         &lt;/object&gt;
+                     &lt;/object&gt;
+                     &lt;object class=&quot;sizeritem&quot;&gt;
+-                        &lt;flag&gt;wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                        &lt;flag&gt;wxALIGN_CENTER_VERTICAL|wxALL&lt;/flag&gt;
+                         &lt;border&gt;5&lt;/border&gt;
+                         &lt;option&gt;1&lt;/option&gt;
+                         &lt;object class=&quot;wxStaticText&quot; name=&quot;ST_SEARCHES&quot;&gt;
+@@ -240,7 +240,7 @@
+                         &lt;object class=&quot;wxBoxSizer&quot;&gt;
+                             &lt;orient&gt;wxVERTICAL&lt;/orient&gt;
+                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                &lt;flag&gt;wxALIGN_LEFT|wxLEFT|wxRIGHT|wxTOP|wxADJUST_MINSIZE&lt;/flag&gt;
++                                &lt;flag&gt;wxALIGN_LEFT|wxLEFT|wxRIGHT|wxTOP&lt;/flag&gt;
+                                 &lt;border&gt;5&lt;/border&gt;
+                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                     &lt;label&gt;Name&lt;/label&gt;
+@@ -289,7 +289,7 @@
+                                         &lt;object class=&quot;wxBoxSizer&quot;&gt;
+                                             &lt;orient&gt;wxVERTICAL&lt;/orient&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxLEFT|wxRIGHT|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxLEFT|wxRIGHT&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;Type&lt;/label&gt;
+@@ -310,7 +310,7 @@
+                                         &lt;object class=&quot;wxBoxSizer&quot;&gt;
+                                             &lt;orient&gt;wxVERTICAL&lt;/orient&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxRIGHT|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxRIGHT&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;Method&lt;/label&gt;
+@@ -391,7 +391,7 @@
+                         &lt;/object&gt;
+                     &lt;/object&gt;
+                     &lt;object class=&quot;sizeritem&quot;&gt;
+-                        &lt;flag&gt;wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                        &lt;flag&gt;wxALIGN_CENTER_VERTICAL|wxALL&lt;/flag&gt;
+                         &lt;border&gt;5&lt;/border&gt;
+                         &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                             &lt;label&gt;Search Results&lt;/label&gt;
+@@ -450,7 +450,7 @@
+                         &lt;/object&gt;
+                     &lt;/object&gt;
+                     &lt;object class=&quot;sizeritem&quot;&gt;
+-                        &lt;flag&gt;wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxTOP|wxADJUST_MINSIZE&lt;/flag&gt;
++                        &lt;flag&gt;wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxTOP&lt;/flag&gt;
+                         &lt;border&gt;5&lt;/border&gt;
+                         &lt;object class=&quot;wxStaticText&quot; name=&quot;ST_SHAREDFILES&quot;&gt;
+                             &lt;label&gt;Shared Files (0)&lt;/label&gt;
+@@ -490,7 +490,7 @@
+                                         &lt;object class=&quot;wxBoxSizer&quot;&gt;
+                                             &lt;orient&gt;wxVERTICAL&lt;/orient&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;font&gt;
+@@ -505,21 +505,21 @@
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;Requests:&lt;/label&gt;
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;Accepted Uploads:&lt;/label&gt;
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;Transferred:&lt;/label&gt;
+@@ -538,21 +538,21 @@
+                                                 &lt;size&gt;5,10d&lt;/size&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_CENTER_HORIZONTAL|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;-&lt;/label&gt;
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_CENTER_HORIZONTAL|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;-&lt;/label&gt;
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_CENTER_HORIZONTAL|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;-&lt;/label&gt;
+@@ -572,21 +572,21 @@
+                                                 &lt;size&gt;5,10d&lt;/size&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;ST_SESREQUESTS&quot;&gt;
+                                                     &lt;label&gt;?&lt;/label&gt;
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;ST_SESACCEPTED&quot;&gt;
+                                                     &lt;label&gt;?&lt;/label&gt;
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;ST_SESTRANSFERRED&quot;&gt;
+                                                     &lt;label&gt;?&lt;/label&gt;
+@@ -600,7 +600,7 @@
+                                         &lt;object class=&quot;wxBoxSizer&quot;&gt;
+                                             &lt;orient&gt;wxVERTICAL&lt;/orient&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;font&gt;
+@@ -615,21 +615,21 @@
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;Requests:&lt;/label&gt;
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;Accepted Uploads:&lt;/label&gt;
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;Transferred:&lt;/label&gt;
+@@ -648,21 +648,21 @@
+                                                 &lt;size&gt;5,10d&lt;/size&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_CENTER_HORIZONTAL|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;-&lt;/label&gt;
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_CENTER_HORIZONTAL|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;-&lt;/label&gt;
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_CENTER_HORIZONTAL|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                     &lt;label&gt;-&lt;/label&gt;
+@@ -682,21 +682,21 @@
+                                                 &lt;size&gt;5,10d&lt;/size&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;ST_TOTREQUESTS&quot;&gt;
+                                                     &lt;label&gt;?&lt;/label&gt;
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;ST_TOTACCEPTED&quot;&gt;
+                                                     &lt;label&gt;?&lt;/label&gt;
+                                                 &lt;/object&gt;
+                                             &lt;/object&gt;
+                                             &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                                 &lt;border&gt;5&lt;/border&gt;
+                                                 &lt;object class=&quot;wxStaticText&quot; name=&quot;ST_TOTTRANSFERRED&quot;&gt;
+                                                     &lt;label&gt;?&lt;/label&gt;
+@@ -744,7 +744,7 @@
+                         &lt;/object&gt;
+                     &lt;/object&gt;
+                     &lt;object class=&quot;sizeritem&quot;&gt;
+-                        &lt;flag&gt;wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                        &lt;flag&gt;wxALIGN_CENTER_VERTICAL|wxALL&lt;/flag&gt;
+                         &lt;border&gt;5&lt;/border&gt;
+                         &lt;option&gt;1&lt;/option&gt;
+                         &lt;object class=&quot;wxStaticText&quot; name=&quot;ST_SERVERS&quot;&gt;
+@@ -851,7 +851,7 @@
+                                                 &lt;object class=&quot;wxBoxSizer&quot;&gt;
+                                                     &lt;orient&gt;wxVERTICAL&lt;/orient&gt;
+                                                     &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                        &lt;flag&gt;wxGROW|wxLEFT|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                        &lt;flag&gt;wxGROW|wxLEFT&lt;/flag&gt;
+                                                         &lt;border&gt;5&lt;/border&gt;
+                                                         &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                             &lt;label&gt;IP or Address:&lt;/label&gt;
+@@ -871,7 +871,7 @@
+                                                 &lt;object class=&quot;wxBoxSizer&quot;&gt;
+                                                     &lt;orient&gt;wxVERTICAL&lt;/orient&gt;
+                                                     &lt;object class=&quot;sizeritem&quot;&gt;
+-                                                        &lt;flag&gt;wxGROW|wxLEFT|wxADJUST_MINSIZE&lt;/flag&gt;
++                                                        &lt;flag&gt;wxGROW|wxLEFT&lt;/flag&gt;
+                                                         &lt;border&gt;5&lt;/border&gt;
+                                                         &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                                             &lt;label&gt;Port:&lt;/label&gt;
+@@ -890,7 +890,7 @@
+                                         &lt;/object&gt;
+                                     &lt;/object&gt;
+                                     &lt;object class=&quot;sizeritem&quot;&gt;
+-                                        &lt;flag&gt;wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE&lt;/flag&gt;
++                                        &lt;flag&gt;wxALIGN_LEFT|wxALL&lt;/flag&gt;
+                                         &lt;border&gt;5&lt;/border&gt;
+                                         &lt;object class=&quot;wxStaticText&quot; name=&quot;wxID_STATIC&quot;&gt;
+                                             &lt;label&gt;Name:&lt;/label&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000020.html">[xMule-svn] r34 - in trunk: . XRC
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

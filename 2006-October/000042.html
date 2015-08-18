@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r56 - trunk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-October/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r56%20-%20trunk&In-Reply-To=%3C200610150325.k9F3P0ah030353%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000043.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r56 - trunk</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r56%20-%20trunk&In-Reply-To=%3C200610150325.k9F3P0ah030353%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r56 - trunk">avivahl at mail.berlios.de
+       </A><BR>
+    <I>Sun Oct 15 05:25:00 CEST 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000043.html">[xMule-svn] r57 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#42">[ date ]</a>
+              <a href="thread.html#42">[ thread ]</a>
+              <a href="subject.html#42">[ subject ]</a>
+              <a href="author.html#42">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-10-15 05:25:00 +0200 (Sun, 15 Oct 2006)
+New Revision: 56
+
+Modified:
+   trunk/COMPILE
+   trunk/xApp.h
+   trunk/xMule.vcproj
+Log:
+1. Updated to using wxWidgets-2.7.1.
+2. Under wxMSW, it uses a much more generic way of linking w/ the wxWidgets lib files (uses include/msvc/wx/setup.h).
+
+Modified: trunk/COMPILE
+===================================================================
+--- trunk/COMPILE	2006-08-14 14:38:18 UTC (rev 55)
++++ trunk/COMPILE	2006-10-15 03:25:00 UTC (rev 56)
+@@ -1,11 +1,11 @@
+ Windows:
+ --------
+ Compiler: Microsoft Visual Studio 2005.
+-Library: wxMSW-2.6.3 (Unicode ON, Static library).
++Library: wxMSW-2.7.1 (Unicode ON, Static library).
+ Notes: Solution file is provided.
+ 
+ Linux:
+ --------
+ Compiler: GCC 4.x. Older versions may work as well, but untested.
+-Library: wxGTK-2.6.3 (--enable-unicode --enable-monolithic --enable-static --enable-debug).
++Library: wxGTK-2.7.1 (--enable-unicode --enable-monolithic --enable-static --enable-debug).
+ Notes: Used Premake-3.1 for creating the makefiles.  Makefiles are provided.
+
+Modified: trunk/xApp.h
+===================================================================
+--- trunk/xApp.h	2006-08-14 14:38:18 UTC (rev 55)
++++ trunk/xApp.h	2006-10-15 03:25:00 UTC (rev 56)
+@@ -6,6 +6,7 @@
+ #define _XAPP_H_
+ 
+ #include &lt;wx/app.h&gt;                    // wxApp
++#include &lt;msvc/wx/setup.h&gt;             // Library Names! :)
+ 
+ class xMainFrame;
+ 
+
+Modified: trunk/xMule.vcproj
+===================================================================
+--- trunk/xMule.vcproj	2006-08-14 14:38:18 UTC (rev 55)
++++ trunk/xMule.vcproj	2006-10-15 03:25:00 UTC (rev 56)
+@@ -40,7 +40,7 @@
+ 			&lt;Tool
+ 				Name=&quot;VCCLCompilerTool&quot;
+ 				Optimization=&quot;0&quot;
+-				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\include&quot;;&quot;C:\wxWidgets-2.7.0-1\lib\vc_lib\mswud&quot;&quot;
++				AdditionalIncludeDirectories=&quot;&quot;C:\wxMSW-2.7.1\include&quot;;&quot;C:\wxMSW-2.7.1\lib\vc_lib\mswud&quot;&quot;
+ 				PreprocessorDefinitions=&quot;__WXDEBUG__&quot;
+ 				MinimalRebuild=&quot;true&quot;
+ 				BasicRuntimeChecks=&quot;3&quot;
+@@ -55,17 +55,17 @@
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCResourceCompilerTool&quot;
+-				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\include&quot;&quot;
++				AdditionalIncludeDirectories=&quot;&quot;C:\wxMSW-2.7.1\include&quot;&quot;
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCPreLinkEventTool&quot;
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCLinkerTool&quot;
+-				AdditionalDependencies=&quot;comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxbase27ud.lib wxbase27ud_net.lib wxbase27ud_odbc.lib wxbase27ud_xml.lib wxexpatd.lib wxmsw27ud_adv.lib wxmsw27ud_core.lib wxmsw27ud_html.lib wxmsw27ud_xrc.lib&quot;
++				AdditionalDependencies=&quot;comctl32.lib rpcrt4.lib winmm.lib wsock32.lib&quot;
+ 				OutputFile=&quot;$(OutDir)/$(InputName)-Debug.exe&quot;
+ 				LinkIncremental=&quot;2&quot;
+-				AdditionalLibraryDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\lib\vc_lib&quot;&quot;
++				AdditionalLibraryDirectories=&quot;&quot;C:\wxMSW-2.7.1\lib\vc_lib&quot;&quot;
+ 				GenerateDebugInformation=&quot;true&quot;
+ 				ProgramDatabaseFile=&quot;$(OutDir)/$(ProjectName).pdb&quot;
+ 				SubSystem=&quot;2&quot;
+@@ -122,7 +122,7 @@
+ 			&lt;Tool
+ 				Name=&quot;VCCLCompilerTool&quot;
+ 				Optimization=&quot;3&quot;
+-				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\include&quot;;&quot;C:\wxWidgets-2.7.0-1\lib\vc_lib\mswu&quot;&quot;
++				AdditionalIncludeDirectories=&quot;&quot;C:\wxMSW-2.7.1\include&quot;;&quot;C:\wxMSW-2.7.1\lib\vc_lib\mswu&quot;&quot;
+ 				RuntimeLibrary=&quot;2&quot;
+ 				UsePrecompiledHeader=&quot;0&quot;
+ 				WarningLevel=&quot;4&quot;
+@@ -134,17 +134,17 @@
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCResourceCompilerTool&quot;
+-				AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\include&quot;&quot;
++				AdditionalIncludeDirectories=&quot;&quot;C:\wxMSW-2.7.1\include&quot;&quot;
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCPreLinkEventTool&quot;
+ 			/&gt;
+ 			&lt;Tool
+ 				Name=&quot;VCLinkerTool&quot;
+-				AdditionalDependencies=&quot;comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib wxbase27u.lib wxbase27u_net.lib wxbase27u_odbc.lib wxbase27u_xml.lib wxexpat.lib wxmsw27u_adv.lib wxmsw27u_core.lib wxmsw27u_html.lib wxmsw27u_xrc.lib&quot;
++				AdditionalDependencies=&quot;comctl32.lib rpcrt4.lib winmm.lib wsock32.lib&quot;
+ 				OutputFile=&quot;$(OutDir)/$(InputName).exe&quot;
+ 				LinkIncremental=&quot;1&quot;
+-				AdditionalLibraryDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\lib\vc_lib&quot;&quot;
++				AdditionalLibraryDirectories=&quot;&quot;C:\wxMSW-2.7.1\lib\vc_lib&quot;&quot;
+ 				GenerateDebugInformation=&quot;false&quot;
+ 				SubSystem=&quot;2&quot;
+ 				OptimizeReferences=&quot;2&quot;
+@@ -333,7 +333,7 @@
+ 					&gt;
+ 					&lt;Tool
+ 						Name=&quot;VCResourceCompilerTool&quot;
+-						AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\include&quot;&quot;
++						AdditionalIncludeDirectories=&quot;&quot;C:\wxMSW-2.7.1\include&quot;&quot;
+ 					/&gt;
+ 				&lt;/FileConfiguration&gt;
+ 				&lt;FileConfiguration
+@@ -341,7 +341,7 @@
+ 					&gt;
+ 					&lt;Tool
+ 						Name=&quot;VCResourceCompilerTool&quot;
+-						AdditionalIncludeDirectories=&quot;&quot;C:\wxWidgets-2.7.0-1\include&quot;&quot;
++						AdditionalIncludeDirectories=&quot;&quot;C:\wxMSW-2.7.1\include&quot;&quot;
+ 					/&gt;
+ 				&lt;/FileConfiguration&gt;
+ 			&lt;/File&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000043.html">[xMule-svn] r57 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#42">[ date ]</a>
+              <a href="thread.html#42">[ thread ]</a>
+              <a href="subject.html#42">[ subject ]</a>
+              <a href="author.html#42">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r20 - trunk/xCore
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r20%20-%20trunk/xCore&In-Reply-To=%3C200601270855.k0R8tSMX004723%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000007.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r20 - trunk/xCore</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r20%20-%20trunk/xCore&In-Reply-To=%3C200601270855.k0R8tSMX004723%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r20 - trunk/xCore">avivahl at berlios.de
+       </A><BR>
+    <I>Fri Jan 27 09:55:28 CET 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000007.html">[xMule-svn] r21 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-01-27 09:55:20 +0100 (Fri, 27 Jan 2006)
+New Revision: 20
+
+Modified:
+   trunk/xCore/xServer.cpp
+   trunk/xCore/xServer.h
+Log:
+Updated to eMule-0.47a's server class.
+
+Modified: trunk/xCore/xServer.cpp
+===================================================================
+--- trunk/xCore/xServer.cpp	2005-12-17 20:53:47 UTC (rev 19)
++++ trunk/xCore/xServer.cpp	2006-01-27 08:55:20 UTC (rev 20)
+@@ -17,7 +17,7 @@
+     wxStrcpy(ipfull, ipstr(ip));
+     files = 0;
+     users = 0;
+-    preferences = 0;
++    m_uPreference = 0;
+     ping = 0;
+     failedcount = 0;
+     lastpinged = 0;
+@@ -45,7 +45,7 @@
+     wxStrcpy(ipfull, ipstr(ip));
+     files = 0;
+     users = 0;
+-    preferences = 0;
++    m_uPreference = 0;
+     ping = 0;
+     failedcount = 0;
+     lastpinged = 0;
+@@ -70,7 +70,7 @@
+     wxStrcpy(ipfull, pOld-&gt;ipfull);
+     files = pOld-&gt;files;
+     users = pOld-&gt;users;
+-    preferences = pOld-&gt;preferences;
++    m_uPreference = pOld-&gt;m_uPreference;
+     ping = pOld-&gt;ping;
+     failedcount = pOld-&gt;failedcount;
+     lastpinged = pOld-&gt;lastpinged;
+@@ -126,7 +126,7 @@
+     case ST_PREFERENCE:
+         wxASSERT( tag-&gt;IsInt() );
+         if (tag-&gt;IsInt())
+-            preferences = tag-&gt;GetInt();
++            m_uPreference = tag-&gt;GetInt();
+         break;
+     case ST_DYNIP:
+         wxASSERT( tag-&gt;IsStr() );
+
+Modified: trunk/xCore/xServer.h
+===================================================================
+--- trunk/xCore/xServer.h	2005-12-17 20:53:47 UTC (rev 19)
++++ trunk/xCore/xServer.h	2006-01-27 08:55:20 UTC (rev 20)
+@@ -26,17 +26,20 @@
+ 
+ 
+ // Server TCP flags
+-#define SRV_TCPFLG_COMPRESSION   0x01
+-#define SRV_TCPFLG_NEWTAGS       0x08
+-#define SRV_TCPFLG_UNICODE       0x10
+-#define SRV_TCPFLG_RELATEDSEARCH 0x40
++#define SRV_TCPFLG_COMPRESSION    0x00000001
++#define SRV_TCPFLG_NEWTAGS        0x00000008
++#define SRV_TCPFLG_UNICODE        0x00000010
++#define SRV_TCPFLG_RELATEDSEARCH  0x00000040
++#define SRV_TCPFLG_TYPETAGINTEGER 0x00000080
++#define SRV_TCPFLG_LARGEFILES     0x00000100
+ 
+ // Server UDP flags
+-#define SRV_UDPFLG_EXT_GETSOURCES  0x01
+-#define SRV_UDPFLG_EXT_GETFILES    0x02
+-#define SRV_UDPFLG_NEWTAGS         0x08
+-#define SRV_UDPFLG_UNICODE         0x10
+-#define SRV_UDPFLG_EXT_GETSOURCES2 0x20
++#define SRV_UDPFLG_EXT_GETSOURCES  0x00000001
++#define SRV_UDPFLG_EXT_GETFILES    0x00000002
++#define SRV_UDPFLG_NEWTAGS         0x00000008
++#define SRV_UDPFLG_UNICODE         0x00000010
++#define SRV_UDPFLG_EXT_GETSOURCES2 0x00000020
++#define SRV_UDPFLG_LARGEFILES      0x00000100
+ 
+ class xServer
+ {
+@@ -71,8 +74,8 @@
+     wxUint32 GetUsers() const { return users; }
+     void SetUserCount(wxUint32 in_users) { users = in_users; }
+ 
+-    wxUint32 GetPreferences() const { return preferences; }
+-    void SetPreference(wxUint32 in_preferences) { preferences = in_preferences; }
++    wxUint32 GetPreferences() const { return m_uPreference; }
++    void SetPreference(wxUint32 in_preferences) { m_uPreference = in_preferences; }
+ 
+     wxUint32 GetPing() const {return ping;}
+     void SetPing(wxUint32 in_ping) { ping = in_ping; }
+@@ -123,6 +126,8 @@
+ 
+     bool GetUnicodeSupport() const { return (GetTCPFlags() &amp; SRV_TCPFLG_UNICODE)!=0; }
+     bool GetRelatedSearchSupport() const { return (GetTCPFlags() &amp; SRV_TCPFLG_RELATEDSEARCH)!=0; }
++    bool SupportsLargeFilesTCP() const { return (GetTCPFlags() &amp; SRV_TCPFLG_LARGEFILES)!=0; }
++    bool SupportsLargeFilesUDP() const { return (GetUDPFlags() &amp; SRV_UDPFLG_LARGEFILES)!=0; }
+ 
+     bool IsEqual(const xServer* pServer) const;
+ 
+@@ -137,7 +142,7 @@
+     wxUint32 maxusers;
+     wxUint32 softfiles;
+     wxUint32 hardfiles;
+-    wxUint32 preferences;
++    wxUint32 m_uPreference;
+     wxUint32 ping;
+     wxString m_strDescription;
+     wxString m_strName;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000007.html">[xMule-svn] r21 - trunk/xCore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

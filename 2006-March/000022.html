@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r36 - trunk/xCore
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-March/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r36%20-%20trunk/xCore&In-Reply-To=%3C200603042154.k24LsH4x002535%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000023.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r36 - trunk/xCore</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r36%20-%20trunk/xCore&In-Reply-To=%3C200603042154.k24LsH4x002535%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r36 - trunk/xCore">avivahl at berlios.de
+       </A><BR>
+    <I>Sat Mar  4 22:54:17 CET 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000023.html">[xMule-svn] r37 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22">[ date ]</a>
+              <a href="thread.html#22">[ thread ]</a>
+              <a href="subject.html#22">[ subject ]</a>
+              <a href="author.html#22">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-03-04 22:54:17 +0100 (Sat, 04 Mar 2006)
+New Revision: 36
+
+Modified:
+   trunk/xCore/xUtils.h
+Log:
+Avoids unused parameters warnings.
+
+Modified: trunk/xCore/xUtils.h
+===================================================================
+--- trunk/xCore/xUtils.h	2006-02-24 19:39:23 UTC (rev 35)
++++ trunk/xCore/xUtils.h	2006-03-04 21:54:17 UTC (rev 36)
+@@ -51,12 +51,12 @@
+ // File Types - TODO
+ /////////////////////////////////////
+ 
+-inline wxString GetFileTypeByName(const wxString&amp; notUsed)
++inline wxString GetFileTypeByName(const wxString&amp; WXUNUSED(notUsed))
+ {
+     return wxString(wxT(&quot;GetFileTypeByName() TODO&quot;));
+ }
+ 
+-inline wxString GetFileTypeDisplayStrFromED2KFileType(const wxString&amp; notUsed)
++inline wxString GetFileTypeDisplayStrFromED2KFileType(const wxString&amp; WXUNUSED(notUsed))
+ {
+     return wxString(wxT(&quot;GetFileTypeDisplayStrFromED2KFileType() TODO&quot;));
+ }
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000023.html">[xMule-svn] r37 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22">[ date ]</a>
+              <a href="thread.html#22">[ thread ]</a>
+              <a href="subject.html#22">[ subject ]</a>
+              <a href="author.html#22">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

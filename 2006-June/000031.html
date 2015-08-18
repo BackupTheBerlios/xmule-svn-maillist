@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r45 - trunk/xMainFrame
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-June/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r45%20-%20trunk/xMainFrame&In-Reply-To=%3C200606231415.k5NEFnAl025242%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000030.html">
+   <LINK REL="Next"  HREF="000032.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r45 - trunk/xMainFrame</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r45%20-%20trunk/xMainFrame&In-Reply-To=%3C200606231415.k5NEFnAl025242%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r45 - trunk/xMainFrame">avivahl at berlios.de
+       </A><BR>
+    <I>Fri Jun 23 16:15:49 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000030.html">[xMule-svn] r44 - trunk
+</A></li>
+        <LI>Next message: <A HREF="000032.html">[xMule-svn] r46 - in trunk: . XRC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#31">[ date ]</a>
+              <a href="thread.html#31">[ thread ]</a>
+              <a href="subject.html#31">[ subject ]</a>
+              <a href="author.html#31">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-06-23 16:15:48 +0200 (Fri, 23 Jun 2006)
+New Revision: 45
+
+Modified:
+   trunk/xMainFrame/xTransfersPanel.cpp
+Log:
+Updated so that toolbars will look like eMule's.
+
+Modified: trunk/xMainFrame/xTransfersPanel.cpp
+===================================================================
+--- trunk/xMainFrame/xTransfersPanel.cpp	2006-06-23 14:14:50 UTC (rev 44)
++++ trunk/xMainFrame/xTransfersPanel.cpp	2006-06-23 14:15:48 UTC (rev 45)
+@@ -26,17 +26,16 @@
+ 
+     // First ToolBar
+     wxToolBar* SwitchToolBar = new wxToolBar( this, ID_SWITCHTOOLBAR, wxDefaultPosition, wxDefaultSize, wxTB_FLAT|wxTB_HORIZONTAL|wxTB_TEXT|wxTB_NODIVIDER|wxTB_HORZ_LAYOUT );
+-    SwitchToolBar-&gt;SetToolBitmapSize(wxSize(16, 16));
++    SwitchToolBar-&gt;SetBackgroundColour(GetBackgroundColour());
++	SwitchToolBar-&gt;SetToolBitmapSize(wxSize(16, 16));
+     SwitchToolBar-&gt;AddTool(ID_SWITCH1, wxT(&quot;Downloads (0)                    &quot;), wxBitmap(downloads_xpm), _T(&quot;&quot;), wxITEM_NORMAL);
+     SwitchToolBar-&gt;Realize();
+     ToolbarsSizer-&gt;Add(SwitchToolBar, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+ 
+-    // Add Space
+-    //ToolbarsSizer-&gt;Add(22, 8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+-
+     // Second ToolBar
+     wxToolBar* ViewsToolBar = new wxToolBar( this, ID_VIEWSTOOLBAR, wxDefaultPosition, wxDefaultSize, wxTB_FLAT|wxTB_HORIZONTAL|wxTB_NODIVIDER );
+-    ViewsToolBar-&gt;SetToolBitmapSize(wxSize(16, 16));
++	ViewsToolBar-&gt;SetBackgroundColour(GetBackgroundColour());
++	ViewsToolBar-&gt;SetToolBitmapSize(wxSize(16, 16));
+     ViewsToolBar-&gt;AddTool(ID_SPLITWINDOW, _T(&quot;&quot;), wxBitmap(splitwindow_xpm), _T(&quot;Split Window&quot;), wxITEM_RADIO);
+     ViewsToolBar-&gt;AddTool(ID_DOWNLOADS, _T(&quot;&quot;), wxBitmap(downloads_xpm), _T(&quot;Downloads&quot;), wxITEM_RADIO);
+     ViewsToolBar-&gt;AddTool(ID_UPLOADING, _T(&quot;&quot;), wxBitmap(uploading_xpm), _T(&quot;Uploading&quot;), wxITEM_RADIO);
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000030.html">[xMule-svn] r44 - trunk
+</A></li>
+	<LI>Next message: <A HREF="000032.html">[xMule-svn] r46 - in trunk: . XRC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#31">[ date ]</a>
+              <a href="thread.html#31">[ thread ]</a>
+              <a href="subject.html#31">[ subject ]</a>
+              <a href="author.html#31">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

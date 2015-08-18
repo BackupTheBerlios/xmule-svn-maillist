@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [xMule-svn] r24 - trunk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/xmule-svn/2006-January/index.html" >
+   <LINK REL="made" HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r24%20-%20trunk&In-Reply-To=%3C200601271018.k0RAIie6013445%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000009.html">
+   <LINK REL="Next"  HREF="000011.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[xMule-svn] r24 - trunk</H1>
+    <B>avivahl at BerliOS</B> 
+    <A HREF="mailto:xmule-svn%40lists.berlios.de?Subject=Re%3A%20%5BxMule-svn%5D%20r24%20-%20trunk&In-Reply-To=%3C200601271018.k0RAIie6013445%40sheep.berlios.de%3E"
+       TITLE="[xMule-svn] r24 - trunk">avivahl at berlios.de
+       </A><BR>
+    <I>Fri Jan 27 11:18:44 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000009.html">[xMule-svn] r23 - trunk/xCore
+</A></li>
+        <LI>Next message: <A HREF="000011.html">[xMule-svn] r25 - in trunk: . XRC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10">[ date ]</a>
+              <a href="thread.html#10">[ thread ]</a>
+              <a href="subject.html#10">[ subject ]</a>
+              <a href="author.html#10">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: avivahl
+Date: 2006-01-27 11:18:43 +0100 (Fri, 27 Jan 2006)
+New Revision: 24
+
+Modified:
+   trunk/COMPILE
+   trunk/Makefile
+   trunk/xMule.make
+Log:
+Regenerated makefiles and updated the COMPILE doc...
+
+Modified: trunk/COMPILE
+===================================================================
+--- trunk/COMPILE	2006-01-27 09:40:51 UTC (rev 23)
++++ trunk/COMPILE	2006-01-27 10:18:43 UTC (rev 24)
+@@ -1,19 +1,11 @@
+-In order to compile xMule, I used wxWidgets 2.6.2 with the following options:
+-
+-- Unicode ON (--enable-unicode)
+-- STL usage ON (--enable-stl)
+-- Monolithic library (--enable-monolithic)
+-- Static library (--enable-static)
+-- Debug ON (--enable-debug)
+-
+ Windows:
+ --------
+ Compiler: Microsoft Visual Studio 2005.
+-Library: wxMSW.
++Library: wxMSW-2.6.2 (Unicode ON, STL usage ON, Static library).
+ Notes: Solution file is provided.
+ 
+ Linux:
+ --------
+ Compiler: GCC 4.x. Older versions may work as well, but untested.
+-Library: wxGTK.
+-Notes: Used Premake-3.0-beta2 for creating the makefiles.  Makefiles are provided.
++Library: wxGTK-2.6.2 (--enable-unicode --enable-stl --enable-monolithic --enable-static --enable-debug).
++Notes: Used Premake-3.0 for creating the makefiles.  Makefiles are provided.
+
+Modified: trunk/Makefile
+===================================================================
+--- trunk/Makefile	2006-01-27 09:40:51 UTC (rev 23)
++++ trunk/Makefile	2006-01-27 10:18:43 UTC (rev 24)
+@@ -13,13 +13,13 @@
+ 
+ all: xMule
+ 
+-Makefile: ./premake.lua
++Makefile: premake.lua
+ 	@echo ==== Regenerating Makefiles ====
+ 	@premake --target gnu
+ 
+ xMule:
+ 	@echo ==== Building xMule ====
+-	@$(MAKE) --no-print-directory -C ./ -f xMule.make
++	@$(MAKE) --no-print-directory -C . -f xMule.make
+ 
+ clean:
+-	@$(MAKE) --no-print-directory -C ./ -f xMule.make clean
++	@$(MAKE) --no-print-directory -C . -f xMule.make clean
+
+Modified: trunk/xMule.make
+===================================================================
+--- trunk/xMule.make	2006-01-27 09:40:51 UTC (rev 23)
++++ trunk/xMule.make	2006-01-27 10:18:43 UTC (rev 24)
+@@ -6,10 +6,10 @@
+ endif
+ 
+ ifeq ($(CONFIG),Debug)
+-  BINDIR = ./bin
++  BINDIR = bin
+   LIBDIR = .
+   OBJDIR = obj/Debug
+-  OUTDIR = ./bin
++  OUTDIR = bin
+   CPPFLAGS = -MD
+   CFLAGS += $(CPPFLAGS) -g `wx-config --cxxflags`
+   CXXFLAGS = $(CFLAGS)
+@@ -19,10 +19,10 @@
+ endif
+ 
+ ifeq ($(CONFIG),Release)
+-  BINDIR = ./bin
++  BINDIR = bin
+   LIBDIR = .
+   OBJDIR = obj/Release
+-  OUTDIR = ./bin
++  OUTDIR = bin
+   CPPFLAGS = -MD
+   CFLAGS += $(CPPFLAGS) -O2 `wx-config --cxxflags`
+   CXXFLAGS = $(CFLAGS)
+@@ -50,11 +50,12 @@
+ 	@echo Linking xMule
+ 	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(BINDIR) ]; then mkdir -p $(BINDIR); fi
+ 	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(LIBDIR) ]; then mkdir -p $(LIBDIR); fi
++	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OUTDIR) ]; then mkdir -p $(OUTDIR); fi
+ 	@$(CXX) -o $@ $(OBJECTS) $(LDFLAGS)
+ 
+ clean:
+ 	@echo Cleaning xMule
+-	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at rm</A> -rf $(OUTDIR)/$(TARGET) $(OBJDIR)/*
++	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at rm</A> -rf $(OUTDIR)/$(TARGET) $(OBJDIR)
+ 
+ $(OBJDIR)/xApp.o: xApp.cpp
+ 	<A HREF="https://lists.berlios.de/mailman/listinfo/xmule-svn">- at if</A> [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000009.html">[xMule-svn] r23 - trunk/xCore
+</A></li>
+	<LI>Next message: <A HREF="000011.html">[xMule-svn] r25 - in trunk: . XRC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10">[ date ]</a>
+              <a href="thread.html#10">[ thread ]</a>
+              <a href="subject.html#10">[ subject ]</a>
+              <a href="author.html#10">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/xmule-svn">More information about the xmule-svn
+mailing list</a><br>
+</body></html>

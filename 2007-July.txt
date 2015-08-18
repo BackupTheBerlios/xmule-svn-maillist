@@ -1,0 +1,94 @@
+From avivahl at mail.berlios.de  Sat Jul  7 15:14:15 2007
+From: avivahl at mail.berlios.de (avivahl at BerliOS)
+Date: Sat, 7 Jul 2007 15:14:15 +0200
+Subject: [xMule-svn] r61 - trunk
+Message-ID: <200707071314.l67DEFl8006113@sheep.berlios.de>
+
+Author: avivahl
+Date: 2007-07-07 15:14:15 +0200 (Sat, 07 Jul 2007)
+New Revision: 61
+
+Modified:
+   trunk/xMule.vcproj
+Log:
+Use the latest wxWidgets Trunk (2.9.x)
+
+Modified: trunk/xMule.vcproj
+===================================================================
+--- trunk/xMule.vcproj	2006-11-13 23:22:06 UTC (rev 60)
++++ trunk/xMule.vcproj	2007-07-07 13:14:15 UTC (rev 61)
+@@ -40,7 +40,7 @@
+ 			<Tool
+ 				Name="VCCLCompilerTool"
+ 				Optimization="0"
+-				AdditionalIncludeDirectories="&quot;C:\wxMSW-2.7.2\include&quot;;&quot;C:\wxMSW-2.7.2\lib\vc_lib\mswud&quot;"
++				AdditionalIncludeDirectories="&quot;C:\wxWidgets-Trunk\include&quot;;&quot;C:\wxWidgets-Trunk\lib\vc_lib\mswud&quot;"
+ 				PreprocessorDefinitions="__WXDEBUG__"
+ 				MinimalRebuild="true"
+ 				BasicRuntimeChecks="3"
+@@ -55,7 +55,7 @@
+ 			/>
+ 			<Tool
+ 				Name="VCResourceCompilerTool"
+-				AdditionalIncludeDirectories="&quot;C:\wxMSW-2.7.2\include&quot;"
++				AdditionalIncludeDirectories="&quot;C:\wxWidgets-Trunk\include&quot;"
+ 			/>
+ 			<Tool
+ 				Name="VCPreLinkEventTool"
+@@ -65,7 +65,7 @@
+ 				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib wsock32.lib"
+ 				OutputFile="$(OutDir)/$(InputName)-Debug.exe"
+ 				LinkIncremental="2"
+-				AdditionalLibraryDirectories="&quot;C:\wxMSW-2.7.2\lib\vc_lib&quot;"
++				AdditionalLibraryDirectories="&quot;C:\wxWidgets-Trunk\lib\vc_lib&quot;"
+ 				GenerateDebugInformation="true"
+ 				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
+ 				SubSystem="2"
+@@ -122,7 +122,7 @@
+ 			<Tool
+ 				Name="VCCLCompilerTool"
+ 				Optimization="3"
+-				AdditionalIncludeDirectories="&quot;C:\wxMSW-2.7.2\include&quot;;&quot;C:\wxMSW-2.7.2\lib\vc_lib\mswu&quot;"
++				AdditionalIncludeDirectories="&quot;C:\wxWidgets-Trunk\include&quot;;&quot;C:\wxWidgets-Trunk\lib\vc_lib\mswu&quot;"
+ 				RuntimeLibrary="2"
+ 				UsePrecompiledHeader="0"
+ 				WarningLevel="4"
+@@ -134,7 +134,7 @@
+ 			/>
+ 			<Tool
+ 				Name="VCResourceCompilerTool"
+-				AdditionalIncludeDirectories="&quot;C:\wxMSW-2.7.2\include&quot;"
++				AdditionalIncludeDirectories="&quot;C:\wxWidgets-Trunk\include&quot;"
+ 			/>
+ 			<Tool
+ 				Name="VCPreLinkEventTool"
+@@ -144,7 +144,7 @@
+ 				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib wsock32.lib"
+ 				OutputFile="$(OutDir)/$(InputName).exe"
+ 				LinkIncremental="1"
+-				AdditionalLibraryDirectories="&quot;C:\wxMSW-2.7.2\lib\vc_lib&quot;"
++				AdditionalLibraryDirectories="&quot;C:\wxWidgets-Trunk\lib\vc_lib&quot;"
+ 				GenerateDebugInformation="false"
+ 				SubSystem="2"
+ 				OptimizeReferences="2"
+@@ -333,7 +333,7 @@
+ 					>
+ 					<Tool
+ 						Name="VCResourceCompilerTool"
+-						AdditionalIncludeDirectories="&quot;C:\wxMSW-2.7.2\include&quot;"
++						AdditionalIncludeDirectories="&quot;C:\wxWidgets-Trunk\include&quot;"
+ 					/>
+ 				</FileConfiguration>
+ 				<FileConfiguration
+@@ -341,7 +341,7 @@
+ 					>
+ 					<Tool
+ 						Name="VCResourceCompilerTool"
+-						AdditionalIncludeDirectories="&quot;C:\wxMSW-2.7.2\include&quot;"
++						AdditionalIncludeDirectories="&quot;C:\wxWidgets-Trunk\include&quot;"
+ 					/>
+ 				</FileConfiguration>
+ 			</File>
+
+
+
